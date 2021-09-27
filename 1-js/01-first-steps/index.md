@@ -2,7 +2,7 @@
 
 Aprendamos los fundamentos para construir código.
 
-* [strict-mode](01-strict-mode/article.md)
+* [strict-mode](14-arrow-functions-basics/01-strict-mode/article.md)
 * [variables](02-variables/article.md)
 * [tipos](03-types/article.md)
 * [conversión de tipos](04-type-conversions/article.md)
