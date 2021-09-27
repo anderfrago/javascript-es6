@@ -1,12 +1,12 @@
+# task
+
 importance: 5
 
----
+## Generar una lista de un solo enlace
 
-# Generar una lista de un solo enlace
+Digamos que tenemos una lista de un solo enlace \(como se describe en el capítulo \):
 
-Digamos que tenemos una lista de un solo enlace (como se describe en el capítulo <info:recursion>):
-
-```js
+```javascript
 let list = {
   value: 1,
   next: {
@@ -27,3 +27,4 @@ Escribe una función `printList(list)` que genere los elementos de la lista uno 
 Haz dos variantes de la solución: utilizando un bucle y utilizando recursividad.
 
 ¿Qué es mejor: con recursividad o sin ella?
+

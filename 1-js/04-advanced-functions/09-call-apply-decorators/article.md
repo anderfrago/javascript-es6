@@ -1,48 +1,39 @@
 # Decoradores y redirecciones, call/apply
 
-JavaScript ofrece una flexibilidad excepcional cuando se trata de funciones. Se pueden pasar, usar como objetos, y ahora veremos cómo *redireccionar* las llamadas entre ellos y *decorarlos*.
+JavaScript ofrece una flexibilidad excepcional cuando se trata de funciones. Se pueden pasar, usar como objetos, y ahora veremos cómo _redireccionar_ las llamadas entre ellos y _decorarlos_.
 
 ## Caché transparente
 
 Digamos que tenemos una función `slow(x)` que es pesada para la CPU, pero sus resultados son estables. En otras palabras, la misma `x` siempre devuelve el mismo resultado.
 
-Si la función se llama con frecuencia, es posible que queramos almacenar en caché (recordar) los resultados para evitar perder tiempo extra en los nuevos cálculos.
+Si la función se llama con frecuencia, es posible que queramos almacenar en caché \(recordar\) los resultados para evitar perder tiempo extra en los nuevos cálculos.
 
 Pero en lugar de agregar esa funcionalidad en `slow()` crearemos una función de contenedor, que agrega almacenamiento en caché. Como veremos, hacer esto trae beneficios.
 
 Aquí está el código, y siguiendo las explicaciones:
 
-```js run
-function slow(x) {
-  // puede haber un trabajo pesado de CPU aquí
-  alert(`Called with ${x}`);
-  return x;
-}
+`````js run function slow(x) { // puede haber un trabajo pesado de CPU aquí alert(```Called with ${x}\`\); return x; }
 
-function cachingDecorator(func) {
-  let cache = new Map();
+function cachingDecorator\(func\) { let cache = new Map\(\);
 
-  return function(x) {
-    if (cache.has(x)) {  // si hay tal propiedad en caché
-      return cache.get(x); // lee el resultado
-    }
+return function\(x\) { if \(cache.has\(x\)\) { // si hay tal propiedad en caché return cache.get\(x\); // lee el resultado }
 
-    let result = func(x);  // de lo contrario llame a func
+```text
+let result = func(x);  // de lo contrario llame a func
 
-    cache.set(x, result);  // y cacheamos (recordamos) el resultado
-    return result;
-  };
-}
-
-slow = cachingDecorator(slow);
-
-alert( slow(1) ); // slow(1) es cacheado y se devuelve el resultado
-alert( "Again: " + slow(1) ); // el resultado slow(1) es devuelto desde cache
-
-alert( slow(2) ); // slow(2) es cacheado y devuelve el resultado
-alert( "Again: " + slow(2) ); // el resultado slow(2) es devuelto desde caché
+cache.set(x, result);  // y cacheamos (recordamos) el resultado
+return result;
 ```
 
+}; }
+
+slow = cachingDecorator\(slow\);
+
+alert\( slow\(1\) \); // slow\(1\) es cacheado y se devuelve el resultado alert\( "Again: " + slow\(1\) \); // el resultado slow\(1\) es devuelto desde cache
+
+alert\( slow\(2\) \); // slow\(2\) es cacheado y devuelve el resultado alert\( "Again: " + slow\(2\) \); // el resultado slow\(2\) es devuelto desde caché
+
+```text
 En el código anterior, `cachingDecorator` es un *decorador*: una función especial que toma otra función y altera su comportamiento.
 
 La idea es que podemos llamar a `cachingDecorator` para cualquier función, y devolver el contenedor de almacenamiento en caché. Eso es genial, porque podemos tener muchas funciones que podrían usar dicha función, y todo lo que tenemos que hacer es aplicarles 'cachingDecorator'.
@@ -111,27 +102,28 @@ La razón es que el contenedor llama a la función original como `func(x)` en la
 
 Observaríamos un síntoma similar si intentáramos ejecutar:
 
-```js
+```javascript
 let func = worker.slow;
 func(2);
 ```
 
 Entonces, el contenedor pasa la llamada al método original, pero sin el contexto `this`. De ahí el error.
 
-Vamos a solucionar esto: 
+Vamos a solucionar esto:
 
-Hay un método de función  especial incorporado [func.call(context, ...args)](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Function/call) que permite llamar a una función que establece explícitamente `this`.
+Hay un método de función especial incorporado [func.call\(context, ...args\)](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Function/call) que permite llamar a una función que establece explícitamente `this`.
 
 La sintaxis es:
 
-```js
+```javascript
 func.call(context, arg1, arg2, ...)
 ```
 
 Ejecuta `func` proporcionando el primer argumento como `this`, y el siguiente como los argumentos.
 
 En pocas palabras, estas dos llamadas hacen casi lo mismo:
-```js
+
+```javascript
 func(1, 2, 3);
 func.call(obj, 1, 2, 3)
 ```
@@ -140,19 +132,13 @@ Ambos llaman `func` con argumentos `1`, `2` y `3`. La única diferencia es que `
 
 Como ejemplo, en el siguiente código llamamos a `sayHi` en el contexto de diferentes objetos: `sayHi.call(user)` ejecuta `sayHi` estableciendo `this = user`, y la siguiente línea establece `this = admin`:
 
-```js run
-function sayHi() {
-  alert(this.name);
-}
+\`\`\`js run function sayHi\(\) { alert\(this.name\); }
 
-let user = { name: "John" };
-let admin = { name: "Admin" };
+let user = { name: "John" }; let admin = { name: "Admin" };
 
-// use call para pasar diferentes objetos como "this"
-sayHi.call( user ); // John
-sayHi.call( admin ); // Admin
-```
+// use call para pasar diferentes objetos como "this" sayHi.call\( user \); // John sayHi.call\( admin \); // Admin
 
+```text
 Y aquí usamos `call` para llamar a `say` con el contexto y la frase dados:
 
 
@@ -169,38 +155,17 @@ say.call( user, "Hello" ); // John: Hello
 
 En nuestro caso, podemos usar `call` en el contenedor para pasar el contexto a la función original:
 
-```js run
-let worker = {
-  someMethod() {
-    return 1;
-  },
+\`\`\`js run let worker = { someMethod\(\) { return 1; },
 
-  slow(x) {
-    alert("Called with " + x);
-    return x * this.someMethod(); // (*)
-  }
-};
+slow\(x\) { alert\("Called with " + x\); return x  _this.someMethod\(\); // \(_\) } };
 
-function cachingDecorator(func) {
-  let cache = new Map();
-  return function(x) {
-    if (cache.has(x)) {
-      return cache.get(x);
-    }
-*!*
-    let result = func.call(this, x); // "this" se pasa correctamente ahora
-*/!*
-    cache.set(x, result);
-    return result;
-  };
-}
+function cachingDecorator\(func\) { let cache = new Map\(\); return function\(x\) { if \(cache.has\(x\)\) { return cache.get\(x\); } _!_ let result = func.call\(this, x\); // "this" se pasa correctamente ahora _/!_ cache.set\(x, result\); return result; }; }
 
-worker.slow = cachingDecorator(worker.slow); // ahora hazlo en caché
+worker.slow = cachingDecorator\(worker.slow\); // ahora hazlo en caché
 
-alert( worker.slow(2) ); // funciona
-alert( worker.slow(2) ); // funciona, no llama al original (en caché)
-```
+alert\( worker.slow\(2\) \); // funciona alert\( worker.slow\(2\) \); // funciona, no llama al original \(en caché\)
 
+```text
 Ahora todo está bien.
 
 Para aclararlo todo, veamos más profundamente cómo se transmite `this`:
@@ -226,57 +191,40 @@ let worker = {
 worker.slow = cachingDecorator(worker.slow);
 ```
 
-Anteriormente, para un solo argumento `x` podríamos simplemente usar `cache.set(x, result)` para guardar el resultado y `cache.get(x)` para recuperarlo. Pero ahora necesitamos recordar el resultado para una *combinación de argumentos* `(min, max)`. El `Map` nativo toma solo un valor como clave.
+Anteriormente, para un solo argumento `x` podríamos simplemente usar `cache.set(x, result)` para guardar el resultado y `cache.get(x)` para recuperarlo. Pero ahora necesitamos recordar el resultado para una _combinación de argumentos_ `(min, max)`. El `Map` nativo toma solo un valor como clave.
 
 Hay muchas posibles soluciones:
 
-1. Implemente una nueva estructura de datos similar a un mapa (o use una de un tercero) que sea más versátil y permita múltiples propiedades.
+1. Implemente una nueva estructura de datos similar a un mapa \(o use una de un tercero\) que sea más versátil y permita múltiples propiedades.
 2. Use mapas anidados `cache.set(min)` será un `Map` que almacena el par `(max, result)`. Para que podamos obtener `result` como `cache.get(min).get(max)`.
-3. Una dos valores en uno. En nuestro caso particular, podemos usar un string `"min,max"` como la propiedad de `Map`. Por flexibilidad, podemos permitir proporcionar un *función hashing* para el decorador, que sabe hacer un valor de muchos.
+3. Una dos valores en uno. En nuestro caso particular, podemos usar un string `"min,max"` como la propiedad de `Map`. Por flexibilidad, podemos permitir proporcionar un _función hashing_ para el decorador, que sabe hacer un valor de muchos.
 
 Para muchas aplicaciones prácticas, la tercera variante es lo suficientemente buena, por lo que nos mantendremos en esa opción.
 
-También necesitamos pasar no solo `x`, sino todos los argumentos en `func.call`. Recordemos que en una `función()` podemos obtener un pseudo-array (*array-like*) de sus argumentos como `arguments`, por lo que `func.call(this, x)` debería reemplazarse por `func.call(this, ...arguments) `.
+También necesitamos pasar no solo `x`, sino todos los argumentos en `func.call`. Recordemos que en una `función()` podemos obtener un pseudo-array \(_array-like_\) de sus argumentos como `arguments`, por lo que `func.call(this, x)` debería reemplazarse por `func.call(this, ...arguments)`.
 
 Aquí un mejorado y poderosísimo `cachingDecorator`:
 
-```js run
-let worker = {
-  slow(min, max) {
-    alert(`Called with ${min},${max}`);
-    return min + max;
-  }
-};
+`````js run let worker = { slow(min, max) { alert(```Called with ${min},${max}\`\); return min + max; } };
 
-function cachingDecorator(func, hash) {
-  let cache = new Map();
-  return function() {
-*!*
-    let key = hash(arguments); // (*)
-*/!*
-    if (cache.has(key)) {
-      return cache.get(key);
-    }
+function cachingDecorator\(func, hash\) { let cache = new Map\(\); return function\(\) { _!_ let key = hash\(arguments\); // \(_\)_ /!\* if \(cache.has\(key\)\) { return cache.get\(key\); }
 
-*!*
-    let result = func.call(this, ...arguments); // (**)
-*/!*
+_!_ let result = func.call\(this, ...arguments\); // \(_\*\)_ /!\*
 
-    cache.set(key, result);
-    return result;
-  };
-}
-
-function hash(args) {
-  return args[0] + ',' + args[1];
-}
-
-worker.slow = cachingDecorator(worker.slow, hash);
-
-alert( worker.slow(3, 5) ); // funciona
-alert( "Again " + worker.slow(3, 5) ); // lo mismo (cacheado)
+```text
+cache.set(key, result);
+return result;
 ```
 
+}; }
+
+function hash\(args\) { return args\[0\] + ',' + args\[1\]; }
+
+worker.slow = cachingDecorator\(worker.slow, hash\);
+
+alert\( worker.slow\(3, 5\) \); // funciona alert\( "Again " + worker.slow\(3, 5\) \); // lo mismo \(cacheado\)
+
+```text
 Ahora funciona con cualquier número de argumentos (aunque la función hash también necesitaría ser ajustada para permitir cualquier número de argumentos. Una forma interesante de manejar esto se tratará a continuación).
 
 Hay dos cambios:
@@ -300,25 +248,25 @@ La única diferencia de sintaxis entre `call` y `apply` es que `call` espera una
 
 Entonces estas dos llamadas son casi equivalentes:
 
-```js
+```javascript
 func.call(context, ...args);
 func.apply(context, args);
 ```
 
-Estas hacen la misma llamada de `func` con el contexto y argumento dados. 
+Estas hacen la misma llamada de `func` con el contexto y argumento dados.
 
 Solo hay una sutil diferencia con respect○ a `args`:
 
-- La sintaxis extendida `...` permite pasar un *iterable* `args` como una lista para `call`.
-- La opción `apply` acepta solo `args` como *array-like*.
+* La sintaxis extendida `...` permite pasar un _iterable_ `args` como una lista para `call`.
+* La opción `apply` acepta solo `args` como _array-like_.
 
 Y para los objetos que son iterables y array-like, como un array real, podemos usar cualquiera de ellos, pero `apply` probablemente será más rápido, porque la mayoría de los motores de JavaScript lo optimizan mejor internamente.
 
-Pasar todos los argumentos junto con el contexto a otra función se llama *redirección de llamadas*.
+Pasar todos los argumentos junto con el contexto a otra función se llama _redirección de llamadas_.
 
 Esta es la forma más simple:
 
-```js
+```javascript
 let wrapper = function() {
   return func.apply(this, arguments);
 };
@@ -326,40 +274,35 @@ let wrapper = function() {
 
 Cuando un código externo llama a tal `wrapper`, no se puede distinguir de la llamada de la función original `func` .
 
-## Préstamo de método [#method-borrowing]
+## Préstamo de método \[\#method-borrowing\]
 
 Ahora hagamos una pequeña mejora en la función de hash:
 
-```js
+```javascript
 function hash(args) {
   return args[0] + ',' + args[1];
 }
 ```
 
-A partir de ahora, funciona solo en dos argumentos. Sería mejor si pudiera adherir (*glue*) cualquier número de `args`.
+A partir de ahora, funciona solo en dos argumentos. Sería mejor si pudiera adherir \(_glue_\) cualquier número de `args`.
 
 La solución natural sería usar el método [arr.join](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Array/join):
 
-```js
+```javascript
 function hash(args) {
   return args.join();
 }
 ```
 
-... Desafortunadamente, eso no funcionará. Debido a que estamos llamando a `hash (arguments)`, y el objeto `arguments` es iterable y *array-like* (similar a un array, pero no es un array real).
+... Desafortunadamente, eso no funcionará. Debido a que estamos llamando a `hash (arguments)`, y el objeto `arguments` es iterable y _array-like_ \(similar a un array, pero no es un array real\).
 
 Por lo tanto, llamar a `join` en él fallará, como podemos ver a continuación:
 
-```js run
-function hash() {
-*!*
-  alert( arguments.join() ); // Error: arguments.join is not a function
-*/!*
-}
+\`\`\`js run function hash\(\) { _!_ alert\( arguments.join\(\) \); // Error: arguments.join is not a function _/!_ }
 
-hash(1, 2);
-```
+hash\(1, 2\);
 
+```text
 Aún así, hay una manera fácil de usar la unión (*join*) de arrays:
 
 ```js run
@@ -372,9 +315,9 @@ function hash() {
 hash(1, 2);
 ```
 
-El truco se llama *préstamo de método* (method borrowing).
+El truco se llama _préstamo de método_ \(method borrowing\).
 
-Tomamos (prestado) el método *join* de un array regular (`[].join`) y usamos `[].join.call` para ejecutarlo en el contexto de `arguments`.
+Tomamos \(prestado\) el método _join_ de un array regular \(`[].join`\) y usamos `[].join.call` para ejecutarlo en el contexto de `arguments`.
 
 ¿Por qué funciona?
 
@@ -390,38 +333,38 @@ Tomado de la especificación casi "tal cual":
 6. ...hazlo hasta que los elementos `this.length` estén adheridos.
 7. Devuelva `result`.
 
-Entones, técnicamente `this` une `this[0]`, `this[1]` ...etc. Está escrito intencionalmente de una manera que permite cualquier tipo de array `this` (no es una coincidencia, muchos métodos siguen esta práctica). Es por eso que también funciona con `this = arguments`
+Entones, técnicamente `this` une `this[0]`, `this[1]` ...etc. Está escrito intencionalmente de una manera que permite cualquier tipo de array `this` \(no es una coincidencia, muchos métodos siguen esta práctica\). Es por eso que también funciona con `this = arguments`
 
 ## Decoradores y propiedades de funciones
 
 Por lo general, es seguro reemplazar una función o un método con un decorador, excepto por una pequeña cosa. Si la función original tenía propiedades, como `func.calledCount` o cualquier otra, entonces la función decoradora no las proporcionará. Porque eso es una envoltura. Por lo tanto, se debe tener cuidado al usarlo.
 
-
 E.j. en el ejemplo anterior, si la función `slow` tenía propiedades, entonces `cachingDecorator(slow)` sería un contenedor, pero sin contener dichas propiedades.
 
 Algunos decoradores pueden proporcionar sus propias propiedades. P.ej. un decorador puede contar cuántas veces se invocó una función y cuánto tiempo tardó, y exponer esta información a través de propiedades de envoltura.
 
-Existe una forma de crear decoradores que mantienen el acceso a las propiedades de la función, pero esto requiere el uso de un objeto especial `Proxy` para ajustar una función. Lo discutiremos más adelante en el artículo  <info:proxy#proxy-apply>.
+Existe una forma de crear decoradores que mantienen el acceso a las propiedades de la función, pero esto requiere el uso de un objeto especial `Proxy` para ajustar una función. Lo discutiremos más adelante en el artículo .
 
 ## Resumen
 
-*Decorator / Decorador* es un contenedor alrededor de una función que altera su comportamiento. El trabajo principal todavía lo realiza la función.
+_Decorator / Decorador_ es un contenedor alrededor de una función que altera su comportamiento. El trabajo principal todavía lo realiza la función.
 
 Los decoradores se pueden ver como "características" o "aspectos" que se pueden agregar a una función. Podemos agregar uno o agregar muchos. ¡Y todo esto sin cambiar su código!
 
 Para implementar `cachingDecorator`, estudiamos los siguientes métodos:
 
-- [func.call(context, arg1, arg2...)](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Function/call) -- llama a `func` con el contexto y argumentos dados.
-- [func.apply(context, args)](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Function/apply) -- llama a `func` pasando `context` como `this` y array-like `args` en una lista de argumentos.
+* [func.call\(context, arg1, arg2...\)](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Function/call) -- llama a `func` con el contexto y argumentos dados.
+* [func.apply\(context, args\)](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Function/apply) -- llama a `func` pasando `context` como `this` y array-like `args` en una lista de argumentos.
 
-La *redirección de llamadas* genérica generalmente se realiza con `apply`:
+La _redirección de llamadas_ genérica generalmente se realiza con `apply`:
 
-```js
+```javascript
 let wrapper = function() {
   return original.apply(this, arguments);
 };
 ```
 
-También vimos un ejemplo de *préstamo de método* cuando tomamos un método de un objeto y lo `llamamos` en el contexto de otro objeto. Es bastante común tomar métodos de array y aplicarlos a `argumentos`. La alternativa es utilizar el objeto de parámetros rest que es un array real.
+También vimos un ejemplo de _préstamo de método_ cuando tomamos un método de un objeto y lo `llamamos` en el contexto de otro objeto. Es bastante común tomar métodos de array y aplicarlos a `argumentos`. La alternativa es utilizar el objeto de parámetros rest que es un array real.
 
 Hay muchos decoradores a tu alrededor. Verifica si eres bueno resolviendo las tareas de este capítulo.
+

@@ -1,15 +1,12 @@
-
-
 # Introducción: callbacks
 
-```warn header="Usamos métodos de navegador en estos ejemplos"
-Para demostrar el uso de callbacks, promesas y otros conceptos abstractos, utilizaremos algunos métodos de navegador: específicamente, carga de scripts y simples manipulaciones de documentos.
+\`\`\`warn header="Usamos métodos de navegador en estos ejemplos" Para demostrar el uso de callbacks, promesas y otros conceptos abstractos, utilizaremos algunos métodos de navegador: específicamente, carga de scripts y simples manipulaciones de documentos.
 
-Si no estás familiarizado con estos métodos, y los ejemplos son confusos, puedes leer algunos capítulos de esta [sección](/document) del tutorial.
+Si no estás familiarizado con estos métodos, y los ejemplos son confusos, puedes leer algunos capítulos de esta [sección](https://github.com/anderfrago/javascript-es6/tree/a40cdf1844f1b053fe92cfe167a2b2a527b7ff38/document/README.md) del tutorial.
 
 Sin embargo, intentaremos aclarar las cosas de todos modos. No habrá nada en cuanto al navegador realmente complejo.
-```
 
+```text
 Muchas funciones son proporcionadas por el entorno de host de Javascript que permiten programar acciones *asíncronas*. En otras palabras, acciones que iniciamos ahora, pero que terminan más tarde.
 
 Por ejemplo, una de esas funciones es la función `setTimeout`.
@@ -32,7 +29,7 @@ Esto inserta en el documento una etiqueta nueva, creada dinámicamente, `<script
 
 Esta función la podemos usar así:
 
-```js
+```javascript
 // cargar y ejecutar el script en la ruta dada
 loadScript('/my/script.js');
 ```
@@ -41,7 +38,7 @@ El script se ejecuta "asincrónicamente", ya que comienza a cargarse ahora, pero
 
 El código debajo de `loadScript (...)`, no espera que finalice la carga del script.
 
-```js
+```javascript
 loadScript('/my/script.js');
 // el código debajo de loadScript
 // no espera a que finalice la carga del script
@@ -52,7 +49,7 @@ Digamos que necesitamos usar el nuevo script tan pronto como se cargue. Declara 
 
 Si hacemos eso inmediatamente después de llamar a `loadScript (...)`, no funcionará:
 
-```js
+```javascript
 loadScript('/my/script.js'); // el script tiene a "function newFunction() {…}"
 
 *!*
@@ -64,7 +61,7 @@ Naturalmente, el navegador probablemente no tuvo tiempo de cargar el script. Has
 
 Agreguemos una función `callback` como segundo argumento para `loadScript` que debería ejecutarse cuando se carga el script:
 
-```js
+```javascript
 function loadScript(src, *!*callback*/!*) {
   let script = document.createElement('script');
   script.src = src;
@@ -79,7 +76,7 @@ function loadScript(src, *!*callback*/!*) {
 
 Ahora, si queremos llamar las nuevas funciones desde el script, deberíamos escribirlo en la callback:
 
-```js
+```javascript
 loadScript('/my/script.js', function() {
   // la callback se ejecuta luego que se carga el script
   newFunction(); // ahora funciona
@@ -87,26 +84,15 @@ loadScript('/my/script.js', function() {
 });
 ```
 
-Esa es la idea: el segundo argumento es una función (generalmente anónima) que se ejecuta cuando se completa la acción.
+Esa es la idea: el segundo argumento es una función \(generalmente anónima\) que se ejecuta cuando se completa la acción.
 
 Aquí un ejemplo ejecutable con un script real:
 
-```js run
-function loadScript(src, callback) {
-  let script = document.createElement('script');
-  script.src = src;
-  script.onload = () => callback(script);
-  document.head.append(script);
-}
+\`\`\`js run function loadScript\(src, callback\) { let script = document.createElement\('script'\); script.src = src; script.onload = \(\) =&gt; callback\(script\); document.head.append\(script\); }
 
-*!*
-loadScript('https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.2.0/lodash.js', script => {
-  alert(`Genial, el script ${script.src} está cargado`);
-  alert( _ ); // función declarada en el script cargado
-});
-*/!*
-```
+_!_ loadScript\('[https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.2.0/lodash.js](https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.2.0/lodash.js)', script =&gt; { alert\(`Genial, el script ${script.src} está cargado`\); alert\( \_ \); // función declarada en el script cargado }\); _/!_
 
+```text
 Eso se llama programación asincrónica "basado en callback". Una función que hace algo de forma asincrónica debería aceptar un argumento de `callback` donde ponemos la función por ejecutar después de que se complete.
 
 Aquí lo hicimos en `loadScript`, pero por supuesto es un enfoque general.
@@ -135,7 +121,7 @@ Una vez que se completa el `loadScript` externo, la callback inicia el interno.
 
 ¿Qué pasa si queremos un script más ...?
 
-```js
+```javascript
 loadScript('/my/script.js', function(script) {
 
   loadScript('/my/script2.js', function(script) {
@@ -159,7 +145,7 @@ En los ejemplos anteriores no consideramos los errores. ¿Qué pasa si falla la 
 
 Aquí una versión mejorada de `loadScript` que rastrea los errores de carga:
 
-```js
+```javascript
 function loadScript(src, callback) {
   let script = document.createElement('script');
   script.src = src;
@@ -176,7 +162,8 @@ function loadScript(src, callback) {
 Para una carga exitosa llama a `callback(null, script)` y de lo contrario a `callback(error)`.
 
 El uso:
-```js
+
+```javascript
 loadScript('/my/script.js', function(error, script) {
   if (error) {
     // maneja el error
@@ -188,9 +175,7 @@ loadScript('/my/script.js', function(error, script) {
 
 Una vez más, la receta que usamos para `loadScript` es bastante común. Se llama el estilo de "callback error primero".
 
-La convención es:
-1. El primer argumento de la 'callback' está reservado para un error, si ocurre. Entonces se llama a `callback(err)`.
-2. El segundo argumento (y los siguientes si es necesario) son para el resultado exitoso. Entonces se llama a `callback(null, result1, result2 ...)`.
+La convención es: 1. El primer argumento de la 'callback' está reservado para un error, si ocurre. Entonces se llama a `callback(err)`. 2. El segundo argumento \(y los siguientes si es necesario\) son para el resultado exitoso. Entonces se llama a `callback(null, result1, result2 ...)`.
 
 Así usamos una única función de 'callback' tanto para informar errores como para transferir resultados.
 
@@ -200,7 +185,7 @@ A primera vista, es una forma viable de codificación asincrónica. Y de hecho l
 
 Pero para múltiples acciones asincrónicas que van una tras otra, tendremos un código como este:
 
-```js
+```javascript
 loadScript('1.js', function(error, script) {
 
   if (error) {
@@ -228,40 +213,13 @@ loadScript('1.js', function(error, script) {
 });
 ```
 
-En el código de arriba:
-1. Cargamos `1.js`, entonces si no hay error:
-2. Cargamos `2.js`, entonces si no hay error:
-3. Cargamos `3.js`, entonces, si no hay ningún error: haga otra cosa `(*)`.
+En el código de arriba: 1. Cargamos `1.js`, entonces si no hay error: 2. Cargamos `2.js`, entonces si no hay error: 3. Cargamos `3.js`, entonces, si no hay ningún error: haga otra cosa `(*)`.
 
 A medida que las llamadas se anidan más, el código se vuelve más profundo y difícil de administrar, especialmente si tenemos un código real en lugar de '...' que puede incluir más bucles, declaraciones condicionales, etc.
 
-A esto se le llama "infierno de callbacks" o "pirámide infernal" ("callback hell", "pyramid of doom").
+A esto se le llama "infierno de callbacks" o "pirámide infernal" \("callback hell", "pyramid of doom"\).
 
-<!--
-loadScript('1.js', function(error, script) {
-  if (error) {
-    handleError(error);
-  } else {
-    // ...
-    loadScript('2.js', function(error, script) {
-      if (error) {
-        handleError(error);
-      } else {
-        // ...
-        loadScript('3.js', function(error, script) {
-          if (error) {
-            handleError(error);
-          } else {
-            // ...
-          }
-        });
-      }
-    })
-  }
-});
--->
-
-![](callback-hell.svg)
+![](../../../.gitbook/assets/callback-hell.svg)
 
 La "pirámide" de llamadas anidadas crece hacia la derecha con cada acción asincrónica. Pronto se sale de control.
 
@@ -269,7 +227,7 @@ Entonces esta forma de codificación no es tan buena.
 
 Podemos tratar de aliviar el problema haciendo, para cada acción, una función independiente:
 
-```js
+```javascript
 loadScript('1.js', step1);
 
 function step1(error, script) {
@@ -308,3 +266,4 @@ Además, las funciones llamadas `step*` son de un solo uso, son para evitar la "
 Nos gustaría tener algo mejor.
 
 Afortunadamente, podemos evitar tales pirámides. Una de las mejores formas es usando "promesas", descritas en el próximo capítulo.
+

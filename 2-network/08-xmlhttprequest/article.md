@@ -9,10 +9,10 @@ Ahora hay un método más moderno `fetch` que en algún sentido hace obsoleto a 
 En el desarrollo web moderno `XMLHttpRequest` se usa por tres razones:
 
 1. Razones históricas: necesitamos soportar scripts existentes con `XMLHttpRequest`.
-2. Necesitamos soportar navegadores viejos, y no queremos `polyfills` (p.ej. para mantener los scripts pequeños).
+2. Necesitamos soportar navegadores viejos, y no queremos `polyfills` \(p.ej. para mantener los scripts pequeños\).
 3. Necesitamos hacer algo que `fetch` no puede todavía, ej. rastrear el progreso de subida.
 
-¿Te suena familiar? Si es así, está bien, adelante con `XMLHttpRequest`. De otra forma, por favor, dirígete a <info:fetch>.
+¿Te suena familiar? Si es así, está bien, adelante con `XMLHttpRequest`. De otra forma, por favor, dirígete a .
 
 ## Lo básico
 
@@ -23,94 +23,80 @@ Veamos primero la asíncrona, ya que es utilizada en la mayoría de los casos.
 Para hacer la petición, necesitamos seguir 3 pasos:
 
 1. Crear el objeto `XMLHttpRequest`:
-    ```js
+
+   ```javascript
     let xhr = new XMLHttpRequest();
-    ```
-    El constructor no tiene argumentos.
+   ```
+
+   El constructor no tiene argumentos.
 
 2. Inicializarlo, usualmente justo después de `new XMLHttpRequest`:
-    ```js
+
+   ```javascript
     xhr.open(method, URL, [async, user, password])
-    ```
+   ```
 
-    Este método especifica los parámetros principales para la petición:
+   Este método especifica los parámetros principales para la petición:
 
-    - `method` -- método HTTP. Usualmente `"GET"` o `"POST"`.
-    - `URL` -- la URL a solicitar, una cadena, puede ser un objeto [URL](info:url).
-    - `async` -- si se asigna explícitamente a `false`, entonces la petición será asincrónica. Cubriremos esto un poco más adelante.
-    - `user`, `password` -- usuario y contraseña para autenticación HTTP básica (si se requiere).
+   * `method` -- método HTTP. Usualmente `"GET"` o `"POST"`.
+   * `URL` -- la URL a solicitar, una cadena, puede ser un objeto [URL](info:url).
+   * `async` -- si se asigna explícitamente a `false`, entonces la petición será asincrónica. Cubriremos esto un poco más adelante.
+   * `user`, `password` -- usuario y contraseña para autenticación HTTP básica \(si se requiere\).
 
-    Por favor, toma en cuenta que la llamada a `open`, contrario a su nombre, no abre la conexión. Solo configura la solicitud, pero la actividad de red solo empieza con la llamada del método `send`.
+     Por favor, toma en cuenta que la llamada a `open`, contrario a su nombre, no abre la conexión. Solo configura la solicitud, pero la actividad de red solo empieza con la llamada del método `send`.
 
 3. Enviar.
 
-    ```js
+   ```javascript
     xhr.send([body])
-    ```
+   ```
 
-    Este método abre la conexión y envía ka solicitud al servidor. El parámetro adicional `body` contiene el cuerpo de la solicitud.
+   Este método abre la conexión y envía ka solicitud al servidor. El parámetro adicional `body` contiene el cuerpo de la solicitud.
 
-    Algunos métodos como `GET` no tienen un cuerpo. Y otros como `POST` usan el parámetro `body` para enviar datos al servidor. Vamos a ver unos ejemplos de eso más tarde.
+   Algunos métodos como `GET` no tienen un cuerpo. Y otros como `POST` usan el parámetro `body` para enviar datos al servidor. Vamos a ver unos ejemplos de eso más tarde.
 
 4. Escuchar los eventos de respuesta `xhr`.
 
-    Estos son los tres eventos más comúnmente utilizados:
-    - `load` -- cuando la solicitud está; completa (incluso si el estado HTTP es 400 o 500), y la respuesta se descargó por completo.
-    - `error` -- cuando la solicitud no pudo ser realizada satisfactoriamente, ej. red caída o una URL inválida.
-    - `progress` -- se dispara periódicamente mientras la respuesta está siendo descargada, reporta cuánto se ha descargado.
+   Estos son los tres eventos más comúnmente utilizados:
 
-    ```js
-    xhr.onload = function() {
-      alert(`Cargado: ${xhr.status} ${xhr.response}`);
-    };
+   * `load` -- cuando la solicitud está; completa \(incluso si el estado HTTP es 400 o 500\), y la respuesta se descargó por completo.
+   * `error` -- cuando la solicitud no pudo ser realizada satisfactoriamente, ej. red caída o una URL inválida.
+   * `progress` -- se dispara periódicamente mientras la respuesta está siendo descargada, reporta cuánto se ha descargado.
 
-    xhr.onerror = function() { // solo se activa si la solicitud no se puede realizar
-      alert(`Error de red`);
-    };
+     ```javascript
+     xhr.onload = function() {
+     alert(`Cargado: ${xhr.status} ${xhr.response}`);
+     };
 
-    xhr.onprogress = function(event) { // se dispara periódicamente
-      // event.loaded - cuántos bytes se han descargado
-      // event.lengthComputable = devuelve true si el servidor envía la cabecera Content-Length (longitud del contenido)
-      // event.total - número total de bytes (si `lengthComputable` es `true`)
-      alert(`Recibido ${event.loaded} of ${event.total}`);
-    };
-    ```
+     xhr.onerror = function() { // solo se activa si la solicitud no se puede realizar
+     alert(`Error de red`);
+     };
+
+     xhr.onprogress = function(event) { // se dispara periódicamente
+     // event.loaded - cuántos bytes se han descargado
+     // event.lengthComputable = devuelve true si el servidor envía la cabecera Content-Length (longitud del contenido)
+     // event.total - número total de bytes (si `lengthComputable` es `true`)
+     alert(`Recibido ${event.loaded} of ${event.total}`);
+     };
+     ```
 
 Aquí un ejemplo completo. El siguiente código carga la URL en `/article/xmlhttprequest/example/load` desde el servidor e imprime el progreso:
 
-```js run
-// 1. Crea un nuevo objeto XMLHttpRequest
-let xhr = new XMLHttpRequest();
+\`\`\`js run // 1. Crea un nuevo objeto XMLHttpRequest let xhr = new XMLHttpRequest\(\);
 
-// 2. Configuración: solicitud GET para la URL /article/.../load
-xhr.open('GET', '/article/xmlhttprequest/example/load');
+// 2. Configuración: solicitud GET para la URL /article/.../load xhr.open\('GET', '/article/xmlhttprequest/example/load'\);
 
-// 3. Envía la solicitud a la red
-xhr.send();
+// 3. Envía la solicitud a la red xhr.send\(\);
 
-// 4. Esto se llamará después de que la respuesta se reciba
-xhr.onload = function() {
-  if (xhr.status != 200) { // analiza el estado HTTP de la respuesta
-    alert(`Error ${xhr.status}: ${xhr.statusText}`); // ej. 404: No encontrado
-  } else { // muestra el resultado
-    alert(`Hecho, obtenidos ${xhr.response.length} bytes`); // Respuesta del servidor
-  }
-};
+// 4. Esto se llamará después de que la respuesta se reciba xhr.onload = function\(\) { if \(xhr.status != 200\) { // analiza el estado HTTP de la respuesta alert\(`Error ${xhr.status}: ${xhr.statusText}`\); // ej. 404: No encontrado } else { // muestra el resultado alert\(`Hecho, obtenidos ${xhr.response.length} bytes`\); // Respuesta del servidor } };
 
-xhr.onprogress = function(event) {
-  if (event.lengthComputable) {
-    alert(`Recibidos ${event.loaded} de ${event.total} bytes`);
-  } else {
-    alert(`Recibidos ${event.loaded} bytes`); // sin Content-Length
-  }
+xhr.onprogress = function\(event\) { if \(event.lengthComputable\) { alert\(`Recibidos ${event.loaded} de ${event.total} bytes`\); } else { alert\(`Recibidos ${event.loaded} bytes`\); // sin Content-Length }
 
 };
 
-xhr.onerror = function() {
-  alert("Solicitud fallida");
-};
-```
+xhr.onerror = function\(\) { alert\("Solicitud fallida"\); };
 
+```text
 Una vez el servidor haya respondido, podemos recibir el resultado en las siguientes propiedades de `xhr`:
 
 `status`
@@ -130,10 +116,9 @@ xhr.timeout = 10000; // límite de tiempo en milisegundos, 10 segundos
 
 Si la solicitud no es realizada con éxito dentro del tiempo dado, se cancela y el evento `timeout` se activa.
 
-````smart header="Parámetros de búsqueda URL"
-Para agregar los parámetros a la URL, como `?nombre=valor`, y asegurar la codificación adecuada, podemos utilizar un objeto [URL](info:url):
+```````smart header="Parámetros de búsqueda URL" Para agregar los parámetros a la URL, como````?nombre=valor\`, y asegurar la codificación adecuada, podemos utilizar un objeto [URL](info:url):
 
-```js
+```javascript
 let url = new URL('https://google.com/search');
 url.searchParams.set('q', 'pruébame!');
 
@@ -141,8 +126,7 @@ url.searchParams.set('q', 'pruébame!');
 xhr.open('GET', url); // https://google.com/search?q=test+me%21
 ```
 
-````
-
+```text
 ## Tipo de respuesta
 
 Podemos usar la propiedad `xhr.responseType` para asignar el formato de la respuesta:
@@ -288,47 +272,49 @@ Existen 3 métodos para las cabeceras HTTP:
     // la cabecera será:
     // X-Auth: 123, 456
     ```
-    ````
+```
 
-`getResponseHeader(name)`
-: Obtiene la cabecera de la respuesta con el `name` dado (excepto `Set-Cookie` y `Set-Cookie2`).
+`getResponseHeader(name)` : Obtiene la cabecera de la respuesta con el `name` dado \(excepto `Set-Cookie` y `Set-Cookie2`\).
 
-    Por ejemplo:
+```text
+Por ejemplo:
 
-    ```js
-    xhr.getResponseHeader('Content-Type')
-    ```
+```js
+xhr.getResponseHeader('Content-Type')
+```
+```
 
-`getAllResponseHeaders()`
-: Devuelve todas las cabeceras de la respuesta, excepto por `Set-Cookie` y `Set-Cookie2`.
+`getAllResponseHeaders()` : Devuelve todas las cabeceras de la respuesta, excepto por `Set-Cookie` y `Set-Cookie2`.
 
-    Las cabeceras se devuelven como una sola línea, ej.:
+```text
+Las cabeceras se devuelven como una sola línea, ej.:
 
-    ```http
-    Cache-Control: max-age=31536000
-    Content-Length: 4260
-    Content-Type: image/png
-    Date: Sat, 08 Sep 2012 16:53:16 GMT
-    ```
+```http
+Cache-Control: max-age=31536000
+Content-Length: 4260
+Content-Type: image/png
+Date: Sat, 08 Sep 2012 16:53:16 GMT
+```
 
-    El salto de línea entre las cabeceras siempre es un `"\r\n"` (independiente del SO), así podemos dividirlas en cabeceras individuales. El separador entre el nombre y el valor siempre es dos puntos seguido de un espacio `": "`. Eso quedó establecido en la especificación.
+El salto de línea entre las cabeceras siempre es un `"\r\n"` (independiente del SO), así podemos dividirlas en cabeceras individuales. El separador entre el nombre y el valor siempre es dos puntos seguido de un espacio `": "`. Eso quedó establecido en la especificación.
 
-    Así, si queremos obtener un objeto con pares nombre/valor, necesitamos tratarlas con un poco de JS.
+Así, si queremos obtener un objeto con pares nombre/valor, necesitamos tratarlas con un poco de JS.
 
-    Como esto (asumiendo que si dos cabeceras tienen el mismo nombre, entonces el último sobreescribe al primero):
+Como esto (asumiendo que si dos cabeceras tienen el mismo nombre, entonces el último sobreescribe al primero):
 
-    ```js
-    let headers = xhr
-      .getAllResponseHeaders()
-      .split('\r\n')
-      .reduce((result, current) => {
-        let [name, value] = current.split(': ');
-        result[name] = value;
-        return result;
-      }, {});
+```js
+let headers = xhr
+  .getAllResponseHeaders()
+  .split('\r\n')
+  .reduce((result, current) => {
+    let [name, value] = current.split(': ');
+    result[name] = value;
+    return result;
+  }, {});
 
-    // headers['Content-Type'] = 'image/png'
-    ```
+// headers['Content-Type'] = 'image/png'
+```
+```
 
 ## POST, Formularios
 
@@ -336,40 +322,29 @@ Para hacer una solicitud POST, podemos utilizar el objeto [FormData](https://dev
 
 La sintaxis:
 
-```js
+```javascript
 let formData = new FormData([form]); // crea un objeto, opcionalmente se completa con un <form>
 formData.append(name, value); // añade un campo
 ```
 
-Lo creamos, opcionalmente lleno desde un formulario, `append` (agrega) más campos si se necesitan, y entonces:
+Lo creamos, opcionalmente lleno desde un formulario, `append` \(agrega\) más campos si se necesitan, y entonces:
 
 1. `xhr.open('POST', ...)` – se utiliza el método `POST`.
 2. `xhr.send(formData)` para enviar el formulario al servidor.
 
 Por ejemplo:
 
-```html run refresh
-<form name="person">
-  <input name="name" value="John">
-  <input name="surname" value="Smith">
-</form>
+\`\`\`html run refresh
 
-<script>
-  // pre llenado del objeto FormData desde el formulario
-  let formData = new FormData(document.forms.person);
+ // pre llenado del objeto FormData desde el formulario let formData = new FormData\(document.forms.person\);
 
-  // agrega un campo más
-  formData.append("middle", "Lee");
+// agrega un campo más formData.append\("middle", "Lee"\);
 
-  // lo enviamos
-  let xhr = new XMLHttpRequest();
-  xhr.open("POST", "/article/xmlhttprequest/post/user");
-  xhr.send(formData);
+// lo enviamos let xhr = new XMLHttpRequest\(\); xhr.open\("POST", "/article/xmlhttprequest/post/user"\); xhr.send\(formData\);
 
-  xhr.onload = () => alert(xhr.response);
-</script>
-```
+xhr.onload = \(\) =&gt; alert\(xhr.response\); &lt;/script&gt;
 
+```text
 El formulario fue enviado con codificación `multipart/form-data`.
 
 O, si nos gusta más JSON, entonces, un `JSON.stringify` y lo enviamos como un string.
@@ -396,7 +371,7 @@ El método `.send(body)` es bastante omnívoro. Puede enviar casi cualquier `bod
 
 El evento `progress` se dispara solo en la fase de descarga.
 
-Esto es: si hacemos un `POST` de algo, `XMLHttpRequest` primero sube nuestros datos (el cuerpo de la respuesta), entonces descarga la respuesta.
+Esto es: si hacemos un `POST` de algo, `XMLHttpRequest` primero sube nuestros datos \(el cuerpo de la respuesta\), entonces descarga la respuesta.
 
 Si estamos subiendo algo grande, entonces seguramente estaremos interesados en rastrear el progreso de nuestra carga. Pero `xhr.onprogress` no ayuda aquí.
 
@@ -404,17 +379,17 @@ Hay otro objeto, sin métodos, exclusivamente para rastrear los eventos de subid
 
 Este genera eventos similares a `xhr`, pero `xhr.upload` se dispara solo en las subidas:
 
-- `loadstart` -- carga iniciada.
-- `progress` -- se dispara periódicamente durante la subida.
-- `abort` -- carga abortada.
-- `error` -- error no HTTP.
-- `load` -- carga finalizada con éxito.
-- `timeout` -- carga caducada (si la propiedad `timeout` está asignada).
-- `loadend` -- carga finalizada con éxito o error.
+* `loadstart` -- carga iniciada.
+* `progress` -- se dispara periódicamente durante la subida.
+* `abort` -- carga abortada.
+* `error` -- error no HTTP.
+* `load` -- carga finalizada con éxito.
+* `timeout` -- carga caducada \(si la propiedad `timeout` está asignada\).
+* `loadend` -- carga finalizada con éxito o error.
 
 Ejemplos de manejadores:
 
-```js
+```javascript
 xhr.upload.onprogress = function(event) {
   alert(`Uploaded ${event.loaded} of ${event.total} bytes`);
 };
@@ -430,35 +405,17 @@ xhr.upload.onerror = function() {
 
 Aquí un ejemplo de la vida real: indicación del progreso de subida de un archivo:
 
-```html run
-<input type="file" onchange="upload(this.files[0])">
+\`\`\`html run
 
-<script>
-function upload(file) {
-  let xhr = new XMLHttpRequest();
+ function upload\(file\) { let xhr = new XMLHttpRequest\(\);
 
-  // rastrea el progreso de la subida
-*!*
-  xhr.upload.onprogress = function(event) {
-    console.log(`Uploaded ${event.loaded} of ${event.total}`);
-  };
-*/!*
+// rastrea el progreso de la subida _!_ xhr.upload.onprogress = function\(event\) { console.log\(`Uploaded ${event.loaded} of ${event.total}`\); }; _/!_
 
-  // seguimiento completado: sea satisfactorio o no
-  xhr.onloadend = function() {
-    if (xhr.status == 200) {
-      console.log("Logrado");
-    } else {
-      console.log("error " + this.status);
-    }
-  };
+// seguimiento completado: sea satisfactorio o no xhr.onloadend = function\(\) { if \(xhr.status == 200\) { console.log\("Logrado"\); } else { console.log\("error " + this.status\); } };
 
-  xhr.open("POST", "/article/xmlhttprequest/post/upload");
-  xhr.send(file);
-}
-</script>
-```
+xhr.open\("POST", "/article/xmlhttprequest/post/upload"\); xhr.send\(file\); } &lt;/script&gt;
 
+```text
 ## Solicitudes de origen cruzado (Cross-origin)
 
 `XMLHttpRequest` puede hacer solicitudes de origen cruzado, utilizando la misma política CORS que se [solicita](info:fetch-crossorigin).
@@ -475,14 +432,13 @@ xhr.open('POST', 'http://anywhere.com/request');
 ...
 ```
 
-Ve el capítulo <info:fetch-crossorigin> para detalles sobre las cabeceras de origen cruzado.
-
+Ve el capítulo  para detalles sobre las cabeceras de origen cruzado.
 
 ## Resumen
 
 Codificación típica de la solicitud GET con `XMLHttpRequest`:
 
-```js
+```javascript
 let xhr = new XMLHttpRequest();
 
 xhr.open('GET', '/my/url');
@@ -509,20 +465,21 @@ xhr.onerror = function() {
 };
 ```
 
-De hecho hay más eventos, la [especificación moderna](https://xhr.spec.whatwg.org/#events) los lista (en el orden del ciclo de vida):
+De hecho hay más eventos, la [especificación moderna](https://xhr.spec.whatwg.org/#events) los lista \(en el orden del ciclo de vida\):
 
-- `loadstart` -- la solicitud ha empezado.
-- `progress` -- un paquete de datos de la respuesta ha llegado, el cuerpo completo de la respuesta al momento está en `response`.
-- `abort` -- la solicitud ha sido cancelada por la llamada de `xhr.abort()`.
-- `error` -- un error de conexión ha ocurrido, ej. nombre de dominio incorrecto. No pasa con errores HTTP como 404.
-- `load` -- la solicitud se ha completado satisfactoriamente.
-- `timeout` -- la solicitud fue cancelada debido a que caducó (solo pasa si fue configurado).
-- `loadend` -- se dispara después de `load`, `error`, `timeout` o `abort`.
+* `loadstart` -- la solicitud ha empezado.
+* `progress` -- un paquete de datos de la respuesta ha llegado, el cuerpo completo de la respuesta al momento está en `response`.
+* `abort` -- la solicitud ha sido cancelada por la llamada de `xhr.abort()`.
+* `error` -- un error de conexión ha ocurrido, ej. nombre de dominio incorrecto. No pasa con errores HTTP como 404.
+* `load` -- la solicitud se ha completado satisfactoriamente.
+* `timeout` -- la solicitud fue cancelada debido a que caducó \(solo pasa si fue configurado\).
+* `loadend` -- se dispara después de `load`, `error`, `timeout` o `abort`.
 
 Los eventos `error`, `abort`, `timeout`, y `load` son mutuamente exclusivos. Solo uno de ellos puede pasar.
 
-Los eventos más usados son la carga terminada (`load`), falla de carga (`error`), o podemos usar un solo manejador `loadend` y comprobar las propiedades del objeto solicitado `xhr` para ver qué ha pasado.
+Los eventos más usados son la carga terminada \(`load`\), falla de carga \(`error`\), o podemos usar un solo manejador `loadend` y comprobar las propiedades del objeto solicitado `xhr` para ver qué ha pasado.
 
 Ya hemos visto otro evento: `readystatechange`. Históricamente, apareció hace mucho tiempo, antes de que la especificación fuera publicada. Hoy en día no es necesario usarlo, podemos reemplazarlo con eventos más nuevos pero puede ser encontrado a menudo en scripts viejos.
 
 Si necesitamos rastrear específicamente, entonces debemos escuchar a los mismos eventos en el objeto `xhr.upload`.
+

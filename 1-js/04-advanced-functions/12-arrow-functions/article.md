@@ -2,47 +2,33 @@
 
 Volvamos a revisar las funciones de flecha.
 
-
 Las funciones de flecha no son solo una "taquigrafía" para escribir pequeñas cosas. Tienen algunas características muy específicas y útiles.
 
 JavaScript está lleno de situaciones en las que necesitamos escribir una pequeña función que se ejecuta en otro lugar.
 
-
 Por ejemplo
 
-- `arr.forEach(func)` -- `func` es ejecutado por `forEach` para cada elemento del array.
-- `setTimeout(func)` -- `func` es ejecutado por el planificador incorporado.
-- ...y muchas más.
+* `arr.forEach(func)` -- `func` es ejecutado por `forEach` para cada elemento del array.
+* `setTimeout(func)` -- `func` es ejecutado por el planificador incorporado.
+* ...y muchas más.
 
 Está en el espíritu de JavaScript crear una función y pasarla a algún otro lugar.
 
-
 Y en tales funciones, por lo general, no queremos abandonar el contexto actual. Ahí es donde las funciones de flecha son útiles.
-
 
 ## Las funciones de flecha no tienen "this"
 
-Como recordamos del capítulo <info:object-methods>, las funciones de flecha no tienen `this`. Si se accede a `this`, se toma el contexto del exterior.
+Como recordamos del capítulo , las funciones de flecha no tienen `this`. Si se accede a `this`, se toma el contexto del exterior.
 
 Por ejemplo, podemos usarlo para iterar dentro de un método de objeto:
 
-```js run
-let group = {
-  title: "Our Group",
-  students: ["John", "Pete", "Alice"],
+\`\`\`js run let group = { title: "Our Group", students: \["John", "Pete", "Alice"\],
 
-  showList() {
-*!*
-    this.students.forEach(
-      student => alert(this.title + ': ' + student)
-    );
-*/!*
-  }
-};
+showList\(\) { _!_ this.students.forEach\( student =&gt; alert\(this.title + ': ' + student\) \); _/!_ } };
 
-group.showList();
-```
+group.showList\(\);
 
+```text
 Aquí en `forEach`, se utiliza la función de flecha, por lo que `this.title` es exactamente igual que en el método externo `showList`. Es decir: `group.title`.
 
 Si usáramos una función "regular", habría un error:
@@ -69,10 +55,9 @@ El error se produce porque `forEach` ejecuta funciones con `this = undefined` de
 
 Eso no afecta las funciones de flecha, porque simplemente no tienen `this`.
 
-```warn header="Las funciones de flecha no pueden ejecutarse con `new`"
-No tener `this` naturalmente significa otra limitación: las funciones de flecha no pueden usarse como constructores. No se pueden llamar con `new`.
-```
+`````warn header="Las funciones de flecha no pueden ejecutarse con```new`" No tener`this`naturalmente significa otra limitación: las funciones de flecha no pueden usarse como constructores. No se pueden llamar con`new\`.
 
+```text
 ```smart header="Funciones de flecha VS bind"
 Hay una sutil diferencia entre una función de flecha `=>` y una función regular llamada con `.bind(this)`:
 
@@ -88,21 +73,13 @@ Eso es genial para los decoradores, cuando necesitamos reenviar una llamada con 
 
 Por ejemplo, `defer (f, ms)` obtiene una función y devuelve un contenedor que retrasa la llamada en `ms` milisegundos:
 
-```js run
-function defer(f, ms) {
-  return function() {
-    setTimeout(() => f.apply(this, arguments), ms);
-  };
-}
+\`\`\`js run function defer\(f, ms\) { return function\(\) { setTimeout\(\(\) =&gt; f.apply\(this, arguments\), ms\); }; }
 
-function sayHi(who) {
-  alert('Hello, ' + who);
-}
+function sayHi\(who\) { alert\('Hello, ' + who\); }
 
-let sayHiDeferred = defer(sayHi, 2000);
-sayHiDeferred("John"); // Hello, John después de 2 segundos
-```
+let sayHiDeferred = defer\(sayHi, 2000\); sayHiDeferred\("John"\); // Hello, John después de 2 segundos
 
+```text
 Lo mismo sin una función de flecha se vería así:
 
 ```js
@@ -122,11 +99,10 @@ Aquí tuvimos que crear variables adicionales `args` y `ctx` para que la funció
 
 Funciones de flecha:
 
-
-- No tienen `this`
-- No tienen argumentos
-- No se pueden llamar con `new`
-- Tampoco tienen `super`, que aún no hemos estudiado. Lo veremos en el capítulo <info:class-inheritance>
+* No tienen `this`
+* No tienen argumentos
+* No se pueden llamar con `new`
+* Tampoco tienen `super`, que aún no hemos estudiado. Lo veremos en el capítulo 
 
 Esto se debe a que están diseñadas para piezas cortas de código que no tienen su propio "contexto", sino que funcionan en el actual. Y realmente brillan en ese caso de uso.
 

@@ -1,14 +1,12 @@
+# task
+
 importance: 5
 
----
+## Reemplaza "for" por "while"
 
-# Reemplaza "for" por "while"
+Reescribe el código cambiando el bucle `for` a `while` sin alterar su comportamiento \(la salida debería ser la misma\).
 
-Reescribe el código cambiando el bucle `for` a `while` sin alterar su comportamiento (la salida debería ser la misma).
+`````js run for (let i = 0; i < 3; i++) { alert(```número ${i}!\` \); }
 
-```js run
-for (let i = 0; i < 3; i++) {
-  alert( `número ${i}!` );
-}
-```
+\`\`\`
 

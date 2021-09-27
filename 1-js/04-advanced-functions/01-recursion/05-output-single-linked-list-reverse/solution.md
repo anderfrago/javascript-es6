@@ -2,35 +2,19 @@
 
 La lógica recursiva es un poco complicada aquí.
 
-Primero necesitamos generar el resto de la lista y *entonces* generar la lista actual:
+Primero necesitamos generar el resto de la lista y _entonces_ generar la lista actual:
 
-```js run
-let list = {
-  value: 1,
-  next: {
-    value: 2,
-    next: {
-      value: 3,
-      next: {
-        value: 4,
-        next: null
-      }
-    }
-  }
-};
+\`\`\`js run let list = { value: 1, next: { value: 2, next: { value: 3, next: { value: 4, next: null } } } };
 
-function printReverseList(list) {
+function printReverseList\(list\) {
 
-  if (list.next) {
-    printReverseList(list.next);
-  }
+if \(list.next\) { printReverseList\(list.next\); }
 
-  alert(list.value);
-}
+alert\(list.value\); }
 
-printReverseList(list);
-```
+printReverseList\(list\);
 
+```text
 # Usando un bucle
 
 La variante con bucle también es un poco más complicada que la salida directa.
@@ -71,4 +55,5 @@ function printReverseList(list) {
 printReverseList(list);
 ```
 
-Ten en cuenta que la solución recursiva en realidad hace exactamente lo mismo: recorre la lista, guarda los elementos en la cadena de llamadas anidadas (en la pila de contexto de ejecución), y luego los genera.
+Ten en cuenta que la solución recursiva en realidad hace exactamente lo mismo: recorre la lista, guarda los elementos en la cadena de llamadas anidadas \(en la pila de contexto de ejecución\), y luego los genera.
+

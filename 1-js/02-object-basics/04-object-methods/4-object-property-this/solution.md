@@ -1,19 +1,14 @@
+# solution
+
 **Respuesta: un error.**
 
-Pruébalo:
-```js run
-function makeUser() {
-  return {
-    name: "John",
-    ref: this
-  };
-}
+Pruébalo: \`\`\`js run function makeUser\(\) { return { name: "John", ref: this }; }
 
-let user = makeUser();
+let user = makeUser\(\);
 
-alert( user.ref.name ); // Error: No se puede leer la propiedad 'name' de undefined
-```
+alert\( user.ref.name \); // Error: No se puede leer la propiedad 'name' de undefined
 
+```text
 Esto es porque las reglas que establecen el `this` no buscan en la definición del objeto. Solamente importa el momento en que se llama.
 
 Aquí el valor de `this` dentro de `makeUser()` es `undefined`, porque es llamado como una función, no como un método con sintaxis de punto.
@@ -31,25 +26,18 @@ function makeUser(){
 
 alert( makeUser().name ); // Error: No se puede leer la propiedad 'name' de undefined
 ```
+
 Como puedes ver el resultado de `alert( makeUser().name )` es el mismo que el resultado de `alert( user.ref.name )` del ejemplo anterior.
 
 Aquí está el caso opuesto:
 
-```js run
-function makeUser() {
-  return {
-    name: "John",
-*!*
-    ref() {
-      return this;
-    }
-*/!*
-  };
-}
+\`\`\`js run function makeUser\(\) { return { name: "John", _!_ ref\(\) { return this; } _/!_ }; }
 
-let user = makeUser();
+let user = makeUser\(\);
 
-alert( user.ref().name ); // John
-```
+alert\( user.ref\(\).name \); // John
+
+\`\`\`
 
 Ahora funciona, porque `user.ref()` es un método. Y el valor de `this` es establecido al del objeto delante del punto `.`.
+

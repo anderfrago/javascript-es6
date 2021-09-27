@@ -1,12 +1,12 @@
+# task
+
 importance: 5
 
----
-
-# El resultado de OR AND OR
+## El resultado de OR AND OR
 
 ¿Cuál será el resultado?
 
-```js
+```javascript
 alert( null || 2 && 3 || 4 );
 ```
 

@@ -1,15 +1,14 @@
+# task
+
 importance: 5
 
----
-
-# Objeto contador
+## Objeto contador
 
 Aquí se crea un objeto contador con la ayuda de la función constructora.
 
 ¿Funcionará? ¿Qué mostrará?
 
-
-```js
+```javascript
 function Counter() {
   let count = 0;
 
@@ -27,3 +26,4 @@ alert( counter.up() ); // ?
 alert( counter.up() ); // ?
 alert( counter.down() ); // ?
 ```
+

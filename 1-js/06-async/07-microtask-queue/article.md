@@ -1,20 +1,18 @@
+# Microtareas \(Microtasks\)
 
-# Microtareas (Microtasks)
+Los manejadores o controladores \(en adelante controladores\) de promesas `.then`/`.catch`/`.finally` son siempre asincrónicos.
 
-Los manejadores o controladores (en adelante controladores) de promesas `.then`/`.catch`/`.finally` son siempre asincrónicos.
-
-Incluso cuando una promesa es inmediatamente resuelta, el código en las líneas *debajo de* `.then`/`.catch`/`.finally` se ejecutará antes que estos controladores.
+Incluso cuando una promesa es inmediatamente resuelta, el código en las líneas _debajo de_ `.then`/`.catch`/`.finally` se ejecutará antes que estos controladores.
 
 Veamos una demostración:
 
-```js run
-let promise = Promise.resolve();
+\`\`\`js run let promise = Promise.resolve\(\);
 
-promise.then(() => alert("¡Promesa realizada!"));
+promise.then\(\(\) =&gt; alert\("¡Promesa realizada!"\)\);
 
-alert("código finalizado"); // esta alerta se muestra primero
-```
+alert\("código finalizado"\); // esta alerta se muestra primero
 
+```text
 Si ejecutas esto, verás `código finalizado` primero, y después `¡promesa realizada!`.
 
 Es algo extraño, porque la promesa se realiza por completo desde el principio.
@@ -54,24 +52,19 @@ Ahora el orden es el previsto.
 
 ## Rechazo no controlado
 
-Recuerdas el evento `unhandledrejection` del artículo <info:promise-error-handling>?
+Recuerdas el evento `unhandledrejection` del artículo ?
 
-Ahora podemos ver exactamente cómo Javascript descubre que hubo un rechazo no controlado o *unhandled rejection*
+Ahora podemos ver exactamente cómo Javascript descubre que hubo un rechazo no controlado o _unhandled rejection_
 
 **Se produce un "rechazo no controlado" cuando no se maneja un error de promesa al final de la cola de microtareas.**
 
 Normalmente, si esperamos un error, agregamos `.catch` a la cadena de promesa para manejarlo:
 
-```js run
-let promise = Promise.reject(new Error("¡Promesa fallida!"));
-*!*
-promise.catch(err => alert('atrapado'));
-*/!*
+\`\`\`js run let promise = Promise.reject\(new Error\("¡Promesa fallida!"\)\); _!_ promise.catch\(err =&gt; alert\('atrapado'\)\); _/!_
 
-// no se ejecuta: error controlado
-window.addEventListener('unhandledrejection', event => alert(event.reason));
-```
+// no se ejecuta: error controlado window.addEventListener\('unhandledrejection', event =&gt; alert\(event.reason\)\);
 
+```text
 Pero si olvidas añadir el `.catch`, entonces, después de que la cola de microtareas esté vacía, el motor activa el evento:
 
 ```js run
@@ -83,15 +76,11 @@ window.addEventListener('unhandledrejection', event => alert(event.reason));
 
 ¿Qué pasa si controlamos el error más tarde? Como esto:
 
-```js run
-let promise = Promise.reject(new Error("¡Promesa fallida!"));
-*!*
-setTimeout(() => promise.catch(err => alert('atrapado')), 1000);
-*/!*
+\`\`\`js run let promise = Promise.reject\(new Error\("¡Promesa fallida!"\)\); _!_ setTimeout\(\(\) =&gt; promise.catch\(err =&gt; alert\('atrapado'\)\), 1000\); _/!_
 
-// Error: ¡Promesa fallida!
-window.addEventListener('unhandledrejection', event => alert(event.reason));
-```
+// Error: ¡Promesa fallida! window.addEventListener\('unhandledrejection', event =&gt; alert\(event.reason\)\);
+
+\`\`\`
 
 Ahora si lo ejecutamos, veremos `¡Promesa fallida!` primero y después `atrapado`.
 
@@ -103,10 +92,11 @@ En el ejemplo anterior, `.catch` agregado por `setTimeout` también se dispara. 
 
 ## Resumen
 
-El control de promesas siempre es asíncrono, ya que todas las acciones de promesa pasan por la cola interna de "PromiseJobs", también llamada "cola de microtareas" (término de V8).
+El control de promesas siempre es asíncrono, ya que todas las acciones de promesa pasan por la cola interna de "PromiseJobs", también llamada "cola de microtareas" \(término de V8\).
 
 Entonces, los controladores `.then/catch/finally` siempre se llaman después de que el código actual ha finalizado.
 
 Si necesitamos garantizar que un código se ejecute después de `.then/catch/finally`, podemos agregarlo a una llamada encadenada `.then`.
 
-En la mayoría de los motores de Javascript, incluidos los navegadores y Node.js, el concepto de microtareas está estrechamente relacionado con el "bucle de eventos" o "event loop" y "macrotareas" o "macrotasks". Como estos no tienen relación directa con las promesas, están cubiertos en otra parte del tutorial, en el artículo <info:event-loop>.
+En la mayoría de los motores de Javascript, incluidos los navegadores y Node.js, el concepto de microtareas está estrechamente relacionado con el "bucle de eventos" o "event loop" y "macrotareas" o "macrotasks". Como estos no tienen relación directa con las promesas, están cubiertos en otra parte del tutorial, en el artículo .
+

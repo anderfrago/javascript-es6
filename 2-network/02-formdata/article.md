@@ -1,4 +1,3 @@
-
 # FormData
 
 Este capítulo trata sobre el envío de formularios HTML: con o sin archivos, con campos adicionales y cosas similares.
@@ -6,7 +5,8 @@ Este capítulo trata sobre el envío de formularios HTML: con o sin archivos, co
 Los objetos [FormData](https://xhr.spec.whatwg.org/#interface-formdata) pueden ser de ayuda en esta tarea. Tal como habrás supuesto, éste es el objeto encargado de representar los datos de los formularios HTML.
 
 El constructor es:
-```js
+
+```javascript
 let formData = new FormData([form]);
 ```
 
@@ -22,31 +22,26 @@ Enviemos un formulario simple.
 
 Tal como se puede ver, es prácticamente una línea:
 
-```html run autorun
-<form id="formElem">
-  <input type="text" name="name" value="John">
-  <input type="text" name="surname" value="Smith">
-  <input type="submit">
-</form>
+\`\`\`html run autorun
 
-<script>
-  formElem.onsubmit = async (e) => {
-    e.preventDefault();
+ formElem.onsubmit = async \(e\) =&gt; { e.preventDefault\(\);
 
-    let response = await fetch('/article/formdata/post/user', {
-      method: 'POST',
-*!*
-      body: new FormData(formElem)
-*/!*
-    });
-
-    let result = await response.json();
-
-    alert(result.message);
-  };
-</script>
+```text
+let response = await fetch('/article/formdata/post/user', {
+  method: 'POST',
 ```
 
+_!_ body: new FormData\(formElem\) _/!_ }\);
+
+```text
+let result = await response.json();
+
+alert(result.message);
+```
+
+}; &lt;/script&gt;
+
+```text
 En este ejemplo, el código del servidor no es representado ya que está fuera de nuestro alcance. El servidor acepta la solicitud POST y responde "Usuario registrado".
 
 ## Métodos de FormData
@@ -85,31 +80,28 @@ El formulario siempre es enviado como `Content-Type: multipart/form-data`, esta 
 
 Aquí un ejemplo con un formulario de este tipo:
 
-```html run autorun
-<form id="formElem">
-  <input type="text" name="firstName" value="John">
-  Imagen: <input type="file" name="picture" accept="image/*">
-  <input type="submit">
-</form>
+\`\`\`html run autorun
 
-<script>
-  formElem.onsubmit = async (e) => {
-    e.preventDefault();
+  Imagen:  
 
-    let response = await fetch('/article/formdata/post/user-avatar', {
-      method: 'POST',
-*!*
-      body: new FormData(formElem)
-*/!*
-    });
+ formElem.onsubmit = async \(e\) =&gt; { e.preventDefault\(\);
 
-    let result = await response.json();
-
-    alert(result.message);
-  };
-</script>
+```text
+let response = await fetch('/article/formdata/post/user-avatar', {
+  method: 'POST',
 ```
 
+_!_ body: new FormData\(formElem\) _/!_ }\);
+
+```text
+let result = await response.json();
+
+alert(result.message);
+```
+
+}; &lt;/script&gt;
+
+```text
 ## Enviando un formulario con datos Blob
 
 Tal como pudimos ver en el capítulo <info:fetch>, es fácil enviar datos binarios generados dinámicamente (por ejemplo una imagen) como `Blob`. Podemos proporcionarlos directamente en un `fetch` con el parámetro `body`.
@@ -156,11 +148,11 @@ Este ejemplo envía una imagen desde un `<canvas>` junto con algunos campos más
 
 Nota como la imagen `Blob` es agregada:
 
-```js
+```javascript
 formData.append("image", imageBlob, "image.png");
 ```
 
-Es lo mismo que si hubiera un campo `<input type="file" name="image">` en el formulario, y el usuario enviara un archivo con nombre `"image.png"` (3er argumento) con los datos `imageBlob` (2do argumento) desde su sistema de archivos.
+Es lo mismo que si hubiera un campo `<input type="file" name="image">` en el formulario, y el usuario enviara un archivo con nombre `"image.png"` \(3er argumento\) con los datos `imageBlob` \(2do argumento\) desde su sistema de archivos.
 
 El servidor lee el formulario `form-data` y el archivo tal como si de un formulario regular se tratara.
 
@@ -170,10 +162,10 @@ Los objetos [FormData](https://xhr.spec.whatwg.org/#interface-formdata) son util
 
 Podemos crear el objeto con `new FormData(form)` desde un formulario HTML, o crear un objeto sin un formulario en absoluto y agregar los campos con los siguientes métodos:
 
-- `formData.append(nombre, valor)`
-- `formData.append(nombre, blob, nombreDeArchivo)`
-- `formData.set(nombre, valor)`
-- `formData.set(nombre, blob, nombreDeArchivo)`
+* `formData.append(nombre, valor)`
+* `formData.append(nombre, blob, nombreDeArchivo)`
+* `formData.set(nombre, valor)`
+* `formData.set(nombre, blob, nombreDeArchivo)`
 
 Nótese aquí dos particularidades:
 
@@ -182,8 +174,9 @@ Nótese aquí dos particularidades:
 
 Otros métodos son:
 
-- `formData.delete(nombre)`
-- `formData.get(nombre)`
-- `formData.has(nombre)`
+* `formData.delete(nombre)`
+* `formData.get(nombre)`
+* `formData.has(nombre)`
 
 ¡Esto es todo!
+

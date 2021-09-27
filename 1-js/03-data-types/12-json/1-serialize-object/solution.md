@@ -1,6 +1,6 @@
+# solution
 
-
-```js
+```javascript
 let user = {
   name: "John Smith",
   age: 35

@@ -2,10 +2,11 @@
 
 ¿Qué crees que pasará? ¿Se disparará el `.catch`? Explica tu respuesta.
 
-```js
+```javascript
 new Promise(function(resolve, reject) {
   setTimeout(() => {
     throw new Error("Whoops!");
   }, 1000);
 }).catch(alert);
 ```
+

@@ -1,8 +1,8 @@
+# task
+
 importance: 4
 
----
-
-# Extraer el dinero
+## Extraer el dinero
 
 Tenemos un costo en forma de "$120". Es decir: el signo de dólar va primero y luego el número.
 
@@ -10,7 +10,7 @@ Crea una función `extractCurrencyValue(str)` que extraiga el valor numérico de
 
 Por ejemplo:
 
-```js
+```javascript
 alert( extractCurrencyValue('$120') === 120 ); // true
 ```
 

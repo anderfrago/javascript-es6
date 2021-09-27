@@ -4,7 +4,7 @@ Hay otra sintaxis muy simple y concisa para crear funciones, que a menudo es mej
 
 Se llama "funciones de flecha", porque se ve así:
 
-```js
+```javascript
 let func = (arg1, arg2, ..., argN) => expression
 ```
 
@@ -12,7 +12,7 @@ let func = (arg1, arg2, ..., argN) => expression
 
 En otras palabras, es la versión más corta de:
 
-```js
+```javascript
 let func = function(arg1, arg2, ..., argN) {
   return expression;
 };
@@ -20,19 +20,15 @@ let func = function(arg1, arg2, ..., argN) {
 
 Veamos un ejemplo concreto:
 
-```js run
-let sum = (a, b) => a + b;
+\`\`\`js let sum = \(a, b\) =&gt; a + b;
 
-/* Esta función de flecha es una forma más corta de:
+/\* Esta función de flecha es una forma más corta de:
 
-let sum = function(a, b) {
-  return a + b;
-};
-*/
+let sum = function\(a, b\) { return a + b; }; \*/
 
-alert( sum(1, 2) ); // 3
-```
+alert\( sum\(1, 2\) \); // 3
 
+```text
 Como puedes ver `(a, b) => a + b` significa una función que acepta dos parámetros llamados `a` y `b`. Tras la ejecución, evalúa la expresión `a + b` y devuelve el resultado.
 
 - Si solo tenemos un argumento, se pueden omitir paréntesis alrededor de los parámetros, lo que lo hace aún más corto.
@@ -46,30 +42,27 @@ Como puedes ver `(a, b) => a + b` significa una función que acepta dos parámet
     */!*
 
     alert( double(3) ); // 6
-    ```
+```
 
-- Si no hay parámetros, los paréntesis estarán vacíos (pero deben estar presentes):
+* Si no hay parámetros, los paréntesis estarán vacíos \(pero deben estar presentes\):
 
-    ```js run
-    let sayHi = () => alert("Hello!");
+  \`\`\`js run let sayHi = \(\) =&gt; alert\("Hello!"\);
 
-    sayHi();
-    ```
+  sayHi\(\);
+
+  \`\`\`
 
 Las funciones de flecha se pueden usar de la misma manera que las expresiones de función.
 
 Por ejemplo, para crear dinámicamente una función:
 
-```js run
-let age = prompt("What is your age?", 18);
+\`\`\`js run let age = prompt\("What is your age?", 18\);
 
-let welcome = (age < 18) ?
-  () => alert('Hello') :
-  () => alert("Greetings!");
+let welcome = \(age &lt; 18\) ? \(\) =&gt; alert\('Hello'\) : \(\) =&gt; alert\("Greetings!"\);
 
-welcome();
-```
+welcome\(\);
 
+```text
 Las funciones de flecha pueden parecer desconocidas y poco legibles al principio, pero eso cambia rápidamente a medida que los ojos se acostumbran a la estructura.
 
 Son muy convenientes para acciones simples de una línea, cuando somos demasiado flojos para escribir muchas palabras.
@@ -93,15 +86,15 @@ let sum = (a, b) => {  // la llave abre una función multilínea
 alert( sum(1, 2) ); // 3
 ```
 
-```smart header="Más por venir"
-Aquí elogiamos las funciones de flecha por su brevedad. ¡Pero eso no es todo!
+\`\`\`smart header="Más por venir" Aquí elogiamos las funciones de flecha por su brevedad. ¡Pero eso no es todo!
 
 Las funciones de flecha tienen otras características interesantes.
 
-Para estudiarlas en profundidad, primero debemos conocer algunos otros aspectos de JavaScript, por lo que volveremos a las funciones de flecha más adelante en el capítulo <info:arrow-functions>.
+Para estudiarlas en profundidad, primero debemos conocer algunos otros aspectos de JavaScript, por lo que volveremos a las funciones de flecha más adelante en el capítulo .
 
 Por ahora, ya podemos usar las funciones de flecha para acciones de una línea y devoluciones de llamada.
-```
+
+\`\`\`
 
 ## Resumen
 
@@ -109,3 +102,4 @@ Las funciones de flecha son útiles para líneas simples. Vienen en dos variante
 
 1. Sin llaves: `(...args) => expression` -- el lado derecho es una expresión: la función lo evalúa y devuelve el resultado.
 2. Con llaves: `(...args) => { body }` -- los paréntesis nos permiten escribir varias declaraciones dentro de la función, pero necesitamos un `return` explícito para devolver algo.
+

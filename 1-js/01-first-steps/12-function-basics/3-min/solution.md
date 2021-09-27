@@ -1,6 +1,8 @@
+# solution
+
 Una solución usando `if`:
 
-```js
+```javascript
 function min(a, b) {
   if (a < b) {
     return a;
@@ -12,10 +14,11 @@ function min(a, b) {
 
 Una solución con un operador de signo de interrogación `'?'`:
 
-```js
+```javascript
 function min(a, b) {
   return a < b ? a : b;
 }
 ```
 
 P.D: En el caso de una igualdad `a == b` No importa qué devuelva.
+

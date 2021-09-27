@@ -1,12 +1,12 @@
+# task
+
 importance: 4
 
----
-
-# ¿Es visible la variable?
+## ¿Es visible la variable?
 
 ¿Cuál será el resultado de este código?
 
-```js
+```javascript
 let x = 1;
 
 function func() {

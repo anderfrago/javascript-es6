@@ -1,20 +1,18 @@
+# task
+
 importance: 5
 
----
-
-# Extraño instanceof
+## Extraño instanceof
 
 En el siguiente código, ¿por qué `instanceof` devuelve `true`? Podemos ver fácilmente que `a` no es creado por `B()`.
 
-```js run
-function A() {}
-function B() {}
+\`\`\`js run function A\(\) {} function B\(\) {}
 
 A.prototype = B.prototype = {};
 
-let a = new A();
+let a = new A\(\);
 
-*!*
-alert( a instanceof B ); // verdadero
-*/!*
-```
+_!_ alert\( a instanceof B \); // verdadero _/!_
+
+\`\`\`
+

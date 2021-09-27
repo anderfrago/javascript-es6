@@ -1,14 +1,15 @@
 # Operador Nullish Coalescing '??'
 
-[recent browser="new"]
+\[recent browser="new"\]
 
-El operador "nullish coalescing" (fusión de null) se escribe con un doble signo de cierre de interrogación `??`.
+El operador "nullish coalescing" \(fusión de null\) se escribe con un doble signo de cierre de interrogación `??`.
 
 Como este trata a `null` y a `undefined` de forma similar, usaremos un término particular para ello en este artículo. Diremos que una expresión es `definida` cuando no es `null` ni `undefined`.
 
 El resultado de `a ?? b`:
-- si `a` está "definida", será `a`, 
-- si `a` no está "definida", será `b`.
+
+* si `a` está "definida", será `a`, 
+* si `a` no está "definida", será `b`.
 
 Es decir, `??` devuelve el primer argumento cuando este no es `null` ni `undefined`. En caso contrario, devuelve el segundo.
 
@@ -16,7 +17,7 @@ El operador "nullish coalescing" no es algo completamente nuevo. Es solamente un
 
 Podemos reescribir `result = a ?? b` usando los operadores que ya conocemos:
 
-```js
+```javascript
 result = (a !== null && a !== undefined) ? a : b;
 ```
 
@@ -26,12 +27,11 @@ Un uso típico de `??` es brindar un valor predeterminado a una variable potenci
 
 Por ejemplo, aquí mostramos `user` si está definido. Si no, `Anonymous`:
 
-```js run
-let user;
+\`\`\`js run let user;
 
-alert(user ?? "Anonymous"); // Anonymous (user no definido)
-```
+alert\(user ?? "Anonymous"\); // Anonymous \(user no definido\)
 
+```text
 Aquí el ejemplo de `user` con un nombre asignado:
 
 ```js run
@@ -48,17 +48,11 @@ Queremos mostrar un nombre usando una de las tres variables, o mostrar "anónimo
 
 Usemos el operador `??` para ello:
 
-```js run
-let firstName = null;
-let lastName = null;
-let nickName = "Supercoder";
+\`\`\`js run let firstName = null; let lastName = null; let nickName = "Supercoder";
 
-// Muestra el primer valor definido:
-*!*
-alert(firstName ?? lastName ?? nickName ?? "Anonymous"); // Supercoder
-*/!*
-```
+// Muestra el primer valor definido: _!_ alert\(firstName ?? lastName ?? nickName ?? "Anonymous"\); // Supercoder _/!_
 
+```text
 ## Comparación con ||
 
 El operador OR `||` puede ser usado de la misma manera que `??`, tal como está explicado en el [capítulo previo](info:logical-operators#or-finds-the-first-truthy-value)
@@ -81,22 +75,21 @@ Históricamente, el operador OR `||` estuvo primero. Existe desde el origen de J
 Por otro lado, el operador "nullish coalescing" `??` fue una adición reciente, y la razón es que la gente no estaba del todo satisfecha con `||`.
 
 La gran diferencia es que:
-- `||` devuelve el primer valor *verdadero*.
-- `??` devuelve el primer valor *definido*.
 
-El `||` no distingue entre `false`, `0`, un string vacío `""`, y `null/undefined`.  Todos son lo mismo: valores "falsos". Si cualquiera de ellos es el primer argumento de `||`, obtendremos el segundo argumento como resultado. 
+* `||` devuelve el primer valor _verdadero_.
+* `??` devuelve el primer valor _definido_.
+
+El `||` no distingue entre `false`, `0`, un string vacío `""`, y `null/undefined`. Todos son lo mismo: valores "falsos". Si cualquiera de ellos es el primer argumento de `||`, obtendremos el segundo argumento como resultado.
 
 Pero en la práctica podemos querer usar el valor predeterminado solamente cuando la variable es `null/undefined`, es decir cuando el valor realmente es desconocido o no fue establecido.
 
 Por ejemplo considera esto:
 
-```js run
-let height = 0; // altura cero
+\`\`\`js run let height = 0; // altura cero
 
-alert(height || 100); // 100
-alert(height ?? 100); // 0
-```
+alert\(height \|\| 100\); // 100 alert\(height ?? 100\); // 0
 
+```text
 `height || 100` verifica si `height` es "falso", y `0` lo es. 
     - así el resultado de `||` es el segundo argumento, `100`.
 `height ?? 100` verifica si `height` es `null/undefined`, y no lo es.
@@ -124,7 +117,7 @@ alert(area); // 5000
 
 Caso contrario, si omitimos los paréntesis, entonces `*` tiene una mayor precedencia y se ejecutará primero. Eso sería lo mismo que:
 
-```js
+```javascript
 // sin paréntesis
 let area = height ?? 100 * width ?? 50;
 
@@ -132,16 +125,15 @@ let area = height ?? 100 * width ?? 50;
 let area = height ?? (100 * width) ?? 50;
 ```
 
-### Uso de ?? con && y ||
+### Uso de ?? con && y \|\|
 
 Por motivos de seguridad, JavaScript prohíbe el uso de `??` junto con los operadores `&&` y `||`, salvo que la precedencia sea explícitamente especificada con paréntesis.
 
 El siguiente código desencadena un error de sintaxis:
 
-```js run
-let x = 1 && 2 ?? 3; // Syntax error
-```
+\`\`\`js run let x = 1 && 2 ?? 3; // Syntax error
 
+```text
 La limitación es debatible. Fue agregada a la especificación del lenguaje con propósito de evitar equivocaciones cuando la gente comenzara a reemplazar `||` por `??`.
 
 Usa paréntesis explícitos para solucionarlo:
@@ -156,14 +148,15 @@ alert(x); // 2
 
 ## Resumen
 
-- El operador "nullish coalescing" `??` brinda una manera concisa de seleccionar un valor "definido" de una lista.
+* El operador "nullish coalescing" `??` brinda una manera concisa de seleccionar un valor "definido" de una lista.
 
-    Es usado para asignar valores por defecto a las variables:
+  Es usado para asignar valores por defecto a las variables:
 
-    ```js
+  ```javascript
     // Asignar height=100, si height es null o undefined
     height = height ?? 100;
-    ```
+  ```
 
-- El operador `??` tiene una precedencia muy baja, un poco más alta que `?` y `=`.
-- Está prohibido su uso con `||` y `&&` sin paréntesis explícitos.
+* El operador `??` tiene una precedencia muy baja, un poco más alta que `?` y `=`.
+* Está prohibido su uso con `||` y `&&` sin paréntesis explícitos.
+

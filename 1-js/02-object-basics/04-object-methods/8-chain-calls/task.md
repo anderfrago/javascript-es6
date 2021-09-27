@@ -1,12 +1,12 @@
+# task
+
 importance: 2
 
----
-
-# Encadenamiento
+## Encadenamiento
 
 Hay un objeto `ladder` que permite subir y bajar:
 
-```js
+```javascript
 let ladder = {
   step: 0,
   up() { 
@@ -23,7 +23,7 @@ let ladder = {
 
 Ahora, si necesitamos hacer varios llamados en secuencia podemos hacer algo como esto:
 
-```js
+```javascript
 ladder.up();
 ladder.up();
 ladder.down();
@@ -32,8 +32,9 @@ ladder.showStep(); // 1
 
 Modifica el código de "arriba" `up`, "abajo" `down` y "mostrar peldaño" `showStep` para hacer los llamados encadenables como esto:
 
-```js
+```javascript
 ladder.up().up().down().showStep(); // 1
 ```
 
 Tal enfoque es ampliamente usado entre las librerías JavaScript.
+

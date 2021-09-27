@@ -1,12 +1,12 @@
+# task
+
 importance: 5
 
----
-
-# LLamados en un contexto de array
+## LLamados en un contexto de array
 
 ¿Cuál es el resultado y por qué?
 
-```js
+```javascript
 let arr = ["a", "b"];
 
 arr.push(function() {
@@ -15,3 +15,4 @@ arr.push(function() {
 
 arr[2](); // ?
 ```
+

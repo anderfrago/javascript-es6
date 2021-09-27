@@ -1,0 +1,2 @@
+# 01-strict-mode
+

@@ -1,8 +1,8 @@
+# task
+
 importance: 5
 
----
-
-# Decorador espía
+## Decorador espía
 
 Cree un decorador `spy(func)` que debería devolver un contenedor que guarde todas las llamadas para que funcionen en su propiedad `calls`
 
@@ -10,7 +10,7 @@ Cada llamada se guarda como un array de argumentos.
 
 Por ejemplo
 
-```js
+```javascript
 function work(a, b) {
   alert( a + b ); // work es una función o método arbitrario
 }
@@ -28,3 +28,4 @@ for (let args of work.calls) {
 ```
 
 P.D Ese decorador a veces es útil para pruebas unitarias. Su forma avanzada es `sinon.spy` en la librería [Sinon.JS](http://sinonjs.org/).
+

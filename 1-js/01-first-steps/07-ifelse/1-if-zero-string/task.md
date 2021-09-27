@@ -1,13 +1,14 @@
+# task
+
 importance: 5
 
----
-
-# if (un string con cero)
+## if \(un string con cero\)
 
 Se mostrará el `alert`?
 
-```js
+```javascript
 if ("0") {
   alert( 'Hello' );
 }
 ```
+

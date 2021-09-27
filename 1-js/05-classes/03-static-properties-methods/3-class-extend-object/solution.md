@@ -1,24 +1,18 @@
+# solution
+
 Primero, veamos por qué el código anterior no funciona.
 
 La razón se vuelve evidente si intentamos ejecutarlo. Un constructor de clase heredado tiene que llamar a `super()`. De lo contrario `"this"` no será "definido".
 
 Así que aquí está la solución:
 
-```js run
-class Rabbit extends Object {
-  constructor(name) {
-*!*
-    super(); // necesita llamar al constructor padre cuando se hereda
-*/!*
-    this.name = name;
-  }
-}
+\`\`\`js run class Rabbit extends Object { constructor\(name\) { _!_ super\(\); // necesita llamar al constructor padre cuando se hereda _/!_ this.name = name; } }
 
-let rabbit = new Rabbit("Rab");
+let rabbit = new Rabbit\("Rab"\);
 
-alert( rabbit.hasOwnProperty('name') ); // verdadero
-```
+alert\( rabbit.hasOwnProperty\('name'\) \); // verdadero
 
+```text
 Pero eso no es todo.
 
 Incluso después de arreglarlo, aún existe una diferencia importante en `"class Rabbit extends Object"` versus `class Rabbit`.
@@ -39,15 +33,11 @@ alert( Rabbit.__proto__ === Object ); // (2) verdadero
 
 Entonces `Rabbit` ahora proporciona acceso a los métodos estáticos de `Object` a través de `Rabbit`, así:
 
-```js run
-class Rabbit extends Object {}
+\`\`\`js run class Rabbit extends Object {}
 
-*!*
-// normalmente llamamos a Object.getOwnPropertyNames
-alert ( Rabbit.getOwnPropertyNames({a: 1, b: 2})); // a,b
-*/!*
-```
+_!_ // normalmente llamamos a Object.getOwnPropertyNames alert \( Rabbit.getOwnPropertyNames\({a: 1, b: 2}\)\); // a,b _/!_
 
+```text
 Pero si no tenemos `extends Object`, entonces `Rabbit.__proto__` no está definido como `Object`.
 
 Aquí está la demostración:
@@ -71,11 +61,12 @@ Por cierto, `Function.prototype` tiene métodos de función "genéricos", como `
 
 Aquí está la imagen:
 
-![](rabbit-extends-object.svg)
+![](../../../../.gitbook/assets/rabbit-extends-object.svg)
 
 Por lo tanto, en pocas palabras, existen dos diferencias:
 
-| class Rabbit | class Rabbit extends Object  |
-|--------------|------------------------------|
-| --             | necesita llamar a `super()` en el constructor |
+| class Rabbit | class Rabbit extends Object |
+| :--- | :--- |
+| -- | necesita llamar a `super()` en el constructor |
 | `Rabbit.__proto__ === Function.prototype` | `Rabbit.__proto__ === Object` |
+

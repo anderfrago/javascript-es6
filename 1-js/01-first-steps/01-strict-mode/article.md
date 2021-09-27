@@ -4,7 +4,7 @@ Durante mucho tiempo, JavaScript evolucionó sin problemas de compatibilidad. Se
 
 Esto tenía el beneficio de nunca romper código existente, pero lo malo era que cualquier error o decisión incorrecta tomada por los creadores de JavaScript se quedaba para siempre en el lenguaje.
 
-Esto fue así hasta 2009, cuando ECMAScript 5 (ES5) apareció. Esta versión añadió nuevas características al lenguaje y modificó algunas de las ya existentes. Para mantener el código antiguo funcionando, la mayor parte de las modificaciones están desactivadas por defecto. Tienes que activarlas explícitamente usando una directiva especial: `"use strict"`.
+Esto fue así hasta 2009, cuando ECMAScript 5 \(ES5\) apareció. Esta versión añadió nuevas características al lenguaje y modificó algunas de las ya existentes. Para mantener el código antiguo funcionando, la mayor parte de las modificaciones están desactivadas por defecto. Tienes que activarlas explícitamente usando una directiva especial: `"use strict"`.
 
 ## "use strict"
 
@@ -12,38 +12,35 @@ La directiva se asemeja a un string: `"use strict"`. Cuando se sitúa al princip
 
 Por ejemplo:
 
-```js
+```javascript
 "use strict";
 
 // este código funciona de la manera moderna
 ...
 ```
 
-Aprenderemos funciones (una manera de agrupar comandos) en breve, pero adelantemos que `"use strict"` se puede poner al inicio de una función. De esta manera, se activa el modo estricto únicamente en esa función. Pero normalmente se utiliza para el script entero.
+Aprenderemos funciones \(una manera de agrupar comandos\) en breve, pero adelantemos que `"use strict"` se puede poner al inicio de una función. De esta manera, se activa el modo estricto únicamente en esa función. Pero normalmente se utiliza para el script entero.
 
-````warn header="Asegúrate de que \"use strict\" está al inicio"
-Por favor, asegúrate de que `"use strict"` está al principio de tus scripts. Si no, el modo estricto podría no estar activado.
+```````warn header="Asegúrate de que \"use strict\" está al inicio" Por favor, asegúrate de que````"use strict"\` está al principio de tus scripts. Si no, el modo estricto podría no estar activado.
 
 El modo estricto no está activado aquí:
 
-```js no-strict
-alert("algo de código");
-// la directiva "use strict" de abajo es ignorada, tiene que estar al principio
+\`\`\`js no-strict alert\("algo de código"\); // la directiva "use strict" de abajo es ignorada, tiene que estar al principio
 
 "use strict";
 
 // el modo estricto no está activado
+
+```text
+Únicamente pueden aparecer comentarios por encima de `"use strict"`.
+`
 ```
 
-Únicamente pueden aparecer comentarios por encima de `"use strict"`.
-````
-
-```warn header="No hay manera de cancelar `use strict`"
-No hay ninguna directiva del tipo `"no use strict"` que haga al motor volver al comportamiento anterior.
+`````warn header="No hay manera de cancelar```use strict`" No hay ninguna directiva del tipo`"no use strict"\` que haga al motor volver al comportamiento anterior.
 
 Una vez entramos en modo estricto, no hay vuelta atrás.
-```
 
+```text
 ## Consola del navegador
 
 Cuando utilices la [consola del navegador](info:devtools) para ejecutar código, ten en cuenta que no utiliza `use strict` por defecto.
@@ -64,7 +61,7 @@ Esto funciona para la mayoría de los navegadores, específicamente Firefox y Ch
 
 Si esto no funciona, como en los viejos navegadores, hay una fea pero confiable manera de asegurar `use strict`. Ponlo dentro de esta especie de envoltura:
 
-```js
+```javascript
 (function() {
   'use strict';
 
@@ -78,7 +75,7 @@ La pregunta podría parecer obvia, pero no lo es.
 
 Uno podría recomendar que se comiencen los script con `"use strict"`... ¿Pero sabes lo que es interesante?
 
-El JavaScript moderno admite "clases" y "módulos", estructuras de lenguaje avanzadas (que seguramente llegaremos a ver), que automáticamente habilitan `use strict`. Entonces no necesitamos agregar la directiva `"use strict"` si las usamos.
+El JavaScript moderno admite "clases" y "módulos", estructuras de lenguaje avanzadas \(que seguramente llegaremos a ver\), que automáticamente habilitan `use strict`. Entonces no necesitamos agregar la directiva `"use strict"` si las usamos.
 
 **Entonces, por ahora `"use strict";` es un invitado bienvenido al tope de tus scripts. Luego, cuando tu código sea todo clases y módulos, puedes omitirlo.**
 
@@ -86,4 +83,5 @@ A partir de ahora tenemos que saber acerca de `use strict` en general.
 
 En los siguientes capítulos, a medida que aprendamos características del lenguaje, veremos las diferencias entre el modo estricto y el antiguo. Afortunadamente no hay muchas y realmente hacen nuestra vida mejor.
 
-Todos los ejemplos en este tutorial asumen modo estricto salvo que (muy raramente) se especifique lo contrario.
+Todos los ejemplos en este tutorial asumen modo estricto salvo que \(muy raramente\) se especifique lo contrario.
+

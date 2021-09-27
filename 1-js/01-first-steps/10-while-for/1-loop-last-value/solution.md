@@ -1,13 +1,12 @@
+# solution
+
 La respuesta: `1`.
 
-```js run
-let i = 3;
+\`\`\`js run let i = 3;
 
-while (i) {
-  alert( i-- );
-}
-```
+while \(i\) { alert\( i-- \); }
 
+```text
 Cada iteración del bucle disminuye `i` en `1`. La comprobación `while(i)` detiene el bucle cuando `i = 0`.
 
 Por consiguiente, los pasos del bucle forman la siguiente secuencia ("bucle desenrollado").
@@ -23,3 +22,4 @@ alert(i--) // muestra 1, disminuye i a 0
 
 // listo, while(i) comprueba y detiene el bucle
 ```
+

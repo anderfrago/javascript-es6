@@ -1,22 +1,14 @@
-
 # Propiedades y métodos estáticos.
 
-También podemos asignar métodos a la funcionalidad de una clase en sí, no a su `"prototype"`. Dichos métodos se llaman *static*.
+También podemos asignar métodos a la funcionalidad de una clase en sí, no a su `"prototype"`. Dichos métodos se llaman _static_.
 
 En una clase, están precedidos por la palabra clave `static`, como esta:
 
-```js run
-class User {
-*!*
-  static staticMethod() {
-*/!*
-    alert(this === User);
-  }
-}
+\`\`\`js run class User { _!_ static staticMethod\(\) { _/!_ alert\(this === User\); } }
 
-User.staticMethod(); // verdadero
-```
+User.staticMethod\(\); // verdadero
 
+```text
 Eso realmente hace lo mismo que asignarlo como una propiedad directamente:
 
 ```js run
@@ -29,40 +21,23 @@ User.staticMethod = function() {
 User.staticMethod(); // verdadero
 ```
 
-El valor de `this` en la llamada `User.staticMethod()` es el mismo constructor de clase `User` (la regla "objeto antes de punto").
+El valor de `this` en la llamada `User.staticMethod()` es el mismo constructor de clase `User` \(la regla "objeto antes de punto"\).
 
 Por lo general, los métodos estáticos se utilizan para implementar funciones que pertenecen a la clase, pero no a ningún objeto particular de la misma.
 
 Por ejemplo, tenemos objetos `Article` y necesitamos una función para compararlos. Una solución natural sería agregar el método `Article.compare`, como este:
 
-```js run
-class Article {
-  constructor(title, date) {
-    this.title = title;
-    this.date = date;
-  }
+\`\`\`js run class Article { constructor\(title, date\) { this.title = title; this.date = date; }
 
-*!*
-  static compare(articleA, articleB) {
-    return articleA.date - articleB.date;
-  }
-*/!*
-}
+_!_ static compare\(articleA, articleB\) { return articleA.date - articleB.date; } _/!_ }
 
-// uso
-let articles = [
-  new Article("HTML", new Date(2019, 1, 1)),
-  new Article("CSS", new Date(2019, 0, 1)),
-  new Article("JavaScript", new Date(2019, 11, 1))
-];
+// uso let articles = \[ new Article\("HTML", new Date\(2019, 1, 1\)\), new Article\("CSS", new Date\(2019, 0, 1\)\), new Article\("JavaScript", new Date\(2019, 11, 1\)\) \];
 
-*!*
-articles.sort(Article.compare);
-*/!*
+_!_ articles.sort\(Article.compare\); _/!_
 
-alert( articles[0].title ); // CSS
-```
+alert\( articles\[0\].title \); // CSS
 
+```text
 Aquí `Article.compare` se encuentra "encima" de los artículos, como un medio para compararlos. No es el método de un artículo, sino de toda la clase.
 
 Otro ejemplo sería un método llamado "factory". Imagina, necesitamos pocas formas para crear un artículo:
@@ -94,11 +69,12 @@ let article = Article.createTodays();
 
 alert( article.title ); // Resumen de hoy
 ```
+
 Ahora, cada vez que necesitamos crear un resumen de hoy, podemos llamar a `Article.createTodays()`. Una vez más, ese no es el método de un objeto artículo, sino el método de toda la clase.
 
 Los métodos estáticos también se utilizan en clases relacionadas con base de datos para buscar/guardar/eliminar entradas de la misma, como esta:
 
-```js
+```javascript
 // suponiendo que el artículo es una clase especial para gestionar artículos
 // método estático para eliminar el artículo:
 Article.remove({id: 12345});
@@ -106,72 +82,46 @@ Article.remove({id: 12345});
 
 ## Propiedades estáticas
 
-[recent browser=Chrome]
+\[recent browser=Chrome\]
 
 Las propiedades estáticas también son posibles, se ven como propiedades de clase regular, pero precedidas por `static`:
 
-```js run
-class Article {
-  static publisher = "Ilya Kantor";
-}
+\`\`\`js run class Article { static publisher = "Ilya Kantor"; }
 
-alert( Article.publisher ); // Ilya Kantor
-```
+alert\( Article.publisher \); // Ilya Kantor
 
+```text
 Eso es lo mismo que una asignación directa a `Article`:
 
 ```js
 Article.publisher = "Ilya Kantor";
 ```
 
-## Herencia de propiedades y métodos estáticos [#statics-and-inheritance] 
+## Herencia de propiedades y métodos estáticos \[\#statics-and-inheritance\]
 
 Las propiedades y métodos estáticos son heredados.
 
 Por ejemplo, `Animal.compare` y `Animal.planet` en el siguiente código son heredados y accesibles como `Rabbit.compare` y `Rabbit.planet`:
 
-```js run
-class Animal {
-  static planet = "Tierra";
-  constructor(name, speed) {
-    this.speed = speed;
-    this.name = name;
-  }
+\`\`\`js run class Animal { static planet = "Tierra"; constructor\(name, speed\) { this.speed = speed; this.name = name; }
 
-  run(speed = 0) {
-    this.speed += speed;
-    alert(`${this.name} corre a una velocidad de ${this.speed}.`);
-  }
+run\(speed = 0\) { this.speed += speed; alert\(`${this.name} corre a una velocidad de ${this.speed}.`\); }
 
-*!*
-  static compare(animalA, animalB) {
-    return animalA.speed - animalB.speed;
-  }
-*/!*
+_!_ static compare\(animalA, animalB\) { return animalA.speed - animalB.speed; } _/!_
 
 }
 
-// Hereda de Animal
-class Rabbit extends Animal {
-  hide() {
-    alert(`${this.name} se esconde!`);
-  }
-}
+// Hereda de Animal class Rabbit extends Animal { hide\(\) { alert\(`${this.name} se esconde!`\); } }
 
-let rabbits = [
-  new Rabbit("Conejo Blanco", 10),
-  new Rabbit("Conejo Negro", 5)
-];
+let rabbits = \[ new Rabbit\("Conejo Blanco", 10\), new Rabbit\("Conejo Negro", 5\) \];
 
-*!*
-rabbits.sort(Rabbit.compare);
-*/!*
+_!_ rabbits.sort\(Rabbit.compare\); _/!_
 
-rabbits[0].run(); // Conejo Negro corre a una velocidad de 5.
+rabbits\[0\].run\(\); // Conejo Negro corre a una velocidad de 5.
 
-alert(Rabbit.planet); // Tierra
-```
+alert\(Rabbit.planet\); // Tierra
 
+```text
 Ahora, cuando llamemos a `Rabbit.compare`, se llamará a `Animal.compare` heredado.
 
 ¿Como funciona? Nuevamente, usando prototipos. Como ya habrás adivinado, `extends` da a `Rabbit` el `[[Prototype]]` referente a `Animal`.
@@ -210,7 +160,7 @@ Las propiedades estáticas se utilizan cuando queremos almacenar datos a nivel d
 
 La sintaxis es:
 
-```js
+```javascript
 class MyClass {
   static property = ...;
 
@@ -222,7 +172,7 @@ class MyClass {
 
 Técnicamente, la declaración estática es lo mismo que asignar a la clase misma:
 
-```js
+```javascript
 MyClass.property = ...
 MyClass.method = ...
 ```
@@ -230,3 +180,4 @@ MyClass.method = ...
 Las propiedades y métodos estáticos se heredan.
 
 Para `class B extends A` el prototipo de la clase `B` en sí mismo apunta a `A`: `B.[[Prototipo]] = A`. Entonces, si no se encuentra un campo en `B`, la búsqueda continúa en `A`.
+

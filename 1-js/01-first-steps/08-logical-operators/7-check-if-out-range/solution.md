@@ -1,12 +1,14 @@
+# solution
+
 La primer variante:
 
-```js
+```javascript
 if (!(age >= 14 && age <= 90))
 ```
 
 La segunda variante:
 
-```js
+```javascript
 if (age < 14 || age > 90)
 ```
 

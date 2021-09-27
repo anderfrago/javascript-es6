@@ -1,12 +1,12 @@
+# task
+
 importance: 5
 
----
-
-# Función enlazada como método
+## Función enlazada como método
 
 ¿Cuál será el resultado?
 
-```js
+```javascript
 function f() {
   alert( this ); // ?
 }

@@ -1,17 +1,12 @@
+# solution
+
 Una solución simple podría ser:
 
-```js run
-*!*
-function shuffle(array) {
-  array.sort(() => Math.random() - 0.5);
-}
-*/!*
+\`\`\`js run _!_ function shuffle\(array\) { array.sort\(\(\) =&gt; Math.random\(\) - 0.5\); } _/!_
 
-let arr = [1, 2, 3];
-shuffle(arr);
-alert(arr);
-```
+let arr = \[1, 2, 3\]; shuffle\(arr\); alert\(arr\);
 
+```text
 Eso funciona de alguna manera, porque `Math.random() - 0.5` es un número aleatorio que puede ser positivo o negativo, por lo tanto, la función de ordenamiento reordena los elementos de forma aleatoria.
 
 Pero debido a que la función de ordenamiento no está hecha para ser usada de esta manera, no todas las permutaciones tienen la misma probabilidad.
@@ -45,9 +40,9 @@ for (let key in count) {
 }
 ```
 
-Un resultado de ejemplo (depende del motor JS):
+Un resultado de ejemplo \(depende del motor JS\):
 
-```js
+```javascript
 123: 250706
 132: 124425
 213: 249618
@@ -64,7 +59,7 @@ El resultado del código puede variar entre distintos motores JavaScript pero ya
 
 Existen otra formas mejores de realizar la tarea. Por ejemplo, hay un excelente algorítmo llamado [Algoritmo de Fisher-Yates](https://es.wikipedia.org/wiki/Algoritmo_de_Fisher-Yates). La idea es recorrer el array en sentido inverso e intercambiar cada elemento con un elemento aleatorio anterior:
 
-```js
+```javascript
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1)); // índice aleatorio entre 0 e i
@@ -81,36 +76,15 @@ function shuffle(array) {
 
 Probémoslo de la misma manera:
 
-```js run
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-}
+\`\`\`js run function shuffle\(array\) { for \(let i = array.length - 1; i &gt; 0; i--\) { let j = Math.floor\(Math.random\(\) \* \(i + 1\)\); \[array\[i\], array\[j\]\] = \[array\[j\], array\[i\]\]; } }
 
-// conteo de apariciones para todas las permutaciones posibles
-let count = {
-  '123': 0,
-  '132': 0,
-  '213': 0,
-  '231': 0,
-  '321': 0,
-  '312': 0
-};
+// conteo de apariciones para todas las permutaciones posibles let count = { '123': 0, '132': 0, '213': 0, '231': 0, '321': 0, '312': 0 };
 
-for (let i = 0; i < 1000000; i++) {
-  let array = [1, 2, 3];
-  shuffle(array);
-  count[array.join('')]++;
-}
+for \(let i = 0; i &lt; 1000000; i++\) { let array = \[1, 2, 3\]; shuffle\(array\); count\[array.join\(''\)\]++; }
 
-// muestra el conteo para todas las permutaciones posibles
-for (let key in count) {
-  alert(`${key}: ${count[key]}`);
-}
-```
+// muestra el conteo para todas las permutaciones posibles for \(let key in count\) { alert\(`${key}: ${count[key]}`\); }
 
+```text
 La salida del ejemplo:
 
 ```js
@@ -125,3 +99,4 @@ La salida del ejemplo:
 Ahora sí se ve bien: todas las permutaciones aparecen con la misma probabilidad.
 
 Además, en cuanto al rendimiento el algoritmo de Fisher-Yates es mucho mejor, no hay "ordenamiento" superpuesto.
+

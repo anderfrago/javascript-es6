@@ -1,3 +1,5 @@
+# solution
+
 La respuesta es: **Pete**.
 
 Una función obtiene variables externas con su estado actual, y utiliza los valores más recientes.

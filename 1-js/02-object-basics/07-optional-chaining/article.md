@@ -1,7 +1,6 @@
-
 # Encadenamiento opcional '?.'
 
-[recent browser="new"]
+\[recent browser="new"\]
 
 El encadenamiento opcional `?.` es una forma a prueba de errores para acceder a las propiedades anidadas de los objetos, incluso si no existe una propiedad intermedia.
 
@@ -9,18 +8,17 @@ El encadenamiento opcional `?.` es una forma a prueba de errores para acceder a 
 
 Si acaba de comenzar a leer el tutorial y aprender JavaScript, quizás el problema aún no lo haya tocado, pero es bastante común.
 
-Como ejemplo, digamos que tenemos objetos `user` que contienen información de nuestros usuarios. 
+Como ejemplo, digamos que tenemos objetos `user` que contienen información de nuestros usuarios.
 
 La mayoría de nuestros usuarios tienen la dirección en la propiedad `user.address`, con la calle en `user.address.street`, pero algunos no la proporcionaron.
 
 En tal caso, cuando intentamos obtener `user.address.street`en un usuario sin dirección obtendremos un error:
 
-```js run
-let user = {}; // usuario sin propiedad "address"
+\`\`\`js run let user = {}; // usuario sin propiedad "address"
 
-alert(user.address.street); // Error!
-```
+alert\(user.address.street\); // Error!
 
+```text
 Este es el resultado esperado. JavaScript funciona así, como `user.address` es `undefined`, el intento de obtener `user.address.street` falla dando un error.
 
 En muchos casos prácticos preferiríamos obtener `undefined` en lugar del error (dando a entender "sin calle")
@@ -38,7 +36,7 @@ Una vez más, si el elemento no existe, obtendremos un error al acceder al `.inn
 
 La solución obvia sería chequear el valor usando `if` o el operador condicional `?` antes de usar la propiedad:
 
-```js 
+```javascript
 let user = {};
 
 alert(user.address ? user.address.street : undefined);
@@ -50,7 +48,7 @@ Ejemplo: Tratemos de obtener `user.address.street.name`.
 
 Necesitamos chequear `user.address` y `user.address.street`:
 
-```js
+```javascript
 let user = {}; // El usuario no tiene dirección
 
 alert(user.address ? user.address.street ? user.address.street.name : null : null);
@@ -58,14 +56,13 @@ alert(user.address ? user.address.street ? user.address.street.name : null : nul
 
 Esto es horrible, podemos tener problemas para siquiera entender tal código.
 
-Ni lo intentes, hay una mejor manera de escribirlo usando el operador  `&&`:
+Ni lo intentes, hay una mejor manera de escribirlo usando el operador `&&`:
 
-```js run
-let user = {}; // usuario sin dirección
+\`\`\`js run let user = {}; // usuario sin dirección
 
-alert( user.address && user.address.street && user.address.street.name ); // undefined (sin error)
-```
+alert\( user.address && user.address.street && user.address.street.name \); // undefined \(sin error\)
 
+```text
 Poniendo AND en el camino completo a la propiedad asegura que todos los componentes existen (si no, la evaluación se detiene), pero no es lo ideal.
 
 Como puedes ver, los nombres de propiedad aún están duplicados en el código. Por ejemplo en el código de arriba `user.address` aparece tres veces.
@@ -94,13 +91,11 @@ El código es corto y claro, no hay duplicación en absoluto
 
 Leer la dirección con `user?.Address` funciona incluso si el objeto `user` no existe:
 
-```js run
-let user = null;
+\`\`\`js run let user = null;
 
-alert( user?.address ); // undefined
-alert( user?.address.street ); // undefined
-```
+alert\( user?.address \); // undefined alert\( user?.address.street \); // undefined
 
+```text
 Tenga en cuenta: la sintaxis `?.` hace opcional el valor delante de él, pero no más allá.
 
 Por ejemplo, en `user?.address.street.name`, el `?.` permite que `user` sea `null/undefined` (y devuelve `undefined` en tal caso), pero solo a `user`. El resto de las propiedades son accedidas de la manera normal.  Si queremos que algunas de ellas sean opcionales, necesitamos reemplazar más `.` con `?.`.
@@ -113,33 +108,30 @@ Por ejemplo, si de acuerdo con nuestra lógica de codificación, el objeto `user
 Entonces, si `user` no está definido debido a un error, lo sabremos y lo arreglaremos. De lo contrario, los errores de codificación pueden silenciarse donde no sea apropiado y volverse más difíciles de depurar.
 ```
 
-````warn header="La variable antes de `?.` debe declararse"
-Si no hay una variable `user` declarada, entonces `user?.anything` provocará un error:
+```````warn header="La variable antes de````?.`debe declararse" Si no hay una variable`user`declarada, entonces`user?.anything\` provocará un error:
 
-```js run
-// ReferenceError: user no está definido
-user?.address;
-```
+\`\`\`js run // ReferenceError: user no está definido user?.address;
+
+```text
 La variable debe ser declarada (con `let/const/var user` o como parámetro de función). El encadenamiento opcional solo funciona para variables declaradas.
-````
+`
+```
 
-## Short-circuiting (Cortocircuitos)
+## Short-circuiting \(Cortocircuitos\)
 
-Como se dijo antes, el `?.` detiene inmediatamente ("cortocircuito") la evaluación si la parte izquierda no existe.
+Como se dijo antes, el `?.` detiene inmediatamente \("cortocircuito"\) la evaluación si la parte izquierda no existe.
 
 Entonces, si hay más llamadas a funciones o efectos secundarios, estos no suceden:
 
 Por ejemplo:
 
-```js run
-let user = null;
-let x = 0;
+\`\`\`js run let user = null; let x = 0;
 
-user?.sayHi(x++); // no hay "sayHi", por lo que la ejecución no alcanza a x++
+user?.sayHi\(x++\); // no hay "sayHi", por lo que la ejecución no alcanza a x++
 
-alert(x); // 0, el valor no se incrementa
-```
+alert\(x\); // 0, el valor no se incrementa
 
+```text
 ## Otros casos: ?.(), ?.[]
 
 El encadenamiento opcional `?.` no es un operador, es una construcción de sintaxis especial que también funciona con funciones y corchetes.
@@ -166,44 +158,37 @@ userGuest.admin?.(); // nada (no existe tal método)
 */!*
 ```
 
-Aquí, en ambas líneas, primero usamos el punto (`userAdmin.admin`) para obtener la propiedad `admin`, porque asumimos que el objeto user existe y es seguro leerlo.
+Aquí, en ambas líneas, primero usamos el punto \(`userAdmin.admin`\) para obtener la propiedad `admin`, porque asumimos que el objeto user existe y es seguro leerlo.
 
-Entonces `?.()` Comprueba la parte izquierda: si la función admin existe, entonces se ejecuta (para `userAdmin`). De lo contrario (para `userGuest`) la evaluación se detiene sin errores.
+Entonces `?.()` Comprueba la parte izquierda: si la función admin existe, entonces se ejecuta \(para `userAdmin`\). De lo contrario \(para `userGuest`\) la evaluación se detiene sin errores.
 
 La sintaxis `?.[]` también funciona si quisiéramos usar corchetes `[]` para acceder a las propiedades en lugar de punto `.`. Al igual que en casos anteriores, permite leer de forma segura una propiedad de un objeto que puede no existir.
 
-```js run
-let key = "firstName";
+\`\`\`js run let key = "firstName";
 
-let user1 = {
-  firstName: "John"
-};
+let user1 = { firstName: "John" };
 
-let user2 = null; 
+let user2 = null;
 
-alert( user1?.[key] ); // John
-alert( user2?.[key] ); // undefined
-```
+alert\( user1?.\[key\] \); // John alert\( user2?.\[key\] \); // undefined
 
+```text
 También podemos usar `?.` con `delete`:
 
 ```js run
 delete user?.name; // Eliminar user.name si el usuario existe
 ```
 
-````warn header="Podemos usar `?.` para una lectura y eliminación segura, pero no para escribir"
-El encadenamiento opcional `?.` no tiene uso en el lado izquierdo de una tarea:
+```````warn header="Podemos usar````?.`para una lectura y eliminación segura, pero no para escribir" El encadenamiento opcional`?.\` no tiene uso en el lado izquierdo de una tarea:
 
-Por ejemplo:
-```js run
-let user = null;
+Por ejemplo: \`\`\`js run let user = null;
 
-user?.name = "John"; // Error, no funciona
-// porque se evalúa como undefined = "John"
-```
+user?.name = "John"; // Error, no funciona // porque se evalúa como undefined = "John"
 
+```text
 Pues no es tan inteligente
-````
+`
+```
 
 ## Resumen
 
@@ -218,3 +203,4 @@ Como podemos ver, todos ellos son sencillos y fáciles de usar. El `?.` comprueb
 Una cadena de `?.` permite acceder de forma segura a las propiedades anidadas.
 
 Aún así, debemos aplicar `?.` con cuidado, solo donde está bien que la parte izquierda no exista. Para que no nos oculte errores de programación, si ocurren.
+

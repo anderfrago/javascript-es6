@@ -1,12 +1,12 @@
+# task
+
 importance: 5
 
----
+## Almacenar fechas de lectura
 
-# Almacenar fechas de lectura
+Hay un array semejante al de la [actividad anterior](info:task/recipients-read). La situación es similar:
 
-Hay un array semejante al de la  [actividad anterior](info:task/recipients-read). La situación es similar:
-
-```js
+```javascript
 let messages = [
   {text: "Hello", from: "John"},
   {text: "How goes?", from: "John"},
@@ -19,3 +19,4 @@ La pregunta ahora es: ¿qué estructura de datos es la adecuada para almacenar l
 En la tarea anterior solo necesitábamos almacenar el hecho de "sí / no". Ahora necesitamos almacenar la fecha, y solo debe permanecer en la memoria hasta que el mensaje sea recolectado como basura.
 
 P.D Las fechas se pueden almacenar como objetos de la clase incorporada `Date`, que cubriremos más adelante.
+

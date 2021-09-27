@@ -10,22 +10,13 @@ Provee una mejor manera de comparar un valor con múltiples variantes.
 
 Se ve de esta forma:
 
-```js no-beautify
-switch(x) {
-  case 'valor1':  // if (x === 'valor1')
-    ...
-    [break]
+\`\`\`js no-beautify switch\(x\) { case 'valor1': // if \(x === 'valor1'\) ... \[break\]
 
-  case 'valor2':  // if (x === 'valor2')
-    ...
-    [break]
+case 'valor2': // if \(x === 'valor2'\) ... \[break\]
 
-  default:
-    ...
-    [break]
-}
-```
+default: ... \[break\] }
 
+```text
 - El valor de `x` es comparado contra el valor del primer `case` (en este caso, `valor1`), luego contra el segundo (`valor2`) y así sucesivamente, todo esto bajo una igualdad estricta.
 - Si la igualdad es encontrada, `switch` empieza a ejecutar el código iniciando por el primer `case` correspondiente, hasta el `break` más cercano (o hasta el final del `switch`).
 - Si no se cumple ningún caso entonces el código `default` es ejecutado (si existe).
@@ -62,23 +53,11 @@ Luego `4`. La comparación es exitosa, por tanto la ejecución empieza desde `ca
 
 Un ejemplo sin `break`:
 
-```js run
-let a = 2 + 2;
+\`\`\`js run let a = 2 + 2;
 
-switch (a) {
-  case 3:
-    alert( 'Muy pequeño' );
-*!*
-  case 4:
-    alert( '¡Exacto!' );
-  case 5:
-    alert( 'Muy grande' );
-  default:
-    alert( "Desconozco estos valores" );
-*/!*
-}
-```
+switch \(a\) { case 3: alert\( 'Muy pequeño' \); _!_ case 4: alert\( '¡Exacto!' \); case 5: alert\( 'Muy grande' \); default: alert\( "Desconozco estos valores" \); _/!_ }
 
+```text
 En el ejemplo anterior veremos ejecuciones de tres `alert` secuenciales:
 
 ```js
@@ -87,28 +66,20 @@ alert( 'Muy grande' );
 alert( "Desconozco estos valores" );
 ```
 
-````smart header="Cualquier expresión puede ser un argumento `switch/case`"
-Ambos `switch` y `case` permiten expresiones arbitrarias.
+```````smart header="Cualquier expresión puede ser un argumento````switch/case`" Ambos`switch`y`case\` permiten expresiones arbitrarias.
 
 Por ejemplo:
 
-```js run
-let a = "1";
-let b = 0;
+\`\`\`js run let a = "1"; let b = 0;
 
-switch (+a) {
-*!*
-  case b + 1:
-    alert("esto se ejecuta, porque +a es 1, exactamente igual b+1");
-    break;
-*/!*
+switch \(+a\) { _!_ case b + 1: alert\("esto se ejecuta, porque +a es 1, exactamente igual b+1"\); break; _/!_
 
-  default:
-    alert("esto no se ejecuta");
-}
-```
+default: alert\("esto no se ejecuta"\); }
+
+```text
 Aquí `+a` da `1`, esto es comparado con `b + 1` en `case`, y el código correspondiente es ejecutado.
-````
+`
+```
 
 ## Agrupamiento de "case"
 
@@ -116,27 +87,15 @@ Varias variantes de `case` los cuales comparten el mismo código pueden ser agru
 
 Por ejemplo, si queremos que se ejecute el mismo código para `case 3` y `case 5`:
 
-```js run no-beautify
-let a = 2 + 2;
+\`\`\`js run no-beautify let a = 2 + 2;
 
-switch (a) {
-  case 4:
-    alert('¡Correcto!');
-    break;
+switch \(a\) { case 4: alert\('¡Correcto!'\); break;
 
-*!*
-  case 3:                    // (*) agrupando dos cases
-  case 5:
-    alert('¡Incorrecto!');
-    alert("¿Por qué no tomas una clase de matemáticas?");
-    break;
-*/!*
+_!_ case 3: // \(_\) agrupando dos cases case 5: alert\('¡Incorrecto!'\); alert\("¿Por qué no tomas una clase de matemáticas?"\); break;_ /!\*
 
-  default:
-    alert('El resultado es extraño. Realmente.');
-}
-```
+default: alert\('El resultado es extraño. Realmente.'\); }
 
+```text
 Ahora ambos `3` y `5` muestran el mismo mensaje.
 
 La habilidad para "agrupar" cases es un efecto secundario de como trabaja `switch/case` sin `break`. Aquí la ejecución de `case 3` inicia desde la línea `(*)` y continúa a través de `case 5`, porque no existe `break`.
@@ -170,4 +129,4 @@ switch (arg) {
 1. Para `0`, `1`, se ejecuta el primer `alert`.
 2. Para `2` se ejecuta el segundo `alert`.
 3. Pero para `3`, el resultado del `prompt` es un string `"3"`, el cual no es estrictamente igual `===` al número `3`. Por tanto ¡Tenemos un código muerto en `case 3`! La variante `default` se ejecutará.
- 
+

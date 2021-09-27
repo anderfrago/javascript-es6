@@ -1,8 +1,8 @@
+# task
+
 importance: 4
 
----
-
-# Filtrar elementos únicos de un array
+## Filtrar elementos únicos de un array
 
 Partiendo del array `arr`.
 
@@ -10,7 +10,7 @@ Crea una función `unique(arr)` que devuelva un array con los elementos que se e
 
 Por ejemplo:
 
-```js
+```javascript
 function unique(arr) {
   /* tu código */
 }
@@ -21,3 +21,4 @@ let strings = ["Hare", "Krishna", "Hare", "Krishna",
 
 alert( unique(strings) ); // Hare, Krishna, :-O
 ```
+

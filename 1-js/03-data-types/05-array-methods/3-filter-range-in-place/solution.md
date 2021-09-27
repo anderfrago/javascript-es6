@@ -1,21 +1,26 @@
-```js run demo
-function filterRangeInPlace(arr, a, b) {
+# solution
 
-  for (let i = 0; i < arr.length; i++) {
-    let val = arr[i];
+\`\`\`js run demo function filterRangeInPlace\(arr, a, b\) {
 
-    // remueve aquellos elementos que se encuentran fuera del intervalo
-    if (val < a || val > b) {
-      arr.splice(i, 1);
-      i--;
-    }
-  }
+for \(let i = 0; i &lt; arr.length; i++\) { let val = arr\[i\];
+
+```text
+// remueve aquellos elementos que se encuentran fuera del intervalo
+if (val < a || val > b) {
+  arr.splice(i, 1);
+  i--;
+}
+```
 
 }
 
-let arr = [5, 3, 8, 1];
+}
 
-filterRangeInPlace(arr, 1, 4); // remueve los números excepto aquellos entre 1 y 4
+let arr = \[5, 3, 8, 1\];
 
-alert( arr ); // [3, 1]
-```
+filterRangeInPlace\(arr, 1, 4\); // remueve los números excepto aquellos entre 1 y 4
+
+alert\( arr \); // \[3, 1\]
+
+\`\`\`
+

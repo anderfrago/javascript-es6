@@ -1,8 +1,8 @@
+# task
+
 importance: 5
 
----
-
-# Excluir referencias circulares
+## Excluir referencias circulares
 
 En casos simples de referencias circulares, podemos excluir una propiedad infractora de la serialización por su nombre.
 
@@ -10,32 +10,15 @@ Pero a veces no podemos usar el nombre, ya que puede usarse tanto en referencias
 
 Escriba la función `replacer` para convertir a string todo, pero elimine las propiedades que hacen referencia a `meetup`:
 
-```js run
-let room = {
-  number: 23
-};
+\`\`\`js run let room = { number: 23 };
 
-let meetup = {
-  title: "Conference",
-  occupiedBy: [{name: "John"}, {name: "Alice"}],
-  place: room
-};
+let meetup = { title: "Conference", occupiedBy: \[{name: "John"}, {name: "Alice"}\], place: room };
 
-*!*
-// referencias circulares
-room.occupiedBy = meetup;
-meetup.self = meetup;
-*/!*
+_!_ // referencias circulares room.occupiedBy = meetup; meetup.self = meetup; _/!_
 
-alert( JSON.stringify(meetup, function replacer(key, value) {
-  /* tu código */
-}));
+alert\( JSON.stringify\(meetup, function replacer\(key, value\) { / _tu código_ / }\)\);
 
-/* el resultado debería ser:
-{
-  "title":"Conference",
-  "occupiedBy":[{"name":"John"},{"name":"Alice"}],
-  "place":{"number":23}
-}
-*/
-```
+/ _el resultado debería ser: { "title":"Conference", "occupiedBy":\[{"name":"John"},{"name":"Alice"}\], "place":{"number":23} }_ /
+
+\`\`\`
+

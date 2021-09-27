@@ -1,17 +1,17 @@
+# task
+
 importance: 4
 
----
-
-# Suma con clausuras
+## Suma con clausuras
 
 Escriba la función `sum` que funcione así: `sum(a)(b) = a+b`.
 
-Sí, exactamente de esta manera, usando paréntesis dobles (no es un error de tipeo).
+Sí, exactamente de esta manera, usando paréntesis dobles \(no es un error de tipeo\).
 
 Por ejemplo:
 
-
-```js
+```javascript
 sum(1)(2) = 3
 sum(5)(-1) = 4
 ```
+

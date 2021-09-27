@@ -1,12 +1,12 @@
+# task
+
 importance: 5
 
----
-
-# Contar propiedades
+## Contar propiedades
 
 Escriba una función `count(obj)` que devuelva el número de propiedades en el objeto:
 
-```js
+```javascript
 let user = {
   name: 'John',
   age: 30

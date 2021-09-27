@@ -1,8 +1,8 @@
+# task
+
 importance: 5
 
----
-
-# Operaciones en arrays.
+## Operaciones en arrays.
 
 Tratemos 5 operaciones de array.
 
@@ -14,10 +14,7 @@ Tratemos 5 operaciones de array.
 
 El array durante el proceso:
 
-```js no-beautify
-Jazz, Blues
-Jazz, Blues, Rock-n-Roll
-Jazz, Classics, Rock-n-Roll
-Classics, Rock-n-Roll
-Rap, Reggae, Classics, Rock-n-Roll
-```
+\`\`\`js no-beautify Jazz, Blues Jazz, Blues, Rock-n-Roll Jazz, Classics, Rock-n-Roll Classics, Rock-n-Roll Rap, Reggae, Classics, Rock-n-Roll
+
+\`\`\`
+

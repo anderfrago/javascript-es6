@@ -1,35 +1,20 @@
-# Solución basada en el bucle
+# solution
+
+## Solución basada en el bucle
 
 La solución basada en el bucle:
 
-```js run
-let list = {
-  value: 1,
-  next: {
-    value: 2,
-    next: {
-      value: 3,
-      next: {
-        value: 4,
-        next: null
-      }
-    }
-  }
-};
+\`\`\`js run let list = { value: 1, next: { value: 2, next: { value: 3, next: { value: 4, next: null } } } };
 
-function printList(list) {
-  let tmp = list;
+function printList\(list\) { let tmp = list;
 
-  while (tmp) {
-    alert(tmp.value);
-    tmp = tmp.next;
-  }
+while \(tmp\) { alert\(tmp.value\); tmp = tmp.next; }
 
 }
 
-printList(list);
-```
+printList\(list\);
 
+```text
 Ten en cuenta que utilizamos una variable temporal `tmp` para recorrer la lista. Técnicamente, podríamos usar una función con una `list` de parámetros en su lugar:
 
 ```js
@@ -49,40 +34,27 @@ Hablando sobre buenos nombres de variables, `list` aquí es la lista en sí. El 
 
 Desde el otro lado, el papel de `tmp` es exclusivamente para recorrer la lista, como `i` en el bucle `for`.
 
-# Solución recursiva
+## Solución recursiva
 
 La solución recursiva de `printList(list)` sigue una lógica simple: para generar una lista debemos generar el elemento actual `list`, luego hacer lo mismo con `list.next`:
 
-```js run
-let list = {
-  value: 1,
-  next: {
-    value: 2,
-    next: {
-      value: 3,
-      next: {
-        value: 4,
-        next: null
-      }
-    }
-  }
-};
+\`\`\`js run let list = { value: 1, next: { value: 2, next: { value: 3, next: { value: 4, next: null } } } };
 
-function printList(list) {
+function printList\(list\) {
 
-  alert(list.value); // genera el elemento actual
+alert\(list.value\); // genera el elemento actual
 
-  if (list.next) {
-    printList(list.next); // hace lo mismo para el resto de la lista
-  }
+if \(list.next\) { printList\(list.next\); // hace lo mismo para el resto de la lista }
 
 }
 
-printList(list);
-```
+printList\(list\);
+
+\`\`\`
 
 Ahora, ¿Qué es mejor?
 
 Técnicamente, el bucle es más efectivo. Estas dos variantes hacen lo mismo, pero el bucle no gasta recursos en llamadas a funciones anidadas.
 
 Por otro lado, la variante recursiva es más corta y a veces más sencilla de entender.
+

@@ -1,14 +1,14 @@
+# task
+
 importance: 5
 
----
-
-# ¿Qué variables están disponibles?
+## ¿Qué variables están disponibles?
 
 La función `makeWorker` a continuación crea otra función y la devuelve. Esa nueva función se puede llamar desde otro lugar.
 
 ¿Tendrá acceso a las variables externas desde su lugar de creación, o desde el lugar de invocación, o ambos?
 
-```js
+```javascript
 function makeWorker() {
   let name = "Pete";
 
@@ -27,3 +27,4 @@ work(); // ¿qué mostrará?
 ```
 
 ¿Qué valor mostrará? "Pete" o "John"?
+

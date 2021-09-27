@@ -1,30 +1,16 @@
+# solution
 
-```js run no-beautify
-let john = { name: "John", surname: "Smith", id: 1 };
-let pete = { name: "Pete", surname: "Hunt", id: 2 };
-let mary = { name: "Mary", surname: "Key", id: 3 };
+\`\`\`js run no-beautify let john = { name: "John", surname: "Smith", id: 1 }; let pete = { name: "Pete", surname: "Hunt", id: 2 }; let mary = { name: "Mary", surname: "Key", id: 3 };
 
-let users = [ john, pete, mary ];
+let users = \[ john, pete, mary \];
 
-*!*
-let usersMapped = users.map(user => ({
-  fullName: `${user.name} ${user.surname}`,
-  id: user.id
-}));
-*/!*
+_!_ let usersMapped = users.map\(user =&gt; \({ fullName: `${user.name} ${user.surname}`, id: user.id }\)\); _/!_
 
-/*
-usersMapped = [
-  { fullName: "John Smith", id: 1 },
-  { fullName: "Pete Hunt", id: 2 },
-  { fullName: "Mary Key", id: 3 }
-]
-*/
+/ _usersMapped = \[ { fullName: "John Smith", id: 1 }, { fullName: "Pete Hunt", id: 2 }, { fullName: "Mary Key", id: 3 } \]_ /
 
-alert( usersMapped[0].id ); // 1
-alert( usersMapped[0].fullName ); // John Smith
-```
+alert\( usersMapped\[0\].id \); // 1 alert\( usersMapped\[0\].fullName \); // John Smith
 
+```text
 Ten en cuenta que para las funciones arrow necesitamos usar paréntesis adicionales.
 
 No podemos escribirlo de la siguiente manera:
@@ -39,7 +25,7 @@ Como recordarás, existen dos funciones arrow: sin cuerpo `value => expr` y con 
 
 Acá JavaScript tratará `{` como el inicio de cuerpo de la función, no el inicio del objeto. La manera de resolver esto es encerrarlo dentro de paréntesis:
 
-```js
+```javascript
 let usersMapped = users.map(user => *!*({*/!*
   fullName: `${user.name} ${user.surname}`,
   id: user.id
@@ -47,3 +33,4 @@ let usersMapped = users.map(user => *!*({*/!*
 ```
 
 Ahora funciona.
+

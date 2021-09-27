@@ -4,13 +4,13 @@ Usualmente necesitamos repetir acciones.
 
 Por ejemplo, mostrar los elementos de una lista uno tras otro o simplemente ejecutar el mismo código para cada número del 1 al 10.
 
-Los *Bucles* son una forma de repetir el mismo código varias veces.
+Los _Bucles_ son una forma de repetir el mismo código varias veces.
 
 ## El bucle "while"
 
-El bucle `while` (mientras) tiene la siguiente sintaxis:
+El bucle `while` \(mientras\) tiene la siguiente sintaxis:
 
-```js
+```javascript
 while (condition) {
   // código
   // llamado "cuerpo del bucle"
@@ -21,14 +21,9 @@ Mientras la condición `condition` sea verdadera, el `código` del cuerpo del bu
 
 Por ejemplo, el bucle debajo imprime `i` mientras se cumpla `i < 3`:
 
-```js run
-let i = 0;
-while (i < 3) { // muestra 0, luego 1, luego 2
-  alert( i );
-  i++;
-}
-```
+\`\`\`js run let i = 0; while \(i &lt; 3\) { // muestra 0, luego 1, luego 2 alert\( i \); i++; }
 
+```text
 Cada ejecución del cuerpo del bucle se llama *iteración*. El bucle en el ejemplo de arriba realiza 3 iteraciones.
 
 Si faltara `i++` en el ejemplo de arriba, el bucle sería repetido (en teoría) eternamente. En la práctica, el navegador tiene maneras de detener tales bucles desmedidos; y en el JavaScript del lado del servidor, podemos eliminar el proceso.
@@ -47,22 +42,19 @@ while (i) { // cuando i sea 0, la condición se volverá falsa y el bucle se det
 }
 ```
 
-````smart header="Las llaves no son requeridas para un cuerpo de una sola línea"
-Si el cuerpo del bucle tiene una sola sentencia, podemos omitir las llaves `{…}`:
+```````smart header="Las llaves no son requeridas para un cuerpo de una sola línea" Si el cuerpo del bucle tiene una sola sentencia, podemos omitir las llaves````{…}\`:
 
-```js run
-let i = 3;
-*!*
-while (i) alert(i--);
-*/!*
+\`\`\`js run let i = 3; _!_ while \(i\) alert\(i--\); _/!_
+
+```text
+`
 ```
-````
 
 ## El bucle "do..while"
 
-La comprobación de la condición puede ser movida *debajo* del cuerpo del bucle usando la sintaxis `do..while`:
+La comprobación de la condición puede ser movida _debajo_ del cuerpo del bucle usando la sintaxis `do..while`:
 
-```js
+```javascript
 do {
   // cuerpo del bucle
 } while (condition);
@@ -72,14 +64,9 @@ El bucle primero ejecuta el cuerpo, luego comprueba la condición, y, mientras s
 
 Por ejemplo:
 
-```js run
-let i = 0;
-do {
-  alert( i );
-  i++;
-} while (i < 3);
-```
+\`\`\`js run let i = 0; do { alert\( i \); i++; } while \(i &lt; 3\);
 
+```text
 Esta sintaxis solo debe ser usada cuando quieres que el cuerpo del bucle sea ejecutado **al menos una vez** sin importar que la condición sea verdadera. Usualmente, se prefiere la otra forma: `while(…) {…}`.
 
 ## El bucle "for"
@@ -94,14 +81,11 @@ for (begin; condition; step) { // (comienzo, condición, paso)
 }
 ```
 
-Aprendamos el significado de cada parte con un ejemplo. El bucle debajo corre `alert(i)` para `i` desde `0` hasta (pero no incluyendo) `3`:
+Aprendamos el significado de cada parte con un ejemplo. El bucle debajo corre `alert(i)` para `i` desde `0` hasta \(pero no incluyendo\) `3`:
 
-```js run
-for (let i = 0; i < 3; i++) { // muestra 0, luego 1, luego 2
-  alert(i);
-}
-```
+\`\`\`js run for \(let i = 0; i &lt; 3; i++\) { // muestra 0, luego 1, luego 2 alert\(i\); }
 
+```text
 Vamos a examinar la declaración `for` parte por parte:
 
 | parte  |          |                                                                            |
@@ -113,13 +97,10 @@ Vamos a examinar la declaración `for` parte por parte:
 
 El algoritmo general del bucle funciona de esta forma:
 ```
-Se ejecuta comenzar
-→ (si condición → ejecutar cuerpo y ejecutar paso)
-→ (si condición → ejecutar cuerpo y ejecutar paso)
-→ (si condición → ejecutar cuerpo y ejecutar paso)
-→ ...
-```
 
+Se ejecuta comenzar → \(si condición → ejecutar cuerpo y ejecutar paso\) → \(si condición → ejecutar cuerpo y ejecutar paso\) → \(si condición → ejecutar cuerpo y ejecutar paso\) → ...
+
+```text
 Si eres nuevo en bucles, te podría ayudar regresar al ejemplo y reproducir cómo se ejecuta paso por paso en una pedazo de papel.
 
 Esto es lo que sucede exactamente en nuestro caso:
@@ -138,16 +119,11 @@ if (i < 3) { alert(i); i++ }
 // ...finaliza, porque ahora i == 3
 ```
 
-````smart header="Declaración de variable en línea"
-Aquí, la variable "counter" `i` es declarada en el bucle. Esto es llamado una declaración de variable "en línea". Dichas variables son visibles solo dentro del bucle.
+```````smart header="Declaración de variable en línea" Aquí, la variable "counter"````i\` es declarada en el bucle. Esto es llamado una declaración de variable "en línea". Dichas variables son visibles solo dentro del bucle.
 
-```js run
-for (*!*let*/!* i = 0; i < 3; i++) {
-  alert(i); // 0, 1, 2
-}
-alert(i); // error, no existe dicha variable
-```
+\`\`\`js run for \(_!_let_/!_ i = 0; i &lt; 3; i++\) { alert\(i\); // 0, 1, 2 } alert\(i\); // error, no existe dicha variable
 
+```text
 En vez de definir una variable, podemos usar una que ya exista:
 
 ```js run
@@ -160,9 +136,7 @@ for (i = 0; i < 3; i++) { // usa una variable existente
 alert(i); // 3, visible, porque fue declarada fuera del bucle
 ```
 
-````
-
-
+```text
 ### Omitiendo partes
 
 Cualquier parte de `for` puede ser omitida.
@@ -266,14 +240,13 @@ for (let i = 0; i < 10; i++) {
 Desde un punto de vista técnico, esto es idéntico al ejemplo de arriba. Claro, podemos simplemente envolver el código en un bloque `if` en vez de usar `continue`.
 
 Pero como efecto secundario, esto crearía un nivel más de anidación (la llamada a `alert` dentro de las llaves). Si el código dentro de `if` posee varias líneas, eso podría reducir la legibilidad en general.
-````
+```
 
-````warn header="No `break/continue` a la derecha de '?'"
-Por favor, nota que las construcciones sintácticas que no son expresiones no pueden user usadas con el operador ternario `?`. En particular, directivas como `break/continue` no son permitidas aquí.
+```````warn header="No````break/continue`a la derecha de '?'" Por favor, nota que las construcciones sintácticas que no son expresiones no pueden user usadas con el operador ternario`?`. En particular, directivas como`break/continue\` no son permitidas aquí.
 
 Por ejemplo, si tomamos este código:
 
-```js
+```javascript
 if (i > 5) {
   alert(i);
 } else {
@@ -283,16 +256,15 @@ if (i > 5) {
 
 ...y lo reescribimos usando un signo de interrogación:
 
+\`\`\`js no-beautify \(i &gt; 5\) ? alert\(i\) : _!_continue_/!_; // continue no está permitida aquí
 
-```js no-beautify
-(i > 5) ? alert(i) : *!*continue*/!*; // continue no está permitida aquí
-```
-
+```text
 ...deja de funcionar. Código como este generará un error de sintaxis: 
 
 
 Esta es otra razón por la cual se recomienda no usar el operador de signo de interrogación `?` en lugar de `if`.
-````
+`
+```
 
 ## Etiquetas para break/continue
 
@@ -300,21 +272,21 @@ A veces necesitamos salirnos de múltiples bucles anidados al mismo tiempo.
 
 Por ejemplo, en el código debajo usamos un bucle sobre `i` y `j`, solicitando las coordenadas `(i,j)` de `(0,0)` a `(3,3)`:
 
-```js run no-beautify
-for (let i = 0; i < 3; i++) {
+\`\`\`js run no-beautify for \(let i = 0; i &lt; 3; i++\) {
 
-  for (let j = 0; j < 3; j++) {
+for \(let j = 0; j &lt; 3; j++\) {
 
-    let input = prompt(`Valor en las coordenadas (${i},${j})`, '');
+```text
+let input = prompt(`Valor en las coordenadas (${i},${j})`, '');
 
-    // ¿Y si quiero salir de aquí hacia Listo (debajo)?
-
-  }
-}
-
-alert('Listo!');
+// ¿Y si quiero salir de aquí hacia Listo (debajo)?
 ```
 
+} }
+
+alert\('Listo!'\);
+
+```text
 Necesitamos una manera de detener el proceso si el usuario cancela la entrada.
 
 El `break` ordinario después de `input` solo nos sacaría del bucle interno. Eso no es suficiente. ¡Etiquetas, vengan al rescate!
@@ -328,22 +300,22 @@ labelName: for (...) {
 
 La declaración `break <labelName>` en el bucle debajo nos saca hacia la etiqueta:
 
-```js run no-beautify
-*!*outer:*/!* for (let i = 0; i < 3; i++) {
+\`\`\`js run no-beautify _!_outer:_/!_ for \(let i = 0; i &lt; 3; i++\) {
 
-  for (let j = 0; j < 3; j++) {
+for \(let j = 0; j &lt; 3; j++\) {
 
-    let input = prompt(`Value at coords (${i},${j})`, '');
+```text
+let input = prompt(`Value at coords (${i},${j})`, '');
 
-    // Si es una cadena de texto vacía o se canceló, entonces salir de ambos bucles
-    if (!input) *!*break outer*/!*; // (*)
+// Si es una cadena de texto vacía o se canceló, entonces salir de ambos bucles
+if (!input) *!*break outer*/!*; // (*)
 
-    // hacer algo con el valor...
-  }
-}
-alert('Listo!');
+// hacer algo con el valor...
 ```
 
+} } alert\('Listo!'\);
+
+```text
 En el código de arriba, `break outer` mira hacia arriba por la etiqueta llamada `outer` y nos saca de dicho bucle.
 
 Así que el control va directamente de `(*)` a `alert('Listo!')`.
@@ -357,18 +329,19 @@ for (let i = 0; i < 3; i++) { ... }
 
 La directiva `continue` también puede usar usada con una etiqueta. En este caso, la ejecución del código salta a la siguiente iteración del bucle etiquetado.
 
-````warn header="Las etiquetas no son \"goto\""
-Las etiquetas no nos permiten saltar a un lugar arbitrario en el código.
+\`\`\`\`warn header="Las etiquetas no son \"goto\"" Las etiquetas no nos permiten saltar a un lugar arbitrario en el código.
 
 Por ejemplo, es imposible hacer esto:
-```js
+
+```javascript
 break label;  // ¿saltar a label? No funciona.
 
 label: for (...)
 ```
 
 Una directiva `break` debe estar en el interior del bucle. Técnicamente, cualquier bloque de código etiquetado:
-```js
+
+```javascript
 label: {
   // ...
   break label; // funciona
@@ -379,18 +352,20 @@ label: {
 ...Aunque 99.9% del tiempo `break` se usa dentro de bucles, como hemos visto en ejemplos previos.
 
 Un `continue` es solo posible dentro de un bucle.
-````
+
+\`\`\`\`
 
 ## Resumen
 
 Cubrimos 3 tipos de bucles:
 
-- `while` -- La condición es comprobada antes de cada iteración.
-- `do..while` --  La condición es comprobada después de cada iteración.
-- `for (;;)` --  La condición es comprobada antes de cada iteración, con ajustes adicionales disponibles.
+* `while` -- La condición es comprobada antes de cada iteración.
+* `do..while` --  La condición es comprobada después de cada iteración.
+* `for (;;)` --  La condición es comprobada antes de cada iteración, con ajustes adicionales disponibles.
 
 Para crear un bucle "infinito", usualmente se usa `while(true)`. Un bucle como este, tal y como cualquier otro, puede ser detenido con la directiva `break`.
 
 Si queremos detener la iteración actual y adelantarnos a la siguiente, podemos usar la directiva `continue`.
 
 `break/continue` soportan etiquetas antes del bucle. Una etiqueta es la única forma de usar `break/continue` para escapar de un bucle anidado para ir a uno exterior.
+

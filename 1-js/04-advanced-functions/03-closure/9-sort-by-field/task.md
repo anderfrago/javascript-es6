@@ -1,13 +1,12 @@
+# task
+
 importance: 5
 
----
-
-# Ordenar por campo
+## Ordenar por campo
 
 Tenemos una variedad de objetos para ordenar:
 
-
-```js
+```javascript
 let users = [
   { name: "John", age: 20, surname: "Johnson" },
   { name: "Pete", age: 18, surname: "Peterson" },
@@ -17,7 +16,7 @@ let users = [
 
 La forma habitual de hacerlo sería:
 
-```js
+```javascript
 // por nombre(Ann, John, Pete)
 users.sort((a, b) => a.name > b.name ? 1 : -1);
 
@@ -27,8 +26,7 @@ users.sort((a, b) => a.age > b.age ? 1 : -1);
 
 ¿Podemos hacerlo aún menos detallado, como este?
 
-
-```js
+```javascript
 users.sort(byField('name'));
 users.sort(byField('age'));
 ```

@@ -1,17 +1,10 @@
+# solution
 
-```js run
-function ask(question, yes, no) {
-  if (confirm(question)) yes();
-  else no();
-}
+\`\`\`js run function ask\(question, yes, no\) { if \(confirm\(question\)\) yes\(\); else no\(\); }
 
-ask(
-  "Do you agree?",
-*!*
-  () => alert("You agreed."),
-  () => alert("You canceled the execution.")
-*/!*
-);
-```
+ask\( "Do you agree?", _!_ \(\) =&gt; alert\("You agreed."\), \(\) =&gt; alert\("You canceled the execution."\) _/!_ \);
+
+\`\`\`
 
 Se ve corto y limpio, ¿verdad?
+

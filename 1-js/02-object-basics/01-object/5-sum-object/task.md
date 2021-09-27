@@ -1,12 +1,12 @@
+# task
+
 importance: 5
 
----
-
-# Suma de propiedades de un objeto
+## Suma de propiedades de un objeto
 
 Tenemos un objeto que almacena los salarios de nuestro equipo:
 
-```js
+```javascript
 let salaries = {
   John: 100,
   Ann: 160,
@@ -17,3 +17,4 @@ let salaries = {
 Escribe el código para sumar todos los salarios y almacenar el resultado en la variable `sum`. En el ejemplo de arriba nos debería dar `390`.
 
 Si `salaries` está vacío entonces el resultado será `0`.
+

@@ -1,12 +1,12 @@
+# task
+
 importance: 3
 
----
-
-# ¿El array es copiado?
+## ¿El array es copiado?
 
 ¿Qué va a mostrar este código?
 
-```js
+```javascript
 let fruits = ["Apples", "Pear", "Orange"];
 
 // introduce un valor nuevo dentro de una copia

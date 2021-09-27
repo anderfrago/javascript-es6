@@ -2,14 +2,14 @@
 
 Los objetos son creados usualmente para representar entidades del mundo real, como usuarios, órdenes, etc.:
 
-```js
+```javascript
 let user = {
   name: "John",
   age: 30
 };
 ```
 
-Y en el mundo real un usuario puede *actuar*: seleccionar algo del carrito de compras, hacer login, logout, etc.
+Y en el mundo real un usuario puede _actuar_: seleccionar algo del carrito de compras, hacer login, logout, etc.
 
 Las acciones son representadas en JavaScript por funciones en las propiedades.
 
@@ -17,21 +17,13 @@ Las acciones son representadas en JavaScript por funciones en las propiedades.
 
 Para empezar, enseñemos al usuario `user` a decir hola:
 
-```js run
-let user = {
-  name: "John",
-  age: 30
-};
+\`\`\`js run let user = { name: "John", age: 30 };
 
-*!*
-user.sayHi = function() {
-  alert("¡Hola!");
-};
-*/!*
+_!_ user.sayHi = function\(\) { alert\("¡Hola!"\); }; _/!_
 
-user.sayHi(); // ¡Hola!
-```
+user.sayHi\(\); // ¡Hola!
 
+```text
 Aquí simplemente usamos una expresión de función para crear la función y asignarla a la propiedad `user.sayHi` del objeto.
 
 Entonces la llamamos con `user.sayHi()`. ¡El usuario ahora puede hablar!
@@ -60,11 +52,11 @@ user.sayHi = sayHi;
 user.sayHi(); // ¡Hola!
 ```
 
-```smart header="Programación orientada a objetos"
-Cuando escribimos nuestro código usando objetos que representan entidades, eso es llamado [Programación Orientada a Objetos](https://es.wikipedia.org/wiki/Programaci%C3%B3n_orientada_a_objetos), abreviado: "POO".
+\`\`\`smart header="Programación orientada a objetos" Cuando escribimos nuestro código usando objetos que representan entidades, eso es llamado [Programación Orientada a Objetos](https://es.wikipedia.org/wiki/Programaci%C3%B3n_orientada_a_objetos), abreviado: "POO".
 
-POO (OOP sus siglas en inglés) es una cosa grande, un ciencia interesante en sí misma. ¿Cómo elegir las entidades correctas? ¿Cómo organizar la interacción entre ellas? Eso es arquitectura, y hay muy buenos libros del tópico como "Patrones de diseño: Elementos de software orientado a objetos reutilizable" de E. Gamma, R. Helm, R. Johnson, J. Vissides o "Análisis y Diseño Orientado a Objetos" de G. Booch, y otros.
-```
+POO \(OOP sus siglas en inglés\) es una cosa grande, un ciencia interesante en sí misma. ¿Cómo elegir las entidades correctas? ¿Cómo organizar la interacción entre ellas? Eso es arquitectura, y hay muy buenos libros del tópico como "Patrones de diseño: Elementos de software orientado a objetos reutilizable" de E. Gamma, R. Helm, R. Johnson, J. Vissides o "Análisis y Diseño Orientado a Objetos" de G. Booch, y otros.
+
+```text
 ### Formas abreviadas para los métodos
 
 Existe una sintaxis más corta para los métodos en objetos literales:
@@ -90,7 +82,7 @@ user = {
 
 Como se demostró, podemos omitir `"function"` y simplemente escribir `sayHi()`.
 
-A decir verdad, las notaciones no son completamente idénticas. Hay diferencias sutiles relacionadas a la herencia de objetos (por cubrir más adelante) que no importan ahora. En casi todos los casos la sintaxis abreviada es la preferida.
+A decir verdad, las notaciones no son completamente idénticas. Hay diferencias sutiles relacionadas a la herencia de objetos \(por cubrir más adelante\) que no importan ahora. En casi todos los casos la sintaxis abreviada es la preferida.
 
 ## "this" en métodos
 
@@ -104,23 +96,15 @@ El valor de `this` es el objeto "antes del punto", el usado para llamar al méto
 
 Por ejemplo:
 
-```js run
-let user = {
-  name: "John",
-  age: 30,
+\`\`\`js run let user = { name: "John", age: 30,
 
-  sayHi() {
-*!*
-    // "this" es el "objeto actual"
-    alert(this.name);
-*/!*
-  }
+sayHi\(\) { _!_ // "this" es el "objeto actual" alert\(this.name\); _/!_ }
 
 };
 
-user.sayHi(); // John
-```
+user.sayHi\(\); // John
 
+```text
 Aquí durante la ejecución de `user.sayHi()`, el valor de `this` será `user`.
 
 Técnicamente, también es posible acceder al objeto sin `this`, haciendo referencia a él por medio de la variable externa:
@@ -143,28 +127,17 @@ let user = {
 
 Eso queda demostrado en las siguientes lineas:
 
-```js run
-let user = {
-  name: "John",
-  age: 30,
+\`\`\`js run let user = { name: "John", age: 30,
 
-  sayHi() {
-*!*
-    alert( user.name ); // lleva a un error
-*/!*
-  }
+sayHi\(\) { _!_ alert\( user.name \); // lleva a un error _/!_ }
 
 };
 
+let admin = user; user = null; // sobrescribimos para hacer las cosas evidentes
 
-let admin = user;
-user = null; // sobrescribimos para hacer las cosas evidentes
+_!_ admin.sayHi\(\); // TypeError: No se puede leer la propiedad 'name' de null _/!_
 
-*!*
-admin.sayHi(); // TypeError: No se puede leer la propiedad 'name' de null
-*/!*
-```
-
+```text
 Si usamos `this.name` en vez de `user.name` dentro de `alert`, entonces el código funciona.
 
 ## "this" no es vinculado
@@ -183,28 +156,17 @@ El valor de `this` es evaluado durante el tiempo de ejecución, dependiendo del 
 
 Por ejemplo, aquí la función es asignada a dos objetos diferentes y tiene diferentes "this" en sus llamados:
 
-```js run
-let user = { name: "John" };
-let admin = { name: "Admin" };
+\`\`\`js run let user = { name: "John" }; let admin = { name: "Admin" };
 
-function sayHi() {
-  alert( this.name );
-}
+function sayHi\(\) { alert\( this.name \); }
 
-*!*
-// usa la misma función en dos objetos
-user.f = sayHi;
-admin.f = sayHi;
-*/!*
+_!_ // usa la misma función en dos objetos user.f = sayHi; admin.f = sayHi; _/!_
 
-// estos llamados tienen diferente "this"
-// "this" dentro de la función es el objeto "antes del punto"
-user.f(); // John  (this == user)
-admin.f(); // Admin  (this == admin)
+// estos llamados tienen diferente "this" // "this" dentro de la función es el objeto "antes del punto" user.f\(\); // John \(this == user\) admin.f\(\); // Admin \(this == admin\)
 
-admin['f'](); // Admin (punto o corchetes para acceder al método, no importa)
-```
+admin['f'](article.md); // Admin \(punto o corchetes para acceder al método, no importa\)
 
+```text
 La regla es simple: si `obj.f()` es llamado, entonces `this` es `obj` durante el llamado de `f`. Entonces es tanto `user` o `admin` en el ejemplo anterior.
 
 ````smart header="Llamado sin un objeto: `this == undefined`"
@@ -220,11 +182,11 @@ sayHi(); // undefined
 
 En este caso `this` es `undefined` en el modo estricto. Si tratamos de acceder a `this.name`, habrá un error.
 
-En modo no estricto el valor de `this` en tal caso será el *objeto global* (`window` en un navegador, llegaremos a ello en el capítulo [](info:global-object)). Este es un comportamiento histórico que `"use strict"` corrige.
+En modo no estricto el valor de `this` en tal caso será el _objeto global_ \(`window` en un navegador, llegaremos a ello en el capítulo \). Este es un comportamiento histórico que `"use strict"` corrige.
 
 Usualmente tal llamado es un error de programa. Si hay `this` dentro de una función, se espera que sea llamada en un contexto de objeto.
-````
 
+```text
 ```smart header="Las consecuencias de un `this` desvinculado"
 Si vienes de otro lenguaje de programación, probablemente estés habituado a la idea de un "`this` vinculado", donde los método definidos en un objeto siempre tienen `this` referenciando ese objeto.
 
@@ -241,30 +203,25 @@ Las funciones de flecha son especiales: ellas no tienen su "propio" `this`. Si n
 
 Por ejemplo, aquí `arrow()` usa `this` desde fuera del método `user.sayHi()`:
 
-```js run
-let user = {
-  firstName: "Ilya",
-  sayHi() {
-    let arrow = () => alert(this.firstName);
-    arrow();
-  }
-};
+\`\`\`js run let user = { firstName: "Ilya", sayHi\(\) { let arrow = \(\) =&gt; alert\(this.firstName\); arrow\(\); } };
 
-user.sayHi(); // Ilya
-```
+user.sayHi\(\); // Ilya
 
-Esto es una característica especial de las funciones de flecha, útil cuando no queremos realmente un `this` separado sino tomarlo de un contexto externo. Más adelante en el capítulo <info:arrow-functions> las trataremos en profundidad.
+\`\`\`
 
+Esto es una característica especial de las funciones de flecha, útil cuando no queremos realmente un `this` separado sino tomarlo de un contexto externo. Más adelante en el capítulo  las trataremos en profundidad.
 
 ## Resumen
 
-- Las funciones que son almacenadas en propiedades de objeto son llamadas "métodos".
-- Los método permiten a los objetos "actuar", como `object.doSomething()`.
-- Los métodos pueden hacer referencia al objeto con `this`.
+* Las funciones que son almacenadas en propiedades de objeto son llamadas "métodos".
+* Los método permiten a los objetos "actuar", como `object.doSomething()`.
+* Los métodos pueden hacer referencia al objeto con `this`.
 
 El valor de `this` es definido en tiempo de ejecución.
-- Cuando una función es declarada, puede usar `this`, pero ese `this` no tiene valor hasta que la función es llamada.
-- Una función puede ser copiada entre objetos.
-- Cuando una función es llamada en la sintaxis de método: `object.method()`, el valor de `this` durante el llamado es `object`.
+
+* Cuando una función es declarada, puede usar `this`, pero ese `this` no tiene valor hasta que la función es llamada.
+* Una función puede ser copiada entre objetos.
+* Cuando una función es llamada en la sintaxis de método: `object.method()`, el valor de `this` durante el llamado es `object`.
 
 Ten en cuenta que las funciones de flecha son especiales: ellas no tienen `this`. Cuando `this` es accedido dentro de una función de flecha, su valor es tomado desde el exterior.
+

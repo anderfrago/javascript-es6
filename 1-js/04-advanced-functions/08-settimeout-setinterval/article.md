@@ -4,8 +4,8 @@ Podemos decidir ejecutar una función no ahora, sino en un momento posterior. Es
 
 Hay dos métodos para ello:
 
-- `setTimeout` nos permite ejecutar una función una vez después del intervalo de tiempo.
-- `setInterval` nos permite ejecutar una función repetidamente, comenzando después del intervalo de tiempo, luego repitiéndose continuamente en ese intervalo.
+* `setTimeout` nos permite ejecutar una función una vez después del intervalo de tiempo.
+* `setInterval` nos permite ejecutar una función repetidamente, comenzando después del intervalo de tiempo, luego repitiéndose continuamente en ese intervalo.
 
 Estos métodos no son parte de la especificación de JavaScript. Pero la mayoría de los entornos tienen el planificador interno y proporcionan estos métodos. En particular, son compatibles con todos los navegadores y Node.js.
 
@@ -13,34 +13,25 @@ Estos métodos no son parte de la especificación de JavaScript. Pero la mayorí
 
 La sintaxis:
 
-```js
+```javascript
 let timerId = setTimeout(func|código, [retraso], [arg1], [arg2], ...)
 ```
 
 Parámetros:
 
-`func|código`
-: Función o una cadena de código para ejecutar.
-Por lo general, es una función. Por razones históricas, se puede pasar una cadena de código, pero eso no es recomendable.
+`func|código` : Función o una cadena de código para ejecutar. Por lo general, es una función. Por razones históricas, se puede pasar una cadena de código, pero eso no es recomendable.
 
-`retraso`
-: El retraso o *delay* antes de la ejecución, en milisegundos (1000 ms = 1 segundo), por defecto 0.
+`retraso` : El retraso o _delay_ antes de la ejecución, en milisegundos \(1000 ms = 1 segundo\), por defecto 0.
 
-`arg1`, `arg2`...
-: Argumentos para la función (no compatible con IE9-)
+`arg1`, `arg2`... : Argumentos para la función \(no compatible con IE9-\)
 
 Por ejemplo, este código llama a `sayHi()` después de un segundo:
 
-```js run
-function sayHi() {
-  alert('Hola');
-}
+\`\`\`js run function sayHi\(\) { alert\('Hola'\); }
 
-*!*
-setTimeout(sayHi, 1000);
-*/!*
-```
+_!_ setTimeout\(sayHi, 1000\); _/!_
 
+```text
 Con argumentos:
 
 ```js run
@@ -57,27 +48,25 @@ Si el primer argumento es un string, entonces JavaScript crea una función a par
 
 Entonces, esto también funcionará:
 
-```js run no-beautify
-setTimeout("alert('Hola')", 1000);
-```
+\`\`\`js run no-beautify setTimeout\("alert\('Hola'\)", 1000\);
 
+```text
 Pero no se recomienda usar strings, use funciones de flecha en lugar de ellas, como esta:
 
 ```js run no-beautify
 setTimeout(() => alert('Hola'), 1000);
 ```
 
-````smart header="Pasa una función, pero no la ejecuta"
-Los desarrolladores novatos a veces cometen un error al agregar paréntesis `()` después de la función:
+```````smart header="Pasa una función, pero no la ejecuta" Los desarrolladores novatos a veces cometen un error al agregar paréntesis````\(\)\` después de la función:
 
-```js
+```javascript
 // mal!
 setTimeout(sayHi(), 1000);
 ```
 
-Eso no funciona, porque `setTimeout` espera una referencia a una función. Y aquí `sayHi()` ejecuta la función, y el *resultado de su ejecución* se pasa a `setTimeout`. En nuestro caso, el resultado de `sayHi()` es `undefined` (la función no devuelve nada), por lo que no hay nada planificado.
-````
+Eso no funciona, porque `setTimeout` espera una referencia a una función. Y aquí `sayHi()` ejecuta la función, y el _resultado de su ejecución_ se pasa a `setTimeout`. En nuestro caso, el resultado de `sayHi()` es `undefined` \(la función no devuelve nada\), por lo que no hay nada planificado.
 
+```text
 ### Cancelando con clearTimeout
 
 Una llamada a `setTimeout` devuelve un "identificador de temporizador" `timerId` que podemos usar para cancelar la ejecución.
@@ -233,7 +222,7 @@ setTimeout(function() {...}, 100);
 Para `setInterval`, la función permanece en la memoria hasta que se invoca `clearInterval`.
 
 Hay un efecto secundario. Una función hace referencia al entorno léxico externo, por lo tanto, mientras vive, las variables externas también viven. Pueden tomar mucha más memoria que la función misma. Entonces, cuando ya no necesitamos la función planificada, es mejor cancelarla, incluso si es muy pequeña.
-````
+```
 
 ## Retraso cero en setTimeout
 
@@ -245,12 +234,11 @@ Por lo tanto, la función está planificada para ejecutarse "justo después" del
 
 Por ejemplo, esto genera "Hola", e inmediatamente después "Mundo":
 
-```js run
-setTimeout(() => alert("Mundo"));
+\`\`\`js run setTimeout\(\(\) =&gt; alert\("Mundo"\)\);
 
-alert("Hola");
-```
+alert\("Hola"\);
 
+```text
 La primera línea "pone la llamada en el calendario después de 0 ms". Pero el planificador solo "verificará el calendario" una vez que se haya completado el script actual, por lo que "Hola" es primero y "Mundo"` -- después.
 
 También hay casos de uso avanzados relacionados con el navegador y el tiempo de espera cero (zero-delay), que discutiremos en el capítulo <info:event-loop>.
@@ -275,29 +263,31 @@ setTimeout(function run() {
 // 1,1,1,1,9,15,20,24,30,35,40,45,50,55,59,64,70,75,80,85,90,95,100
 ```
 
-Los primeros temporizadores se ejecutan inmediatamente (tal como está escrito en la especificación), y luego vemos `9, 15, 20, 24 ...`. Entra en juego el retraso obligatorio de más de 4 ms entre invocaciones.
+Los primeros temporizadores se ejecutan inmediatamente \(tal como está escrito en la especificación\), y luego vemos `9, 15, 20, 24 ...`. Entra en juego el retraso obligatorio de más de 4 ms entre invocaciones.
 
 Lo mismo sucede si usamos `setInterval` en lugar de `setTimeout`: `setInterval(f)` ejecuta `f` algunas veces con cero retardo, y luego con 4+ ms de retraso.
 
 Esa limitación proviene de la antigüedad y muchos guiones dependen de ella, por lo que existe por razones históricas.
 
 Para JavaScript del lado del servidor, esa limitación no existe, y existen otras formas de planificar un trabajo asincrónico inmediato, como [setImmediate](https://nodejs.org/api/timers.html) para Node.js. Entonces esta nota es específica del navegador.
-````
+
+\`\`\`\`
 
 ## Resumen
 
-- Los métodos `setTimeout(func, delay, ... args)` y `setInterval(func, delay, ... args)` nos permiten ejecutar el `func` una vez / regularmente después de un retardo (delay) en milisegundos.
-- Para cancelar la ejecución, debemos llamar a `clearTimeout / clearInterval` con el valor devuelto por `setTimeout / setInterval`.
-- Las llamadas anidadas `setTimeout` son una alternativa más flexible a `setInterval`, lo que nos permite establecer el tiempo *entre* ejecuciones con mayor precisión.
-- La programación de retardo cero con `setTimeout(func, 0) `(lo mismo que `setTimeout(func)`) se usa para programar la llamada "lo antes posible, pero después de que se complete el script actual".
-- El navegador limita la demora mínima para cinco o más llamadas anidadas de `setTimeout` o para `setInterval` (después de la quinta llamada) a 4 ms. Eso es por razones históricas.
+* Los métodos `setTimeout(func, delay, ... args)` y `setInterval(func, delay, ... args)` nos permiten ejecutar el `func` una vez / regularmente después de un retardo \(delay\) en milisegundos.
+* Para cancelar la ejecución, debemos llamar a `clearTimeout / clearInterval` con el valor devuelto por `setTimeout / setInterval`.
+* Las llamadas anidadas `setTimeout` son una alternativa más flexible a `setInterval`, lo que nos permite establecer el tiempo _entre_ ejecuciones con mayor precisión.
+* La programación de retardo cero con `setTimeout(func, 0)`\(lo mismo que `setTimeout(func)`\) se usa para programar la llamada "lo antes posible, pero después de que se complete el script actual".
+* El navegador limita la demora mínima para cinco o más llamadas anidadas de `setTimeout` o para `setInterval` \(después de la quinta llamada\) a 4 ms. Eso es por razones históricas.
 
-Tenga en cuenta que todos los métodos de planificación no *garantizan* el retraso exacto.
+Tenga en cuenta que todos los métodos de planificación no _garantizan_ el retraso exacto.
 
 Por ejemplo, el temporizador en el navegador puede ralentizarse por muchas razones:
-- La CPU está sobrecargada.
-- La pestaña del navegador está en modo de fondo.
-- El portátil está con batería.
 
-Todo eso puede aumentar la resolución mínima del temporizador (el retraso mínimo) a 300 ms o incluso 1000 ms dependiendo de la configuración de rendimiento del navegador y del nivel del sistema operativo.
+* La CPU está sobrecargada.
+* La pestaña del navegador está en modo de fondo.
+* El portátil está con batería.
+
+Todo eso puede aumentar la resolución mínima del temporizador \(el retraso mínimo\) a 300 ms o incluso 1000 ms dependiendo de la configuración de rendimiento del navegador y del nivel del sistema operativo.
 

@@ -1,16 +1,16 @@
+# task
+
 importance: 4
 
----
-
-# Crea un objeto a partir de un array
+## Crea un objeto a partir de un array
 
 Supongamos que recibimos un array de usuarios con la forma `{id:..., name:..., age:... }`.
 
-Crea una función `groupById(arr)` que cree un objeto, con `id` como clave (key) y los elementos del array como valores.
+Crea una función `groupById(arr)` que cree un objeto, con `id` como clave \(key\) y los elementos del array como valores.
 
 Por ejemplo:
 
-```js
+```javascript
 let users = [
   {id: 'john', name: "John Smith", age: 20},
   {id: 'ann', name: "Ann Smith", age: 24},
@@ -35,3 +35,4 @@ Dicha función es realmente útil cuando trabajamos con información del servido
 Para esta actividad asumimos que cada `id` es único. No existen dos elementos del array con el mismo `id`.
 
 Usa el método de array `.reduce` en la solución.
+

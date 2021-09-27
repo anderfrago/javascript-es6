@@ -1,14 +1,12 @@
+# solution
 
 La respuesta corta es: **no, no son iguales**:
 
 La diferencia es que si ocurre un error en `f1`, entonces aqui es manejado por `.catch`:
 
-```js run
-promise
-  .then(f1)
-  .catch(f2);
-```
+\`\`\`js run promise .then\(f1\) .catch\(f2\);
 
+```text
 ...Pero no aquí:
 
 ```js run

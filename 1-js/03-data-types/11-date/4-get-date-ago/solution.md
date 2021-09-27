@@ -1,6 +1,8 @@
+# solution
+
 La idea es simple: restarle a la fecha `date` la cantidad de días especificada.
 
-```js
+```javascript
 function getDateAgo(date, days) {
   date.setDate(date.getDate() - days);
   return date.getDate();
@@ -11,17 +13,13 @@ function getDateAgo(date, days) {
 
 Para hacerlo, clonemos la fecha de esta manera:
 
-```js run demo
-function getDateAgo(date, days) {
-  let dateCopy = new Date(date);
+\`\`\`js run demo function getDateAgo\(date, days\) { let dateCopy = new Date\(date\);
 
-  dateCopy.setDate(date.getDate() - days);
-  return dateCopy.getDate();
-}
+dateCopy.setDate\(date.getDate\(\) - days\); return dateCopy.getDate\(\); }
 
-let date = new Date(2015, 0, 2);
+let date = new Date\(2015, 0, 2\);
 
-alert( getDateAgo(date, 1) ); // 1, (1 Jan 2015)
-alert( getDateAgo(date, 2) ); // 31, (31 Dec 2014)
-alert( getDateAgo(date, 365) ); // 2, (2 Jan 2014)
-```
+alert\( getDateAgo\(date, 1\) \); // 1, \(1 Jan 2015\) alert\( getDateAgo\(date, 2\) \); // 31, \(31 Dec 2014\) alert\( getDateAgo\(date, 365\) \); // 2, \(2 Jan 2014\)
+
+\`\`\`
+

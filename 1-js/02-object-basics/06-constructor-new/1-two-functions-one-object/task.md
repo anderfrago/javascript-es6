@@ -1,19 +1,18 @@
+# task
+
 importance: 2
 
----
-
-# Dos funciones – un objeto
+## Dos funciones – un objeto
 
 ¿Es posible crear las funciones `A` y `B` para que se cumpla `new A() == new B()`?
 
-```js no-beautify
-function A() { ... }
-function B() { ... }
+\`\`\`js no-beautify function A\(\) { ... } function B\(\) { ... }
 
-let a = new A;
-let b = new B;
+let a = new A; let b = new B;
 
-alert( a == b ); // true
-```
+alert\( a == b \); // true
+
+\`\`\`
 
 Si es posible, entonces proporcione un ejemplo de su código.
+

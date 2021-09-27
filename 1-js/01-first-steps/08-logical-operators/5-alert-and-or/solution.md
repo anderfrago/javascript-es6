@@ -1,16 +1,18 @@
+# solution
+
 La respuesta: `3`.
 
-```js run
-alert( null || 2 && 3 || 4 );
-```
+\`\`\`js run alert\( null \|\| 2 && 3 \|\| 4 \);
 
+```text
 La precedencia de AND `&&` es mayor que la de `||`, así que se ejecuta primero.
 
 El resultado de `2 && 3 = 3`, por lo que la expresión se convierte en:
+```
 
-```
-null || 3 || 4
-```
+null \|\| 3 \|\| 4
+
+\`\`\`
 
 Ahora el resultado será el primer valor verdadero: `3`.
 

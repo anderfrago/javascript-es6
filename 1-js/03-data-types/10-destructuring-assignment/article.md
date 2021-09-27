@@ -2,12 +2,12 @@
 
 Las dos estructuras de datos más usadas en JavaScript son `Object` y `Array`.
 
-- Los objetos nos permiten crear una entidad individual que almacena elementos de información con una clave.
-- los arrays nos permiten reunir elementos de información en una colección ordenada.
+* Los objetos nos permiten crear una entidad individual que almacena elementos de información con una clave.
+* los arrays nos permiten reunir elementos de información en una colección ordenada.
 
 Pero cuando pasamos estos a una función, tal vez no necesitemos un objeto/array como un conjunto sino piezas individuales.
 
-La *asignación desestructurante* es una sintaxis especial que nos permite "desempaquetar" arrays u objetos en varias variables, ya que esto a veces es más conveniente. 
+La _asignación desestructurante_ es una sintaxis especial que nos permite "desempaquetar" arrays u objetos en varias variables, ya que esto a veces es más conveniente.
 
 La desestructuración también funciona bien con funciones complejas que tienen muchos argumentos, valores por defecto, etcétera. Pronto lo veremos.
 
@@ -15,7 +15,7 @@ La desestructuración también funciona bien con funciones complejas que tienen 
 
 Un ejemplo de cómo el array es desestructurado en variables:
 
-```js
+```javascript
 // tenemos un array con el nombre y apellido
 let arr = ["John", "Smith"]
 
@@ -34,12 +34,9 @@ Ahora podemos trabajar con variables en lugar de miembros de array.
 
 Se ve genial cuando se combina con `split` u otro método que devuelva un array:
 
-```js run
-let [firstName, surname] = "John Smith".split(' ');
-alert(firstName); // John
-alert(surname);  // Smith
-```
+\`\`\`js run let \[firstName, surname\] = "John Smith".split\(' '\); alert\(firstName\); // John alert\(surname\); // Smith
 
+```text
 Como puedes ver, la sintaxis es simple. Aunque hay varios detalles peculiares. Veamos más ejemplos para entenderlo mejor.
 
 ````smart header="\"Desestructuración\" no significa \"destructivo\"."
@@ -51,8 +48,8 @@ Es sólo una manera más simple de escribir:
 let firstName = arr[0];
 let surname = arr[1];
 ```
-````
 
+```text
 ````smart header="Ignorar elementos utilizando comas"
 Los elementos no deseados de un array también pueden ser descartados por medio de una coma extra:
 
@@ -66,20 +63,20 @@ alert( title ); // Consul
 ```
 
 En el código de arriba, el segundo elemento del array es omitido, el tercero es asignado a `title`, y el resto de los elementos del array también se omiten (debido a que no hay variables para ellos).
-````
+```
 
-````smart header="Funciona con cualquier iterable en el lado derecho"
+\`\`\`\`smart header="Funciona con cualquier iterable en el lado derecho"
 
 ...Incluso lo podemos usar con cualquier iterable, no sólo arrays:
 
-```js
+```javascript
 let [a, b, c] = "abc"; // ["a", "b", "c"]
 let [one, two, three] = new Set([1, 2, 3]);
 ```
+
 Esto funciona, porque internamente una desestructuración trabaja iterando sobre el valor de la derecha. Es una clase de azúcar sintáctica para llamar `for..of` sobre el valor a la derecha del `=` y asignar esos valores.
-````
 
-
+```text
 ````smart header="Asignar a cualquier cosa en el lado izquierdo"
 Podemos usar cualquier "asignable" en el lado izquierdo.
 
@@ -91,28 +88,17 @@ let user = {};
 alert(user.name); // John
 alert(user.surname); // Smith
 ```
+```
 
-````
-
-````smart header="Bucle con .entries()"
-En el capítulo anterior vimos el método [Object.entries(obj)](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Object/entries).
+\`\`\`\`smart header="Bucle con .entries\(\)" En el capítulo anterior vimos el método [Object.entries\(obj\)](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Object/entries).
 
 Podemos usarlo con la desestructuración para recorrer claves-y-valores de un objeto:
 
-```js run
-let user = {
-  name: "John",
-  age: 30
-};
+\`\`\`js run let user = { name: "John", age: 30 };
 
-// recorrer claves-y-valores
-*!*
-for (let [key, value] of Object.entries(user)) {
-*/!*
-  alert(`${key}:${value}`); // name:John, luego age:30
-}
-```
+// recorrer claves-y-valores _!_ for \(let \[key, value\] of Object.entries\(user\)\) { _/!_ alert\(`${key}:${value}`\); // name:John, luego age:30 }
 
+```text
 El código equivalente para `Map` es más simple, porque es iterable:
 
 ```js run
@@ -127,8 +113,8 @@ for (let [key, value] of user) {
   alert(`${key}:${value}`); // name:John, luego age:30
 }
 ```
-````
 
+```text
 ````smart header="Truco para intercambiar variables"
 Hay un conocido truco para intercambiar los valores de dos variables usando asignación desestructurante:
 
@@ -147,7 +133,7 @@ alert(`${guest} ${admin}`); // Pete Jane (¡intercambiados con éxito!)
 Aquí creamos un array temporal de dos variables e inmediatamente lo desestructuramos con el orden cambiado.
 
 Podemos intercambiar más de dos variables de este modo.
-````
+```
 
 ### El resto '...'
 
@@ -155,14 +141,11 @@ En general, si el array es mayor que la lista de la izquierda, los ítems extras
 
 Por ejemplo, aquí solo dos items son tomados, el resto simplemente es ignorado:
 
-```js run
-let [name1, name2] = ["Julius", "Caesar", "Consul", "of the Roman Republic"];
+\`\`\`js run let \[name1, name2\] = \["Julius", "Caesar", "Consul", "of the Roman Republic"\];
 
-alert(name1); // Julius
-alert(name2); // Caesar
-// items posteriores no serán asignados a ningún lugar
-```
+alert\(name1\); // Julius alert\(name2\); // Caesar // items posteriores no serán asignados a ningún lugar
 
+```text
 si queremos también obtener todo lo que sigue, podemos agregarle un parámetro que obtiene "el resto" usando puntos suspensivos "..."`:
 
 ```js run
@@ -176,15 +159,13 @@ alert(rest.length); // 2
 */!*
 ```
 
-El valor de `rest` es un array de los elementos restantes. 
+El valor de `rest` es un array de los elementos restantes.
 
 Podemos usar cualquier otro nombre de variable en lugar de `rest`, sólo hay que asegurar que tenga tres puntos que lo antecedan y que esté último en la asignación desestructurante.
 
-```js run
-let [name1, name2, *!*...titles*/!*] = ["Julius", "Caesar", "Consul", "of the Roman Republic"];
-// ahora titles = ["Consul", "of the Roman Republic"]
-```
+\`\`\`js run let \[name1, name2, _!_...titles_/!_\] = \["Julius", "Caesar", "Consul", "of the Roman Republic"\]; // ahora titles = \["Consul", "of the Roman Republic"\]
 
+```text
 ### Valores predeterminados
 
 Si el array es más corto que la lista de variables a la izquierda, no habrá errores. Los valores ausentes son considerados undefined:
@@ -200,16 +181,11 @@ alert(surname); // undefined
 
 Si queremos un valor "predeterminado" para reemplazar el valor faltante, podemos proporcionarlo utilizando `=`:
 
-```js run
-*!*
-// valores predeterminados
-let [name = "Guest", surname = "Anonymous"] = ["Julius"];
-*/!*
+\`\`\`js run _!_ // valores predeterminados let \[name = "Guest", surname = "Anonymous"\] = \["Julius"\]; _/!_
 
-alert(name);    // Julius (desde array)
-alert(surname); // Anonymous (predeterminado utilizado)
-```
+alert\(name\); // Julius \(desde array\) alert\(surname\); // Anonymous \(predeterminado utilizado\)
 
+```text
 Los valores predeterminados pueden ser expresiones más complejas e incluso llamadas a función, que serán evaluadas sólo si el valor no ha sido proporcionado.
 
 Por ejemplo, aquí utilizamos la función `prompt` para dos valores predeterminados.
@@ -222,7 +198,7 @@ alert(name);    // Julius (desde array)
 alert(surname); // lo que reciba la captura
 ```
 
-Observa que el `prompt` se ejecuta solamente para el valor faltante (`surname`).
+Observa que el `prompt` se ejecuta solamente para el valor faltante \(`surname`\).
 
 ## Desestructuración de objetos
 
@@ -230,7 +206,7 @@ La asignación desestructurante también funciona con objetos.
 
 La sintaxis básica es:
 
-```js
+```javascript
 let {var1, var2} = {var1:…, var2:…}
 ```
 
@@ -238,22 +214,13 @@ Tenemos un objeto existente en el lado derecho que queremos dividir en variables
 
 Por ejemplo:
 
-```js run
-let options = {
-  title: "Menu",
-  width: 100,
-  height: 200
-};
+\`\`\`js run let options = { title: "Menu", width: 100, height: 200 };
 
-*!*
-let {title, width, height} = options;
-*/!*
+_!_ let {title, width, height} = options; _/!_
 
-alert(title);  // Menu
-alert(width);  // 100
-alert(height); // 200
-```
+alert\(title\); // Menu alert\(width\); // 100 alert\(height\); // 200
 
+```text
 Las propiedades `options.title`, `options.width` y `options.height` son asignadas a las variables correspondientes. 
 
 No importa el orden sino los nombres. Esto también funciona:
@@ -267,27 +234,15 @@ El patrón de la izquierda puede ser más complejo y especificar el mapeo entre 
 
 Si queremos asignar una propiedad a una variable con otro nombre, por ejemplo que `options.width` vaya en la variable llamada `w`, lo podemos establecer usando dos puntos:
 
-```js run
-let options = {
-  title: "Menu",
-  width: 100,
-  height: 200
-};
+\`\`\`js run let options = { title: "Menu", width: 100, height: 200 };
 
-*!*
-// { propiedadOrigen: variableObjetivo }
-let {width: w, height: h, title} = options;
-*/!*
+_!_ // { propiedadOrigen: variableObjetivo } let {width: w, height: h, title} = options; _/!_
 
-// width -> w
-// height -> h
-// title -> title
+// width -&gt; w // height -&gt; h // title -&gt; title
 
-alert(title);  // Menu
-alert(w);      // 100
-alert(h);      // 200
-```
+alert\(title\); // Menu alert\(w\); // 100 alert\(h\); // 200
 
+```text
 Los dos puntos muestran "qué : va dónde". En el ejemplo de arriba la propiedad `width` va a `w`, `height` va a `h`, y `title` es asignado al mismo nombre.
 
 Para propiedades potencialmente faltantes podemos establecer valores predeterminados utilizando `"="`, de esta manera:
@@ -310,19 +265,13 @@ Al igual que con arrays o argumentos de función, los valores predeterminados pu
 
 En el código de abajo `prompt` pregunta por `width`, pero no por `title`:
 
-```js run
-let options = {
-  title: "Menu"
-};
+\`\`\`js run let options = { title: "Menu" };
 
-*!*
-let {width = prompt("¿ancho?"), title = prompt("¿título?")} = options;
-*/!*
+_!_ let {width = prompt\("¿ancho?"\), title = prompt\("¿título?"\)} = options; _/!_
 
-alert(title);  // Menu
-alert(width);  // (lo que sea el resultado de la captura)
-```
+alert\(title\); // Menu alert\(width\); // \(lo que sea el resultado de la captura\)
 
+```text
 También podemos combinar ambos, los dos puntos y la igualdad:
 
 ```js run
@@ -341,19 +290,13 @@ alert(h);      // 200
 
 Si tenemos un objeto complejo con muchas propiedades, podemos extraer solamente las que necesitamos:
 
-```js run
-let options = {
-  title: "Menu",
-  width: 100,
-  height: 200
-};
+\`\`\`js run let options = { title: "Menu", width: 100, height: 200 };
 
-// sólo extrae título como variable
-let { title } = options;
+// sólo extrae título como variable let { title } = options;
 
-alert(title); // Menu
-```
+alert\(title\); // Menu
 
+```text
 ### El patrón resto "..."
 
 ¿Qué pasa si el objeto tiene más propiedades que las variables que tenemos? ¿Podemos tomar algunas y luego asignar el "resto" en alguna parte?
@@ -380,17 +323,13 @@ alert(rest.height);  // 200
 alert(rest.width);   // 100
 ```
 
-````smart header="La trampa si no hay `let`"
-En los ejemplos de arriba, las variables fueron declaradas en la asignación: `let {…} = {…}`. Por supuesto que también podemos usar variables existentes, sin `let`. Pero hay una trampa.
+```````smart header="La trampa si no hay````let`" En los ejemplos de arriba, las variables fueron declaradas en la asignación:`let {…} = {…}`. Por supuesto que también podemos usar variables existentes, sin`let\`. Pero hay una trampa.
 
-Esto no funcionará:
-```js run
-let title, width, height;
+Esto no funcionará: \`\`\`js run let title, width, height;
 
-// error en esta línea
-{title, width, height} = {title: "Menu", width: 200, height: 100};
-```
+// error en esta línea {title, width, height} = {title: "Menu", width: 200, height: 100};
 
+```text
 El problema es que JavaScript trata al `{...}` como un bloque de código en el flujo principal de código (no dentro de otra expresión). Estos bloques de código pueden ser usados para agrupar sentencias, de esta manera:
 
 ```js run
@@ -406,15 +345,15 @@ Aquí JavaScript supone que tenemos un bloque de código, es por eso que hay un 
 
 Para mostrarle a JavaScript que no es un bloque de código, podemos rodear la expresión entre paréntesis `(...)`:
 
-```js run
-let title, width, height;
+\`\`\`js run let title, width, height;
 
-// ahora está bien
-*!*(*/!*{title, width, height} = {title: "Menu", width: 200, height: 100}*!*)*/!*;
+// ahora está bien _!_\(_/!_{title, width, height} = {title: "Menu", width: 200, height: 100}_!_\)_/!_;
 
-alert( title ); // Menu
+alert\( title \); // Menu
+
+```text
+`
 ```
-````
 
 ## Desestructuración anidada
 
@@ -422,33 +361,14 @@ Si un objeto o array contiene objetos y arrays anidados, podemos utilizar patron
 
 En el código de abajo `options` tiene otro objeto en la propiedad `size` y un array en la propiedad `items`. El patrón en el lado izquierdo de la asignación tiene la misma estructura para extraer valores de ellos:
 
-```js run
-let options {
-  size: {
-    width: 100,
-    height: 200
-  },
-  items: ["Cake", "Donut"],
-  extra: true   
+\`\`\`js run let options { size: { width: 100, height: 200 }, items: \["Cake", "Donut"\], extra: true  
 };
 
-// la asignación desestructurante fue dividida en varias líneas para mayor claridad
-let {
-  size: { // colocar tamaño aquí
-    width,
-    height
-  },
-  items: [item1, item2], // asignar ítems aquí
-  title = "Menu" // no se encuentra en el objeto (se utiliza valor predeterminado)
-} = options;
+// la asignación desestructurante fue dividida en varias líneas para mayor claridad let { size: { // colocar tamaño aquí width, height }, items: \[item1, item2\], // asignar ítems aquí title = "Menu" // no se encuentra en el objeto \(se utiliza valor predeterminado\) } = options;
 
-alert(title);  // Menu
-alert(width);  // 100
-alert(height); // 200
-alert(item1);  // Cake
-alert(item2);  // Donut
-```
+alert\(title\); // Menu alert\(width\); // 100 alert\(height\); // 200 alert\(item1\); // Cake alert\(item2\); // Donut
 
+```text
 Todas las propiedades del objeto `options` con excepción de `extra` que no está en el lado izquierda, son asignadas a las variables correspondientes:
 
 ![](destructuring-complex.svg)
@@ -469,11 +389,11 @@ function showMenu(title = "Untitled", width = 200, height = 100, items = []) {
 }
 ```
 
-En la vida real, el problema es cómo recordar el orden de los argumentos. Normalmente los IDEs (Entorno de desarrollo integrado) intentan ayudarnos, especialmente si el código está bien documentado, pero aún así... Otro problema es cómo llamar a una función si queremos que use sus valores predeterminados en la mayoría de los argumentos.
+En la vida real, el problema es cómo recordar el orden de los argumentos. Normalmente los IDEs \(Entorno de desarrollo integrado\) intentan ayudarnos, especialmente si el código está bien documentado, pero aún así... Otro problema es cómo llamar a una función si queremos que use sus valores predeterminados en la mayoría de los argumentos.
 
 ¿Así?
 
-```js
+```javascript
 // undefined para que use los valores predeterminados
 showMenu("My Menu", undefined, undefined, ["Item1", "Item2"])
 ```
@@ -484,24 +404,13 @@ Esto no es nada grato. Y se torna ilegible cuando tratamos con muchos argumentos
 
 Podemos pasar los argumentos como un objeto, y la función inmediatamente los desestructura en variables:
 
-```js run
-// pasamos un objeto a la función
-let options = {
-  title: "My menu",
-  items: ["Item1", "Item2"]
-};
+\`\`\`js run // pasamos un objeto a la función let options = { title: "My menu", items: \["Item1", "Item2"\] };
 
-// ...y los expande inmediatamente a variables
-function showMenu(*!*{title = "Untitled", width = 200, height = 100, items = []}*/!*) {
-  // title, items – desde options
-  // width, height – usan los predeterminados
-  alert( `${title} ${width} ${height}` ); // My Menu 200 100
-  alert( items ); // Item1, Item2
-}
+// ...y los expande inmediatamente a variables function showMenu\(_!_{title = "Untitled", width = 200, height = 100, items = \[\]}_/!_\) { // title, items – desde options // width, height – usan los predeterminados alert\( `${title} ${width} ${height}` \); // My Menu 200 100 alert\( items \); // Item1, Item2 }
 
-showMenu(options);
-```
+showMenu\(options\);
 
+```text
 También podemos usar desestructuración más compleja con objetos anidados y mapeo de dos puntos:
 
 ```js run
@@ -527,7 +436,8 @@ showMenu(options);
 ```
 
 La sintaxis completa es la misma que para una asignación desestructurante:
-```js
+
+```javascript
 function({
   incomingProperty: varName = defaultValue  // propiedadEntrante: nombreVariable = valorPredeterminado
   ...
@@ -538,7 +448,7 @@ Entonces, para un objeto de parámetros, habrá una variable `varName` para la p
 
 Por favor observe que tal desestructuración supone que `showMenu()` tiene un argumento. Si queremos todos los valores predeterminados, debemos especificar un objeto vacío:
 
-```js
+```javascript
 showMenu({}); // ok, todos los valores son predeterminados
 
 showMenu(); // esto daría un error
@@ -546,14 +456,11 @@ showMenu(); // esto daría un error
 
 Podemos solucionar esto, poniendo `{}` como valor predeterminado para todo el objeto de argumentos:
 
-```js run
-function showMenu({ title = "Menu", width = 100, height = 200 }*!* = {}*/!*) {
-  alert( `${title} ${width} ${height}` );
-}
+`````js run function showMenu({ title = "Menu", width = 100, height = 200 }*!* = {}*/!*) { alert(```${title} ${width} ${height}\` \); }
 
-showMenu(); // Menu 100 200
-```
+showMenu\(\); // Menu 100 200
 
+```text
 En el código de arriba, todo el objeto de argumentos es `{}` por defecto, por lo tanto siempre hay algo para desestructurar.
 
 ## Resumen
@@ -562,18 +469,21 @@ En el código de arriba, todo el objeto de argumentos es `{}` por defecto, por l
 - La sintaxis completa para objeto:
     ```js
     let {prop : varName = default, ...rest} = object
-    ```
+```
 
-    Esto significa que la propiedad `prop` se asigna a la variable `varName`; pero si no existe tal propiedad, se usa el valor `default`.
+```text
+Esto significa que la propiedad `prop` se asigna a la variable `varName`; pero si no existe tal propiedad, se usa el valor `default`.
 
-    Las propiedades de objeto que no fueron mapeadas son copiadas al objeto `rest`.
+Las propiedades de objeto que no fueron mapeadas son copiadas al objeto `rest`.
+```
 
-- La sintaxis completa para array:
+* La sintaxis completa para array:
 
-    ```js
+  ```javascript
     let [item1 = default, item2, ...resto] = array
-    ```
+  ```
 
-    El primer item va a `item1`, el segundo a `item2`, todos los ítems restantes crean el array `resto`.
+  El primer item va a `item1`, el segundo a `item2`, todos los ítems restantes crean el array `resto`.
 
-- Es posible extraer información desde arrays/objetos anidados, para esto el lado izquierdo debe tener la misma estructura que el lado derecho.
+* Es posible extraer información desde arrays/objetos anidados, para esto el lado izquierdo debe tener la misma estructura que el lado derecho.
+

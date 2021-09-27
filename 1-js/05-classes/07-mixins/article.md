@@ -10,7 +10,7 @@ Hay un concepto que puede ayudar aquí, llamado "mixins".
 
 Como se define en Wikipedia, un [mixin](https://es.wikipedia.org/wiki/Mixin) es una clase que contiene métodos que pueden ser utilizados por otras clases sin necesidad de heredar de ella.
 
-En otras palabras, un *mixin* proporciona métodos que implementan cierto comportamiento, pero su uso no es exclusivo, lo usamos para agregar el comportamiento a otras clases.
+En otras palabras, un _mixin_ proporciona métodos que implementan cierto comportamiento, pero su uso no es exclusivo, lo usamos para agregar el comportamiento a otras clases.
 
 ## Un ejemplo de mixin
 
@@ -18,35 +18,15 @@ La forma más sencilla de implementar un mixin en JavaScript es hacer un objeto 
 
 Por ejemplo, aquí el mixin `sayHiMixin` se usa para agregar algo de "diálogo" a `User`:
 
-```js run
-*!*
-// mixin
-*/!*
-let sayHiMixin = {
-  sayHi() {
-    alert(`Hola ${this.name}`);
-  },
-  sayBye() {
-    alert(`Adiós ${this.name}`);
-  }
-};
+`````js run *!* // mixin */!* let sayHiMixin = { sayHi() { alert(```Hola ${this.name}`); }, sayBye() { alert(`Adiós ${this.name}\`\); } };
 
-*!*
-// uso:
-*/!*
-class User {
-  constructor(name) {
-    this.name = name;
-  }
-}
+_!_ // uso: _/!_ class User { constructor\(name\) { this.name = name; } }
 
-// copia los métodos
-Object.assign(User.prototype, sayHiMixin);
+// copia los métodos Object.assign\(User.prototype, sayHiMixin\);
 
-// Ahora el User puede decir hola
-new User("tío").sayHi(); // Hola tío!
-```
+// Ahora el User puede decir hola new User\("tío"\).sayHi\(\); // Hola tío!
 
+```text
 No hay herencia, sino un simple método de copia. Entonces, `User` puede heredar de otra clase y también incluir el mixin para "mezclar" los métodos adicionales, como este:
 
 ```js
@@ -61,40 +41,19 @@ Los mixins pueden hacer uso de la herencia dentro de sí mismos.
 
 Por ejemplo, aquí `sayHiMixin` hereda de `sayMixin`:
 
-```js run
-let sayMixin = {
-  say(phrase) {
-    alert(phrase);
-  }
-};
+\`\`\`js run let sayMixin = { say\(phrase\) { alert\(phrase\); } };
 
-let sayHiMixin = {
-  __proto__: sayMixin, // (o podríamos usar Object.setPrototypeOf para configurar el prototype aquí)
+let sayHiMixin = { **proto**: sayMixin, // \(o podríamos usar Object.setPrototypeOf para configurar el prototype aquí\)
 
-  sayHi() {
-    *!*
-    // llama al método padre
-    */!*
-    super.say(`Hola ${this.name}`); // (*)
-  },
-  sayBye() {
-    super.say(`Adios ${this.name}`); // (*)
-  }
-};
+sayHi\(\) { _!_ // llama al método padre _/!_ super.say\(`Hola ${this.name}`\); // \(_\) }, sayBye\(\) { super.say\(`Adios ${this.name}`\); // \(_\) } };
 
-class User {
-  constructor(name) {
-    this.name = name;
-  }
-}
+class User { constructor\(name\) { this.name = name; } }
 
-// copia los métodos
-Object.assign(User.prototype, sayHiMixin);
+// copia los métodos Object.assign\(User.prototype, sayHiMixin\);
 
-// User ahora puede decir hola
-new User("tío").sayHi(); // Hola tío!
-```
+// User ahora puede decir hola new User\("tío"\).sayHi\(\); // Hola tío!
 
+```text
 Ten en cuenta que la llamada al método padre `super.say()` de `sayHiMixin` (en las líneas etiquetadas con `(*)`) busca el método en el prototipo de ese mixin, no en la clase.
 
 Aquí está el diagrama (ver la parte derecha):
@@ -164,45 +123,33 @@ let eventMixin = {
 };
 ```
 
-
-- `.on(eventName, handler)`: asigna la función `handler` para que se ejecute cuando se produce el evento con ese nombre. Técnicamente, hay una propiedad `_eventHandlers` que almacena una matriz de controladores para cada nombre de evento, y simplemente la agrega a la lista.
-- `.off(eventName, handler)` - elimina la función de la lista de controladores.
-- `.trigger(eventName, ...args)` - genera el evento: se llama a todos los controladores de `_eventHandlers[eventName]`, con una lista de argumentos `...args`.
+* `.on(eventName, handler)`: asigna la función `handler` para que se ejecute cuando se produce el evento con ese nombre. Técnicamente, hay una propiedad `_eventHandlers` que almacena una matriz de controladores para cada nombre de evento, y simplemente la agrega a la lista.
+* `.off(eventName, handler)` - elimina la función de la lista de controladores.
+* `.trigger(eventName, ...args)` - genera el evento: se llama a todos los controladores de `_eventHandlers[eventName]`, con una lista de argumentos `...args`.
 
 Uso:
 
-```js run
-// Construir una clase
-class Menu {
-  choose(value) {
-    this.trigger("select", value);
-  }
-}
-// Agrega el mixin con métodos relacionados con eventos
-Object.assign(Menu.prototype, eventMixin);
+\`\`\`js run // Construir una clase class Menu { choose\(value\) { this.trigger\("select", value\); } } // Agrega el mixin con métodos relacionados con eventos Object.assign\(Menu.prototype, eventMixin\);
 
-let menu = new Menu();
+let menu = new Menu\(\);
 
-// agrega un controlador, que se llamará en la selección:
-*!*
-menu.on("select", value => alert(`Valor seleccionado: ${value}`));
-*/!*
+// agrega un controlador, que se llamará en la selección: _!_ menu.on\("select", value =&gt; alert\(`Valor seleccionado: ${value}`\)\); _/!_
 
-// desencadena el evento => el controlador anterior se ejecuta y muestra:
-// Valor seleccionado: 123
-menu.choose("123");
-```
+// desencadena el evento =&gt; el controlador anterior se ejecuta y muestra: // Valor seleccionado: 123 menu.choose\("123"\);
+
+\`\`\`
 
 Ahora, si queremos que el código reaccione a una selección de menú, podemos escucharlo con `menu.on(...)`.
 
-Y el mixin de `eventMixin`  hace que sea fácil agregar ese comportamiento a tantas clases como queramos, sin interferir con la cadena de herencia.
+Y el mixin de `eventMixin` hace que sea fácil agregar ese comportamiento a tantas clases como queramos, sin interferir con la cadena de herencia.
 
 ## Resumen
 
-*Mixin* -- es un término genérico de programación orientado a objetos: una clase que contiene métodos para otras clases.
+_Mixin_ -- es un término genérico de programación orientado a objetos: una clase que contiene métodos para otras clases.
 
 Algunos lenguajes permiten la herencia múltiple. JavaScript no admite la herencia múltiple, pero los mixins se pueden implementar copiando métodos en el prototipo.
 
 Podemos usar mixins como una forma de expandir una clase agregando múltiples comportamientos, como el manejo de eventos que hemos visto anteriormente.
 
 Los mixins pueden convertirse en un punto de conflicto si sobrescriben accidentalmente los métodos de clase existentes. Por lo tanto, generalmente debes planificar correctamente la definición de métodos de un mixin, para minimizar la probabilidad de que suceda.
+

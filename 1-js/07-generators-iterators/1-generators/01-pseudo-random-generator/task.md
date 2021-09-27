@@ -1,4 +1,3 @@
-
 # Generador pseudoaleatorio
 
 Hay muchas áreas en las que necesitamos datos aleatorios.
@@ -11,24 +10,21 @@ Para eso, se utilizan los denominados "generadores pseudoaleatorios con semilla"
 
 Un ejemplo de dicha fórmula, que genera valores distribuidos de manera algo uniforme:
 
-```
+```text
 next = previous * 16807 % 2147483647
 ```
 
-Si nosotros usamos `1` como semilla, los valores serán:
-1. `16807`
-2. `282475249`
-3. `1622650073`
-4. ...y así...
+Si nosotros usamos `1` como semilla, los valores serán: 1. `16807` 2. `282475249` 3. `1622650073` 4. ...y así...
 
 La tarea es crear una función generadora `pseudoRandom (seed)` que toma `seed` y crea el generador con esta fórmula.
 
 Ejemplo de uso
 
-```js
+```javascript
 let generator = pseudoRandom(1);
 
 alert(generator.next().value); // 16807
 alert(generator.next().value); // 282475249
 alert(generator.next().value); // 1622650073
 ```
+

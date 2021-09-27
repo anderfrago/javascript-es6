@@ -2,19 +2,19 @@
 
 Volvamos a las funciones y estudiémoslas más en profundidad.
 
-Nuestro primer tema será la *recursividad*.
+Nuestro primer tema será la _recursividad_.
 
 Si no eres nuevo en la programación, probablemente te resulte familiar y podrías saltarte este capítulo.
 
 La recursión es un patrón de programación que es útil en situaciones en las que una tarea puede dividirse naturalmente en varias tareas del mismo tipo, pero más simples. O cuando una tarea se puede simplificar en una acción fácil más una variante más simple de la misma tarea. O, como veremos pronto, tratar con ciertas estructuras de datos.
 
-Cuando una función resuelve una tarea, en el proceso puede llamar a muchas otras funciones. Un caso parcial de esto es cuando una función se llama *a sí misma*. Eso se llama *recursividad*.
+Cuando una función resuelve una tarea, en el proceso puede llamar a muchas otras funciones. Un caso parcial de esto es cuando una función se llama _a sí misma_. Eso se llama _recursividad_.
 
 ## Dos formas de pensar
 
 Para comenzar con algo simple, escribamos una función `pow(x, n)` que eleve `x` a una potencia natural de`n`. En otras palabras, multiplica `x` por sí mismo `n` veces.
 
-```js
+```javascript
 pow(2, 2) = 4
 pow(2, 3) = 8
 pow(2, 4) = 16
@@ -24,40 +24,29 @@ Hay dos formas de implementarlo.
 
 1. Pensamiento iterativo: el bucle `for`:
 
-    ```js run
-    function pow(x, n) {
-      let result = 1;
+   \`\`\`js run function pow\(x, n\) { let result = 1;
 
-      // multiplicar el resultado por x n veces en el ciclo
-      for (let i = 0; i < n; i++) {
-        result *= x;
-      }
+   // multiplicar el resultado por x n veces en el ciclo for \(let i = 0; i &lt; n; i++\) { result \*= x; }
 
-      return result;
-    }
+   return result; }
 
-    alert( pow(2, 3) ); // 8
-    ```
+   alert\( pow\(2, 3\) \); // 8
+
+   \`\`\`
 
 2. Pensamiento recursivo: simplifica la tarea y se llama a sí mismo:
 
-    ```js run
-    function pow(x, n) {
-      if (n == 1) {
-        return x;
-      } else {
-        return x * pow(x, n - 1);
-      }
-    }
+   \`\`\`js run function pow\(x, n\) { if \(n == 1\) { return x; } else { return x \* pow\(x, n - 1\); } }
 
-    alert( pow(2, 3) ); // 8
-    ```
+   alert\( pow\(2, 3\) \); // 8
+
+   \`\`\`
 
 Note cómo la variante recursiva es fundamentalmente diferente.
 
 Cuando se llama a `pow(x, n)`, la ejecución se divide en dos ramas:
 
-```js
+```javascript
               if n==1  = x
              /
 pow(x, n) =
@@ -65,13 +54,12 @@ pow(x, n) =
               else     = x * pow(x, n - 1)
 ```
 
-1. Si `n == 1`, entonces todo es trivial. Se llama *la base* de la recursividad, porque produce inmediatamente el resultado obvio: `pow (x, 1)` es igual a `x`.
-2. De lo contrario, podemos representar `pow (x, n)` como `x * pow (x, n - 1)`. En matemáticas, uno escribiría <code>x<sup>n</sup> = x * x <sup>n-1</sup></code>. Esto se llama *un paso recursivo*: transformamos la tarea en una acción más simple (multiplicación por `x`) y una llamada más simple de la misma tarea (`pow` con menor `n`). Los siguientes pasos lo simplifican más y más hasta que `n` llegue a` 1`.
+1. Si `n == 1`, entonces todo es trivial. Se llama _la base_ de la recursividad, porque produce inmediatamente el resultado obvio: `pow (x, 1)` es igual a `x`.
+2. De lo contrario, podemos representar `pow (x, n)` como `x * pow (x, n - 1)`. En matemáticas, uno escribiría `xn = x * x n-1`. Esto se llama _un paso recursivo_: transformamos la tarea en una acción más simple \(multiplicación por `x`\) y una llamada más simple de la misma tarea \(`pow` con menor `n`\). Los siguientes pasos lo simplifican más y más hasta que `n` llegue a`1`.
 
-También podemos decir que `pow` * recursivamente se llama a sí mismo * hasta que` n == 1`.
+También podemos decir que `pow`  _recursivamente se llama a sí mismo_  hasta que`n == 1`.
 
-![diagrama recursivo de pow](recursion-pow.svg)
-
+![diagrama recursivo de pow](../../../.gitbook/assets/recursion-pow.svg)
 
 Por ejemplo, para calcular `pow (2, 4)` la variante recursiva realiza estos pasos:
 
@@ -82,21 +70,19 @@ Por ejemplo, para calcular `pow (2, 4)` la variante recursiva realiza estos paso
 
 Por lo tanto, la recursión reduce una llamada de función a una más simple y luego -- a una más simple, y así sucesivamente, hasta que el resultado se vuelve obvio.
 
-````smart header="La recursión suele ser más corta"
-Una solución recursiva suele ser más corta que una iterativa.
+\`\`\`\`smart header="La recursión suele ser más corta" Una solución recursiva suele ser más corta que una iterativa.
 
 Aquí podemos reescribir lo mismo usando el operador condicional `?` En lugar de `if` para hacer que `pow (x, n)`sea más conciso y aún bastante legible:
 
-```js run
-función pow (x, n) {
-   volver (n == 1)? x: (x * pow (x, n - 1));
-}
+\`\`\`js run función pow \(x, n\) { volver \(n == 1\)? x: \(x \* pow \(x, n - 1\)\); }
+
+```text
+`
 ```
-````
 
-El número máximo de llamadas anidadas (incluida la primera) se llama *profundidad de recursión*. En nuestro caso, será exactamente `n`.
+El número máximo de llamadas anidadas \(incluida la primera\) se llama _profundidad de recursión_. En nuestro caso, será exactamente `n`.
 
-La profundidad máxima de recursión está limitada por el motor de JavaScript. Podemos confiar en que sea 10000, algunos motores permiten más, pero 100000 probablemente esté fuera del límite para la mayoría de ellos. Hay optimizaciones automáticas que ayudan a aliviar esto ("optimizaciones de llamadas de cola"), pero aún no son compatibles en todas partes y funcionan solo en casos simples.
+La profundidad máxima de recursión está limitada por el motor de JavaScript. Podemos confiar en que sea 10000, algunos motores permiten más, pero 100000 probablemente esté fuera del límite para la mayoría de ellos. Hay optimizaciones automáticas que ayudan a aliviar esto \("optimizaciones de llamadas de cola"\), pero aún no son compatibles en todas partes y funcionan solo en casos simples.
 
 Eso limita la aplicación de la recursividad, pero sigue siendo muy amplia. Hay muchas tareas donde la forma recursiva de pensar proporciona un código más simple, más fácil de mantener.
 
@@ -104,51 +90,36 @@ Eso limita la aplicación de la recursividad, pero sigue siendo muy amplia. Hay 
 
 Ahora examinemos cómo funcionan las llamadas recursivas. Para eso observaremos lo que sucede debajo del sombrero en las funciones.
 
-La información sobre el proceso de ejecución de una función en ejecución se almacena en su *contexto de ejecución*.
+La información sobre el proceso de ejecución de una función en ejecución se almacena en su _contexto de ejecución_.
 
-El [contexto de ejecución](https://tc39.github.io/ecma262/#sec-execution-contexts) es una estructura de datos interna que contiene detalles sobre la ejecución de una función: dónde está el flujo de control ahora, las variables actuales, el valor de `this` (no lo usamos aquí) y algunos otros detalles internos.
+El [contexto de ejecución](https://tc39.github.io/ecma262/#sec-execution-contexts) es una estructura de datos interna que contiene detalles sobre la ejecución de una función: dónde está el flujo de control ahora, las variables actuales, el valor de `this` \(no lo usamos aquí\) y algunos otros detalles internos.
 
 Una llamada de función tiene exactamente un contexto de ejecución asociado.
 
 Cuando una función realiza una llamada anidada, sucede lo siguiente:
 
-- La función actual está en pausa.
-- El contexto de ejecución asociado con él se recuerda en una estructura de datos especial llamada *pila de contexto de ejecución*.
-- La llamada anidada se ejecuta.
-- Una vez que finaliza, el antiguo contexto de ejecución se recupera de la pila y la función externa se reanuda desde donde se detuvo.
+* La función actual está en pausa.
+* El contexto de ejecución asociado con él se recuerda en una estructura de datos especial llamada _pila de contexto de ejecución_.
+* La llamada anidada se ejecuta.
+* Una vez que finaliza, el antiguo contexto de ejecución se recupera de la pila y la función externa se reanuda desde donde se detuvo.
 
 Veamos qué sucede durante la llamada de `pow (2, 3)`.
 
-### pow (2, 3)
+### pow \(2, 3\)
 
 Al comienzo de la llamada `pow (2, 3)` el contexto de ejecución almacenará variables: `x = 2, n = 3`, el flujo de ejecución está en la línea `1` de la función.
 
 Podemos esbozarlo como:
 
-<ul class="function-execution-context-list">
-  <li>
-    <span class="function-execution-context">Context: { x: 2, n: 3, at line 1 }</span>
-    <span class="function-execution-context-call">pow(2, 3)</span>
-  </li>
-</ul>
+*  Context: { x: 2, n: 3, at line 1 } pow\(2, 3\)
 
 Ahí es cuando la función comienza a ejecutarse. La condición `n == 1` es falsa, por lo que el flujo continúa en la segunda rama de `if`:
 
-```js run
-function pow(x, n) {
-  if (n == 1) {
-    return x;
-  } else {
-*!*
-    return x * pow(x, n - 1);
-*/!*
-  }
-}
+\`\`\`js run function pow\(x, n\) { if \(n == 1\) { return x; } else { _!_ return x  _pow\(x, n - 1\);_ /!\* } }
 
-alert( pow(2, 3) );
-```
+alert\( pow\(2, 3\) \);
 
-
+```text
 Las variables son las mismas, pero la línea cambia, por lo que el contexto es ahora:
 
 <ul class="function-execution-context-list">
@@ -193,26 +164,15 @@ En la figura usamos la palabra línea "line" porque en nuestro ejemplo hay solo 
 Entonces sería más preciso decir que la ejecución se reanuda "inmediatamente después de la subllamada".
 ```
 
-### pow(2, 1)
+### pow\(2, 1\)
 
-El proceso se repite: se realiza una nueva subllamada en la línea `5`, ahora con argumentos` x = 2`, `n = 1`.
+El proceso se repite: se realiza una nueva subllamada en la línea `5`, ahora con argumentos`x = 2`, `n = 1`.
 
 Se crea un nuevo contexto de ejecución, el anterior se coloca en la parte superior de la pila:
 
-<ul class="function-execution-context-list">
-  <li>
-    <span class="function-execution-context">Context: { x: 2, n: 1, at line 1 }</span>
-    <span class="function-execution-context-call">pow(2, 1)</span>
-  </li>
-  <li>
-    <span class="function-execution-context">Context: { x: 2, n: 2, at line 5 }</span>
-    <span class="function-execution-context-call">pow(2, 2)</span>
-  </li>
-  <li>
-    <span class="function-execution-context">Context: { x: 2, n: 3, at line 5 }</span>
-    <span class="function-execution-context-call">pow(2, 3)</span>
-  </li>
-</ul>
+*  Context: { x: 2, n: 1, at line 1 } pow\(2, 1\)
+*  Context: { x: 2, n: 2, at line 5 } pow\(2, 2\)
+*  Context: { x: 2, n: 3, at line 5 } pow\(2, 3\)
 
 Hay 2 contextos antiguos ahora y 1 actualmente en ejecución para `pow (2, 1)`.
 
@@ -220,7 +180,7 @@ Hay 2 contextos antiguos ahora y 1 actualmente en ejecución para `pow (2, 1)`.
 
 Durante la ejecución de `pow (2, 1)`, a diferencia de antes, la condición `n == 1` es verdadera, por lo que la primera rama de `if` funciona:
 
-```js
+```javascript
 function pow(x, n) {
   if (n == 1) {
 *!*
@@ -236,28 +196,14 @@ No hay más llamadas anidadas, por lo que la función finaliza y devuelve `2`.
 
 Cuando finaliza la función, su contexto de ejecución ya no es necesario, por lo que se elimina de la memoria. El anterior se restaura desde la parte superior de la pila:
 
-
-<ul class="function-execution-context-list">
-  <li>
-    <span class="function-execution-context">Context: { x: 2, n: 2, at line 5 }</span>
-    <span class="function-execution-context-call">pow(2, 2)</span>
-  </li>
-  <li>
-    <span class="function-execution-context">Context: { x: 2, n: 3, at line 5 }</span>
-    <span class="function-execution-context-call">pow(2, 3)</span>
-  </li>
-</ul>
+*  Context: { x: 2, n: 2, at line 5 } pow\(2, 2\)
+*  Context: { x: 2, n: 3, at line 5 } pow\(2, 3\)
 
 Se reanuda la ejecución de `pow (2, 2)`. Tiene el resultado de la subllamada `pow (2, 1)`, por lo que también puede finalizar la evaluación de `x * pow (x, n - 1)`, devolviendo `4`.
 
 Luego se restaura el contexto anterior:
 
-<ul class="function-execution-context-list">
-  <li>
-    <span class="function-execution-context">Context: { x: 2, n: 3, at line 5 }</span>
-    <span class="function-execution-context-call">pow(2, 3)</span>
-  </li>
-</ul>
+*  Context: { x: 2, n: 3, at line 5 } pow\(2, 3\)
 
 Cuando termina, tenemos un resultado de `pow (2, 3) = 8`.
 
@@ -269,7 +215,7 @@ Tenga en cuenta los requisitos de memoria. Los contextos toman memoria. En nuest
 
 Un algoritmo basado en bucles ahorra más memoria:
 
-```js
+```javascript
 function pow(x, n) {
   let result = 1;
 
@@ -295,7 +241,7 @@ Otra gran aplicación de la recursión es un recorrido recursivo.
 
 Imagina que tenemos una empresa. La estructura del personal se puede presentar como un objeto:
 
-```js
+```javascript
 let company = {
   sales: [{
     name: 'John',
@@ -324,11 +270,11 @@ let company = {
 
 En otras palabras, una empresa tiene departamentos.
 
-- Un departamento puede tener una gran variedad de personal. Por ejemplo, el departamento de ventas `sales` tiene 2 empleados: John y Alice.
-- O un departamento puede dividirse en subdepartamentos, como `development` tiene dos ramas: `sites` e `internals`. Cada uno de ellos tiene su propio personal.
-- También es posible que cuando un subdepartamento crece, se divida en subdepartamentos (o equipos).
+* Un departamento puede tener una gran variedad de personal. Por ejemplo, el departamento de ventas `sales` tiene 2 empleados: John y Alice.
+* O un departamento puede dividirse en subdepartamentos, como `development` tiene dos ramas: `sites` e `internals`. Cada uno de ellos tiene su propio personal.
+* También es posible que cuando un subdepartamento crece, se divida en subdepartamentos \(o equipos\).
 
-    Por ejemplo, el departamento `sites` en el futuro puede dividirse en equipos para `siteA` y `siteB`. Y ellos, potencialmente, pueden dividirse aún más. Eso no está en la imagen, solo algo a tener en cuenta.
+  Por ejemplo, el departamento `sites` en el futuro puede dividirse en equipos para `siteA` y `siteB`. Y ellos, potencialmente, pueden dividirse aún más. Eso no está en la imagen, solo algo a tener en cuenta.
 
 Ahora digamos que queremos una función para obtener la suma de todos los salarios. ¿Cómo podemos hacer eso?
 
@@ -338,43 +284,22 @@ Probemos la recursividad.
 
 Como podemos ver, cuando nuestra función hace que un departamento sume, hay dos casos posibles:
 
-1. O bien es un departamento "simple" con una *array de personas* -- entonces podemos sumar los salarios en un bucle simple.
-2. O es *un objeto con subdepartamentos `N`*, entonces podemos hacer llamadas recursivas `N` para obtener la suma de cada uno de los subdepartamentos y combinar los resultados.
+1. O bien es un departamento "simple" con una _array de personas_ -- entonces podemos sumar los salarios en un bucle simple.
+2. O es _un objeto con subdepartamentos `N`_, entonces podemos hacer llamadas recursivas `N` para obtener la suma de cada uno de los subdepartamentos y combinar los resultados.
 
 El primer caso es la base de la recursividad, el caso trivial, cuando obtenemos un "array"
 
-El segundo caso, cuando obtenemos un objeto, es el paso recursivo. Una tarea compleja se divide en subtareas para departamentos más pequeños. A su vez, pueden dividirse nuevamente, pero tarde o temprano la división terminará en (1).
+El segundo caso, cuando obtenemos un objeto, es el paso recursivo. Una tarea compleja se divide en subtareas para departamentos más pequeños. A su vez, pueden dividirse nuevamente, pero tarde o temprano la división terminará en \(1\).
 
 El algoritmo es probablemente aún más fácil de leer desde el código:
 
+\`\`\`js run let company = { // el mismo objeto, comprimido por brevedad sales: \[{name: 'John', salary: 1000}, {name: 'Alice', salary: 600 }\], development: { sites: \[{name: 'Peter', salary: 2000}, {name: 'Alex', salary: 1800 }\], internals: \[{name: 'Jack', salary: 1300}\] } };
 
-```js run
-let company = { // el mismo objeto, comprimido por brevedad
-  sales: [{name: 'John', salary: 1000}, {name: 'Alice', salary: 600 }],
-  development: {
-    sites: [{name: 'Peter', salary: 2000}, {name: 'Alex', salary: 1800 }],
-    internals: [{name: 'Jack', salary: 1300}]
-  }
-};
+// La función para hacer el trabajo _!_ function sumSalaries\(department\) { if \(Array.isArray\(department\)\) { // caso \(1\) return department.reduce\(\(prev, current\) =&gt; prev + current.salary, 0\); // suma del Array } else { // caso \(2\) let sum = 0; for \(let subdep of Object.values\(department\)\) { sum += sumSalaries\(subdep\); // llama recursivamente a subdepartamentos, suma los resultados } return sum; } } _/!_
 
-// La función para hacer el trabajo
-*!*
-function sumSalaries(department) {
-  if (Array.isArray(department)) { // caso (1)
-    return department.reduce((prev, current) => prev + current.salary, 0); // suma del Array
-  } else { // caso (2)
-    let sum = 0;
-    for (let subdep of Object.values(department)) {
-      sum += sumSalaries(subdep); // llama recursivamente a subdepartamentos, suma los resultados
-    }
-    return sum;
-  }
-}
-*/!*
+alert\(sumSalaries\(company\)\); // 7700
 
-alert(sumSalaries(company)); // 7700
-```
-
+```text
 El código es corto y fácil de entender (¿Quizás?). Ese es el poder de la recursividad. También funciona para cualquier nivel de anidamiento de subdepartamentos.
 
 Aquí está el diagrama de llamadas:
@@ -426,13 +351,14 @@ Las únicas modificaciones estructurales que no requieren renumeración masiva s
 
 Alternativamente, si realmente necesitamos una inserción/eliminación rápida, podemos elegir otra estructura de datos llamada [lista enlazada](https://es.wikipedia.org/wiki/Lista_enlazada).
 
-El *elemento de lista enlazada* se define de forma recursiva como un objeto con:
-- `value`.
-- propiedad `next` que hace referencia al siguiente *elemento de lista enlazado* o `null` si ese es el final.
+El _elemento de lista enlazada_ se define de forma recursiva como un objeto con:
+
+* `value`.
+* propiedad `next` que hace referencia al siguiente _elemento de lista enlazado_ o `null` si ese es el final.
 
 Por ejemplo:
 
-```js
+```javascript
 let list = {
   value: 1,
   next: {
@@ -450,18 +376,13 @@ let list = {
 
 Representación gráfica de la lista:
 
-![lista enlazada](linked-list.svg)
+![lista enlazada](../../../.gitbook/assets/linked-list.svg)
 
 Un código alternativo para la creación:
 
-```js no-beautify
-let list = { value: 1 };
-list.next = { value: 2 };
-list.next.next = { value: 3 };
-list.next.next.next = { value: 4 };
-list.next.next.next.next = null;
-```
+\`\`\`js no-beautify let list = { value: 1 }; list.next = { value: 2 }; list.next.next = { value: 3 }; list.next.next.next = { value: 4 }; list.next.next.next.next = null;
 
+```text
 Aquí podemos ver aún más claramente que hay varios objetos, cada uno tiene el `value` y el `next` apuntando al vecino. La variable `list` es el primer objeto en la cadena, por lo que siguiendo los punteros` next` de ella podemos alcanzar cualquier elemento.
 
 La lista se puede dividir fácilmente en varias partes y luego volver a unir:
@@ -471,11 +392,11 @@ let secondList = list.next.next;
 list.next.next = null;
 ```
 
-![linked list split](linked-list-split.svg)
+![linked list split](../../../.gitbook/assets/linked-list-split.svg)
 
 Para unir:
 
-```js
+```javascript
 list.next.next = secondList;
 ```
 
@@ -483,7 +404,7 @@ Y seguramente podemos insertar o eliminar elementos en cualquier lugar.
 
 Por ejemplo, para anteponer un nuevo valor, necesitamos actualizar el encabezado de la lista:
 
-```js
+```javascript
 let list = { value: 1 };
 list.next = { value: 2 };
 list.next.next = { value: 3 };
@@ -495,15 +416,15 @@ list = { value: "new item", next: list };
 */!*
 ```
 
-![linked list](linked-list-0.svg)
+![linked list](../../../.gitbook/assets/linked-list-0.svg)
 
 Para eliminar un valor del medio, cambie el `next` del anterior:
 
-```js
+```javascript
 list.next = list.next.next;
 ```
 
-![linked list](linked-list-remove-1.svg)
+![linked list](../../../.gitbook/assets/linked-list-remove-1.svg)
 
 Hicimos que `list.next` salte sobre `1` al valor `2`. El valor `1` ahora está excluido de la cadena. Si no se almacena en ningún otro lugar, se eliminará automáticamente de la memoria.
 
@@ -516,28 +437,30 @@ El principal inconveniente es que no podemos acceder fácilmente a un elemento p
 ... Pero no siempre necesitamos tales operaciones. Por ejemplo, cuando necesitamos una cola o incluso un [deque](https://es.wikipedia.org/wiki/Cola_doblemente_terminada) -- la estructura ordenada que debe permitir agregar/eliminar elementos muy rápidamente desde ambos extremos.
 
 Las "listas" pueden ser mejoradas:
-- Podemos agregar la propiedad `prev` (previo) junto a `next` (siguiente) para referenciar el elemento previo para mover hacia atrás fácilmente.
-- Podemos también agregar una variable llamada `tail` (cola) referenciando el último elemento de la lista (y actualizarla cuando se agregan/remueven elementos del final).
-- ...La estructura de datos puede variar de acuerdo a nuestras necesidades.
 
+* Podemos agregar la propiedad `prev` \(previo\) junto a `next` \(siguiente\) para referenciar el elemento previo para mover hacia atrás fácilmente.
+* Podemos también agregar una variable llamada `tail` \(cola\) referenciando el último elemento de la lista \(y actualizarla cuando se agregan/remueven elementos del final\).
+* ...La estructura de datos puede variar de acuerdo a nuestras necesidades.
 
 ## Resumen
 
 Glosario:
-- *Recursion* es concepto de programación que significa una función "auto-llamada". Dichas funciones se pueden utilizar para resolver ciertas tareas de manera elegante.
 
-    Cuando una función se llama a sí misma, eso se llama *paso de recursión*. La *base* de la recursividad son los argumentos de la función que hacen que la tarea sea tan simple que la función no realiza más llamadas.
+* _Recursion_ es concepto de programación que significa una función "auto-llamada". Dichas funciones se pueden utilizar para resolver ciertas tareas de manera elegante.
 
-- Una estructura de datos [definida recursivamente](https://en.wikipedia.org/wiki/Recursive_data_type) es una estructura de datos que se puede definir utilizándose a sí misma.
+  Cuando una función se llama a sí misma, eso se llama _paso de recursión_. La _base_ de la recursividad son los argumentos de la función que hacen que la tarea sea tan simple que la función no realiza más llamadas.
 
-    Por ejemplo, la lista enlazada se puede definir como una estructura de datos que consiste en un objeto que hace referencia a una lista (o nulo).
+* Una estructura de datos [definida recursivamente](https://en.wikipedia.org/wiki/Recursive_data_type) es una estructura de datos que se puede definir utilizándose a sí misma.
 
-    ```js
+  Por ejemplo, la lista enlazada se puede definir como una estructura de datos que consiste en un objeto que hace referencia a una lista \(o nulo\).
+
+  ```javascript
     list = { value, next -> list }
-    ```
+  ```
 
-    Los árboles como el árbol de elementos HTML o el árbol de departamento de este capítulo también son naturalmente recursivos: se ramifican y cada rama puede tener otras ramas.
+  Los árboles como el árbol de elementos HTML o el árbol de departamento de este capítulo también son naturalmente recursivos: se ramifican y cada rama puede tener otras ramas.
 
-    Las funciones recursivas se pueden usar para recorrerlas como hemos visto en el ejemplo `sumSalary`.
+  Las funciones recursivas se pueden usar para recorrerlas como hemos visto en el ejemplo `sumSalary`.
 
 Cualquier función recursiva puede reescribirse en una iterativa. Y eso a veces es necesario para optimizar las cosas. Pero para muchas tareas, una solución recursiva es lo suficientemente rápida y fácil de escribir y mantener.
+

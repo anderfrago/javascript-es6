@@ -13,20 +13,13 @@ La función constructora es técnicamente una función normal. Aunque hay dos co
 
 Por ejemplo:
 
-```js run
-function User(name) {
-  this.name = name;
-  this.isAdmin = false;
-}
+\`\`\`js run function User\(name\) { this.name = name; this.isAdmin = false; }
 
-*!*
-let user = new User("Jack");
-*/!*
+_!_ let user = new User\("Jack"\); _/!_
 
-alert(user.name); // Jack
-alert(user.isAdmin); // false
-```
+alert\(user.name\); // Jack alert\(user.isAdmin\); // false
 
+```text
 Cuando una función es ejecutada con `new`, realiza los siguientes pasos:
 
 1. Se crea un nuevo objeto vacío y se asigna a `this`.
@@ -53,7 +46,7 @@ function User(name) {
 
 Entonces `let user = new User("Jack")` da el mismo resultado que:
 
-```js
+```javascript
 let user = {
   name: "Jack",
   isAdmin: false
@@ -64,12 +57,11 @@ Ahora si queremos crear otros usuarios, podemos llamar a `new User("Ann")`, `new
 
 Este es el principal propósito del constructor -- implementar código de creación de objetos re-utilizables.
 
-Tomemos nota otra vez: técnicamente cualquier función (excepto las de flecha pues no tienen this) puede ser utilizada como constructor. Puede ser llamada con `new`, y ejecutará el algoritmo de arriba. La "primera letra mayúscula" es un acuerdo general, para dejar en claro que la función debe ser ejecutada con `new`.
+Tomemos nota otra vez: técnicamente cualquier función \(excepto las de flecha pues no tienen this\) puede ser utilizada como constructor. Puede ser llamada con `new`, y ejecutará el algoritmo de arriba. La "primera letra mayúscula" es un acuerdo general, para dejar en claro que la función debe ser ejecutada con `new`.
 
-````smart header="new function() { ... }"
-Si tenemos muchas líneas de código todas sobre la creación de un único objeto complejo, podemos agruparlas en un constructor de función que es llamado inmediatamente de esta manera:
+\`\`\`\`smart header="new function\(\) { ... }" Si tenemos muchas líneas de código todas sobre la creación de un único objeto complejo, podemos agruparlas en un constructor de función que es llamado inmediatamente de esta manera:
 
-```js
+```javascript
 // crea una función e inmediatamente la llama con new
 let user = new function() { 
   this.name = "John";
@@ -82,8 +74,8 @@ let user = new function() {
 ```
 
 Este constructor no puede ser llamado de nuevo porque no es guardado en ninguna parte, sólo es creado y llamado. Por lo tanto este truco apunta a encapsular el código que construye el objeto individual, sin reutilización futura.
-````
 
+```text
 ## Constructor modo test: new.target
 
 ```smart header="Temas avanzados"
@@ -180,7 +172,7 @@ let user = new User();
 ```
 
 Omitir paréntesis aquí no se considera "buen estilo", pero la especificación permite esa sintaxis.
-````
+```
 
 ## Métodos en constructor
 
@@ -190,29 +182,17 @@ Por supuesto podemos agregar a `this` no sólo propiedades, sino también métod
 
 Por ejemplo, `new User(name)` de abajo, crea un objeto con el `name` dado y el método `sayHi`:
 
-```js run
-function User(name) {
-  this.name = name;
+\`\`\`js run function User\(name\) { this.name = name;
 
-  this.sayHi = function() {
-    alert( "Mi nombre es: " + this.name );
-  };
-}
+this.sayHi = function\(\) { alert\( "Mi nombre es: " + this.name \); }; }
 
-*!*
-let john = new User("John");
+_!_ let john = new User\("John"\);
 
-john.sayHi(); // Mi nombre es: John
-*/!*
+john.sayHi\(\); // Mi nombre es: John _/!_
 
-/*
-john = {
-   name: "John",
-   sayHi: function() { ... }
-}
-*/
-```
+/ _john = { name: "John", sayHi: function\(\) { ... } }_ /
 
+```text
 Para crear objetos complejos existe una sintaxis más avanzada, [classes](info:classes), que cubriremos más adelante.
 
 ## Resumen
@@ -229,3 +209,4 @@ En este capítulo solo cubrimos los conceptos básicos sobre objetos y construct
 
 Después de aprender aquello, volvemos a los objetos y los cubrimos en profundidad en los capítulos <info:prototypes> y <info:classes>.
 ```
+

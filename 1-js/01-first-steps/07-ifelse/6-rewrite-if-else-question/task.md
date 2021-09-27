@@ -1,14 +1,14 @@
+# task
+
 importance: 5
 
----
-
-# Reescriba el 'if..else' con '?'
+## Reescriba el 'if..else' con '?'
 
 Reescriba el `if..else` utilizando operadores ternarios múltiples`'?'`.
 
 Para legibilidad, es recomendad dividirlo en múltiples lineas de código.
 
-```js
+```javascript
 let message;
 
 if (login == 'Empleado') {
@@ -21,3 +21,4 @@ if (login == 'Empleado') {
   message = '';
 }
 ```
+

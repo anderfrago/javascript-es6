@@ -1,10 +1,10 @@
+# task
+
 importance: 4
 
----
+## Ordenar en orden decreciente
 
-# Ordenar en orden decreciente
-
-```js
+```javascript
 let arr = [5, 2, 1, -10, 8];
 
 // ... tu código para ordenar en orden decreciente

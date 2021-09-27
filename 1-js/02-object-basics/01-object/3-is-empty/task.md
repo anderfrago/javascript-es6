@@ -1,14 +1,14 @@
+# task
+
 importance: 5
 
----
-
-# Verificar los vacíos
+## Verificar los vacíos
 
 Escribe la función `isEmpty(obj)` que devuelva el valor `true` si el objeto no tiene propiedades, en caso contrario `false`.
 
 Debería funcionar así:
 
-```js
+```javascript
 let schedule = {};
 
 alert( isEmpty(schedule) ); // true

@@ -1,12 +1,12 @@
+# task
+
 importance: 5
 
----
-
-# Reescribe el "switch" en un "if"
+## Reescribe el "switch" en un "if"
 
 Escribe el código utilizando `if..else` que corresponda al siguiente `switch`:
 
-```js
+```javascript
 switch (navegador) {
   case 'Edge':
     alert( "¡Tienes Edge!" );

@@ -1,3 +1,5 @@
+# solution
+
 Necesitamos hacer un "mapeo" de todos los valores del intervalo 0..1 a valores desde `min` a `max`.
 
 Esto puede hacerse en dos pasos:
@@ -7,13 +9,9 @@ Esto puede hacerse en dos pasos:
 
 La función:
 
-```js run
-function random(min, max) {
-  return min + Math.random() * (max - min);
-}
+\`\`\`js run function random\(min, max\) { return min + Math.random\(\) \* \(max - min\); }
 
-alert( random(1, 5) ); 
-alert( random(1, 5) ); 
-alert( random(1, 5) ); 
-```
+alert\( random\(1, 5\) \); alert\( random\(1, 5\) \); alert\( random\(1, 5\) \);
+
+\`\`\`
 

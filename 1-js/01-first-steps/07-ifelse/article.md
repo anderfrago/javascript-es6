@@ -10,14 +10,11 @@ La sentencia `if(...)` evalúa la condición en los paréntesis, y si el resulta
 
 Por ejemplo:
 
-```js run
-let year = prompt('¿En que año fué publicada la especificación ECMAScript-2015?', '');
+\`\`\`js run let year = prompt\('¿En que año fué publicada la especificación ECMAScript-2015?', ''\);
 
-*!*
-if (year == 2015) alert( '¡Estás en lo cierto!' );
-*/!*
-```
+_!_ if \(year == 2015\) alert\( '¡Estás en lo cierto!' \); _/!_
 
+```text
 Aquí la condición es una simple igualdad (`year == 2015`), pero podría ser mucho mas complejo.
 
 Si quisiéramos ejecutar más de una sentencia, debemos encerrar nuestro bloque de código entre llaves:
@@ -35,14 +32,14 @@ Recomendamos siempre encerrar nuestro bloque de código entre llaves `{}` siempr
 
 La sentencia `if (…)` evalúa la expresión dentro de sus paréntesis y convierte el resultado en booleano.
 
-Recordemos las reglas de conversión del capítulo <info:type-conversions>:
+Recordemos las reglas de conversión del capítulo :
 
-- El número `0`, un string vacío `""`, `null`, `undefined`, y `NaN` se convierte en `false`. Por esto son llamados valores "falso".
-- El resto de los valores se convierten en  `true`, entonces los llamaremos valores "verdadero".
+* El número `0`, un string vacío `""`, `null`, `undefined`, y `NaN` se convierte en `false`. Por esto son llamados valores "falso".
+* El resto de los valores se convierten en  `true`, entonces los llamaremos valores "verdadero".
 
 Entonces, el código bajo esta condición nunca se ejecutaría:
 
-```js
+```javascript
 if (0) { // 0 es falso
   ...
 }
@@ -50,7 +47,7 @@ if (0) { // 0 es falso
 
 ...y dentro de esta condición siempre se ejecutará:
 
-```js
+```javascript
 if (1) { // 1 es verdadero
   ...
 }
@@ -58,7 +55,7 @@ if (1) { // 1 es verdadero
 
 También podemos pasar un valor booleano pre-evaluado al `if`, así:
 
-```js
+```javascript
 let cond = (year == 2015); // la igualdad evalúa y devuelve un true o false
 
 if (cond) {
@@ -70,17 +67,11 @@ if (cond) {
 
 La sentencia `if` quizás contenga un bloque "else" opcional. Este se ejecutará cuando la condición sea falsa.
 
-Por ejemplo:
-```js run
-let year = prompt('¿En qué año fue publicada la especificación ECMAScript-2015?', '');
+Por ejemplo: \`\`\`js run let year = prompt\('¿En qué año fue publicada la especificación ECMAScript-2015?', ''\);
 
-if (year == 2015) {
-  alert( '¡Lo adivinaste, correcto!' );
-} else {
-  alert( '¿Cómo puedes estar tan equivocado?' ); // cualquier valor excepto 2015
-}
-```
+if \(year == 2015\) { alert\( '¡Lo adivinaste, correcto!' \); } else { alert\( '¿Cómo puedes estar tan equivocado?' \); // cualquier valor excepto 2015 }
 
+```text
 ## Muchas condiciones: "else if"
 
 Algunas veces, queremos probar variantes de una condición. La clausula `else if` nos permite hacer esto.
@@ -101,7 +92,7 @@ if (year < 2015) {
 
 En el código de arriba, JavaScript primero revisa si `year < 2015`. Si esto es falso, continúa a la siguiente condición `year > 2015`. Si esta también es falsa, mostrará la última `alert`.
 
-Podría haber más bloques `else if`.  Y el último  `else` es opcional.
+Podría haber más bloques `else if`. Y el último `else` es opcional.
 
 ## Operador ternario '?'
 
@@ -109,21 +100,13 @@ A veces necesitamos asignar una variable dependiendo de alguna condición.
 
 Por ejemplo:
 
-```js run no-beautify
-let accessAllowed;
-let age = prompt('¿Qué edad tienes?', '');
+\`\`\`js run no-beautify let accessAllowed; let age = prompt\('¿Qué edad tienes?', ''\);
 
-*!*
-if (age > 18) {
-  accessAllowed = true;
-} else {
-  accessAllowed = false;
-}
-*/!*
+_!_ if \(age &gt; 18\) { accessAllowed = true; } else { accessAllowed = false; } _/!_
 
-alert(accessAllowed);
-```
+alert\(accessAllowed\);
 
+```text
 Entonces el operador "ternario" también llamado  "signo de interrogación" nos permite ejecutar esto en una forma más corta y simple.
 
 El operador está representado por un signo de interrogación de cierre `?`.  A veces es llamado "ternario" porque el operador tiene tres operandos. Es el único operador de JavaScript que tiene esta cantidad de ellos.
@@ -137,15 +120,15 @@ Se evalúa `condition`: si es verdadera entonces devuelve `value1` , de lo contr
 
 Por ejemplo:
 
-```js
+```javascript
 let accessAllowed = (age > 18) ? true : false;
 ```
 
-Técnicamente, podemos omitir el paréntesis alrededor de  `age > 18`. El operador de signo de interrogación tiene una precedencia baja, por lo que se ejecuta después de la comparación `>`. 
+Técnicamente, podemos omitir el paréntesis alrededor de `age > 18`. El operador de signo de interrogación tiene una precedencia baja, por lo que se ejecuta después de la comparación `>`.
 
 En este ejemplo realizaremos lo mismo que en el anterior:
 
-```js
+```javascript
 // el operador de comparación  "age > 18" se ejecuta primero de cualquier forma
 // (no necesitamos agregar los paréntesis)
 let accessAllowed = age > 18 ? true : false;
@@ -153,31 +136,26 @@ let accessAllowed = age > 18 ? true : false;
 
 Pero los paréntesis hacen el código mas legible, asi que recomendamos utilizarlos.
 
-````smart
+```text
 En el ejemplo de arriba, podrías evitar utilizar el operador de signo de interrogación porque esta comparación devuelve directamente `true/false`:
 
 ```js
 // es lo mismo que
 let accessAllowed = age > 18;
 ```
-````
+```
 
 ## Múltiples '?'
 
-Una secuencia de operadores de signos de interrogación  `?` puede devolver un valor que depende de más de una condición.
+Una secuencia de operadores de signos de interrogación `?` puede devolver un valor que depende de más de una condición.
 
-Por ejemplo:
-```js run
-let age = prompt('¿edad?', 18);
+Por ejemplo: \`\`\`js run let age = prompt\('¿edad?', 18\);
 
-let message = (age < 3) ? '¡Hola, bebé!' :
-  (age < 18) ? '¡Hola!' :
-  (age < 100) ? '¡Felicidades!' :
-  '¡Qué edad tan inusual!';
+let message = \(age &lt; 3\) ? '¡Hola, bebé!' : \(age &lt; 18\) ? '¡Hola!' : \(age &lt; 100\) ? '¡Felicidades!' : '¡Qué edad tan inusual!';
 
-alert( message );
-```
+alert\( message \);
 
+```text
 Puede ser difícil al principio comprender lo que está sucediendo. Pero después de una mirada más cercana, podemos ver que es solo una secuencia ordinaria de condiciones:
 
 1. El primer signo de pregunta revisa si `age < 3`.
@@ -203,15 +181,11 @@ if (age < 3) {
 
 A veces el signo de interrogación cerrado `?` se utiliza para reemplazar `if`:
 
-```js run no-beautify
-let company = prompt('¿Qué compañía creó JavaScript?', '');
+\`\`\`js run no-beautify let company = prompt\('¿Qué compañía creó JavaScript?', ''\);
 
-*!*
-(company == 'Netscape') ?
-   alert('¡Correcto!') : alert('Equivocado.');
-*/!*
-```
+_!_ \(company == 'Netscape'\) ? alert\('¡Correcto!'\) : alert\('Equivocado.'\); _/!_
 
+```text
 Dependiendo de la condición `company == 'Netscape'`, se ejecutará la primera o la segunda expresión del operador `?` y se mostrará una alerta.
 
 Aquí no asignamos el resultado de una variable. En vez de esto, ejecutamos diferentes códigos dependiendo de la condición.
@@ -237,3 +211,4 @@ if (company == 'Netscape') {
 Nuestros ojos leen el código verticalmente. Los bloques de código que se expanden múltiples lineas son mas fáciles de entender que los las instrucciones largas horizontales.
 
 El propósito del operador de signo de interrogación `?` es para devolver un valor u otro dependiendo de su condición. Por favor utilízala para exactamente esto. Utiliza la sentencia `if` cuando necesites ejecutar código en ramas distintas.
+

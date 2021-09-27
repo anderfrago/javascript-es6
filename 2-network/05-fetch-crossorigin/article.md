@@ -4,14 +4,9 @@ Si enviamos una petición `fetch` hacia otro sitio seguramente fallará.
 
 Por ejemplo, probemos realizar una petición a `http://example.com`:
 
-```js run async
-try {
-  await fetch('http://example.com');
-} catch(err) {
-  alert(err); // Failed to fetch
-}
-```
+\`\`\`js run async try { await fetch\('[http://example.com](http://example.com)'\); } catch\(err\) { alert\(err\); // Failed to fetch }
 
+```text
 El método fetch falla, tal como lo esperábamos.
 
 El concepto clave aquí es *el origen* (*origin*), triple combinación de dominio/puerto/protocolo.
@@ -60,7 +55,7 @@ Para ser precisos, en realidad había trucos para eso, requerían scripts especi
 
 Otro truco es en el modo de utilizar la etiqueta `script`. Un script puede tener cualquier origen `src`, con cualquier dominio, tal como `<script src="http://another.com/…">`. De este modo es posible ejecutar un script de cualquier sitio web.
 
-Si un sitio, por ejemplo, `another.com` requiere exponer datos con este tipo de acceso, se utilizaba el protocolo llamado en ese entonces "JSONP (JSON con padding)" .
+Si un sitio, por ejemplo, `another.com` requiere exponer datos con este tipo de acceso, se utilizaba el protocolo llamado en ese entonces "JSONP \(JSON con padding\)" .
 
 Veamos como se utilizaba.
 
@@ -68,27 +63,31 @@ Digamos que, en nuestro sitio es necesario obtener datos de `http://another.com`
 
 1. Primero, adelantándonos, creamos una función global para aceptar los datos, por ejemplo: `gotWeather`.
 
-    ```js
+   ```javascript
     // 1. Se declara la función para procesar los datos del tiempo
     function gotWeather({ temperature, humidity }) {
       alert(`temperature: ${temperature}, humidity: ${humidity}`);
     }
-    ```
+   ```
+
 2. Entonces creamos una etiqueta `<script>` donde `src="http://another.com/weather.json?callback=gotWeather"`, utilizando el nombre de nuestra función como un parámetro `callback`, dentro de la URL.
 
-    ```js
+   ```javascript
     let script = document.createElement('script');
     script.src = `http://another.com/weather.json?callback=gotWeather`;
     document.body.append(script);
-    ```
+   ```
+
 3. El servidor remoto `another.com` de forma dinámica genera un script que invoca el método `gotWeather(...)` con los datos que nosotros necesitamos recibir.
-    ```js
+
+   ```javascript
     // The expected answer from the server looks like this:
     gotWeather({
       temperature: 25,
       humidity: 78
     });
-    ```
+   ```
+
 4. Entonces el script remoto carga y es ejecutado, la función `gotWeather` se invoca, y ya que es nuestra función, obtenemos los datos.
 
 Esto funciona, y no viola la seguridad, ya que ambos sitios acuerdan en intercambiar los datos de este modo. Y cuando ambos lados concuerdan, definitivamente no se trata de un hackeo. Aún hay servicios que proveen este tipo de acceso, lo que puede ser útil ya que funciona en navegadores obsoletos.
@@ -110,10 +109,10 @@ Una solicitud es segura si cumple dos condiciones:
 
 1. [método seguro](https://fetch.spec.whatwg.org/#cors-safelisted-method): GET, POST o HEAD
 2. [Cabeceras seguras](https://fetch.spec.whatwg.org/#cors-safelisted-request-header) -- Las únicas cabeceras permitidas son:
-    - `Accept`,
-    - `Accept-Language`,
-    - `Content-Language`,
-    - `Content-Type` con el valor `application/x-www-form-urlencoded`, `multipart/form-data` o `text/plain`.
+   * `Accept`,
+   * `Accept-Language`,
+   * `Content-Language`,
+   * `Content-Type` con el valor `application/x-www-form-urlencoded`, `multipart/form-data` o `text/plain`.
 
 Cualquier otra solicitud es considerada "insegura". Por lo tanto, una solicitud con el método `PUT` o con una cabecera HTTP `API-Key` no cumple con las limitaciones.
 
@@ -144,17 +143,16 @@ Origin: https://javascript.info
 ...
 ```
 
-Tal como se puede ver, la cabecera `Origin` contiene exactamente el origen (protocolo/dominio/puerto), sin el path.
+Tal como se puede ver, la cabecera `Origin` contiene exactamente el origen \(protocolo/dominio/puerto\), sin el path.
 
-El servidor puede inspeccionar el origen `Origin` y, si esta de acuerdo en aceptar ese tipo de solicitudes, agrega una cabecera especial `Access-Control-Allow-Origin` a la respuesta. Esta cabecera debe contener el origen permitido (en nuestro caso `https://javascript.info`), o un asterisco `*`. En ese caso la respuesta es satisfactoria, de otro modo falla.
+El servidor puede inspeccionar el origen `Origin` y, si esta de acuerdo en aceptar ese tipo de solicitudes, agrega una cabecera especial `Access-Control-Allow-Origin` a la respuesta. Esta cabecera debe contener el origen permitido \(en nuestro caso `https://javascript.info`\), o un asterisco `*`. En ese caso la respuesta es satisfactoria, de otro modo falla.
 
-El navegador cumple el papel de mediador de confianza:
-1. Ante una solicitud de origen cruzado, se asegura de que se envíe el origen correcto.
-2. Chequea que la respuesta contenga la cabecera `Access-Control-Allow-Origin`, de ser así JavaScript tiene permitido acceder a la respuesta, de no ser así la solicitud falla con un error.
+El navegador cumple el papel de mediador de confianza: 1. Ante una solicitud de origen cruzado, se asegura de que se envíe el origen correcto. 2. Chequea que la respuesta contenga la cabecera `Access-Control-Allow-Origin`, de ser así JavaScript tiene permitido acceder a la respuesta, de no ser así la solicitud falla con un error.
 
-![](xhr-another-domain.svg)
+![](../../.gitbook/assets/xhr-another-domain.svg)
 
 Aquí tenemos un ejemplo de una respuesta permisiva desde el servidor:
+
 ```http
 200 OK
 Content-Type:text/html; charset=UTF-8
@@ -167,16 +165,16 @@ Access-Control-Allow-Origin: https://javascript.info
 
 Para las respuestas de origen cruzado, por defecto JavaScript sólo puede acceder a las cabeceras llamadas "seguras":
 
-- `Cache-Control`
-- `Content-Language`
-- `Content-Type`
-- `Expires`
-- `Last-Modified`
-- `Pragma`
+* `Cache-Control`
+* `Content-Language`
+* `Content-Type`
+* `Expires`
+* `Last-Modified`
+* `Pragma`
 
 El acceso a otro tipo de cabeceras de la respuesta generará un error.
 
-```smart
+```text
 Como se puede ver, ¡no está la cabecera `Content-Length` en la lista!
 
 Esta cabecera contiene el tamaño total de la respuesta. Por lo que si queremos mostrar el progreso de la descarga, en ese caso necesitaremos un permiso adicional para acceder a ese campo de la cabecera.
@@ -205,25 +203,25 @@ Podemos utilizar cualquier método HTTP: no únicamente `GET/POST`, sino tambié
 
 Hace algún tiempo nadie podía siquiera imaginar que un sitio web pudiera realizar ese tipo de solicitudes. Por lo que aún existen servicios web que cuando reciben un método no estándar los consideran como una señal de que: "Del otro lado no hay un navegador". Ellos pueden tener en cuenta esto cuando revisan los derechos de acceso.
 
-Por lo tanto, para evitar malentendidos, cualquier solicitud "insegura" (Estas que no podían ser realizadas en los viejos tiempos), no será realizada por el navegador en forma directa. Antes, enviará una solicitud preliminar llamada solicitud de "pre-vuelo", solicitando que se le concedan los permisos.
+Por lo tanto, para evitar malentendidos, cualquier solicitud "insegura" \(Estas que no podían ser realizadas en los viejos tiempos\), no será realizada por el navegador en forma directa. Antes, enviará una solicitud preliminar llamada solicitud de "pre-vuelo", solicitando que se le concedan los permisos.
 
 Una solicitud de "pre-vuelo" utiliza el método `OPTIONS`, sin contenido en el cuerpo y con dos cabeceras:
 
-- `Access-Control-Request-Method`, cabecera que contiene el método de la solicitud "insegura".
-- `Access-Control-Request-Headers` provee una lista separada por comas de las cabeceras inseguras de la solicitud.
+* `Access-Control-Request-Method`, cabecera que contiene el método de la solicitud "insegura".
+* `Access-Control-Request-Headers` provee una lista separada por comas de las cabeceras inseguras de la solicitud.
 
 Si el servidor está de acuerdo con lo solicitado, entonces responderá con el código de estado 200 y un cuerpo vacío:
 
-- `Access-Control-Allow-Origin` debe ser `*` o el origen de la solicitud, tal como `https://javascript.info`, para permitir el acceso.
-- `Access-Control-Allow-Methods` contiene el método permitido.
-- `Access-Control-Allow-Headers` contiene un listado de las cabeceras permitidas.
-- Además, la cabecera `Access-Control-Max-Age` puede especificar el número máximo de segundos que puede recordar los permisos. Por lo que el navegador no necesita volver a requerirlos en las próximas solicitudes.
+* `Access-Control-Allow-Origin` debe ser `*` o el origen de la solicitud, tal como `https://javascript.info`, para permitir el acceso.
+* `Access-Control-Allow-Methods` contiene el método permitido.
+* `Access-Control-Allow-Headers` contiene un listado de las cabeceras permitidas.
+* Además, la cabecera `Access-Control-Max-Age` puede especificar el número máximo de segundos que puede recordar los permisos. Por lo que el navegador no necesita volver a requerirlos en las próximas solicitudes.
 
-![](xhr-preflight.svg)
+![](../../.gitbook/assets/xhr-preflight.svg)
 
-Vamos a ver cómo funciona paso a paso, mediante un ejemplo para una solicitud de origen cruzado `PATCH` (este método suele utilizarse para actualizar datos):
+Vamos a ver cómo funciona paso a paso, mediante un ejemplo para una solicitud de origen cruzado `PATCH` \(este método suele utilizarse para actualizar datos\):
 
-```js
+```javascript
 let response = await fetch('https://site.com/service.json', {
   method: 'PATCH',
   headers: {
@@ -233,12 +231,13 @@ let response = await fetch('https://site.com/service.json', {
 });
 ```
 
-Hay tres motivos por los cuales esta solicitud no es segura (una es suficiente):
-- Método `PATCH`
-- `Content-Type` no es del tipo: `application/x-www-form-urlencoded`, `multipart/form-data`, `text/plain`.
-- Cabecera `API-Key` "insegura".
+Hay tres motivos por los cuales esta solicitud no es segura \(una es suficiente\):
 
-### Paso 1 (solicitud de pre-vuelo)
+* Método `PATCH`
+* `Content-Type` no es del tipo: `application/x-www-form-urlencoded`, `multipart/form-data`, `text/plain`.
+* Cabecera `API-Key` "insegura".
+
+### Paso 1 \(solicitud de pre-vuelo\)
 
 Antes de enviar una solicitud de este tipo, el navegador envía una solicitud de pre-vuelo que se ve de este modo:
 
@@ -250,19 +249,20 @@ Access-Control-Request-Method: PATCH
 Access-Control-Request-Headers: Content-Type,API-Key
 ```
 
-- Método: `OPTIONS`.
-- El path -- exactamente el mismo que el de la solicitud principal: `/service.json`.
-- Cabeceras especiales de origen cruzado (Cross-origin):
-    - `Origin` -- el origen de la fuente.
-    - `Access-Control-Request-Method` -- método solicitado.
-    - `Access-Control-Request-Headers` -- listado separado por comas de las cabeceras "inseguras".
+* Método: `OPTIONS`.
+* El path -- exactamente el mismo que el de la solicitud principal: `/service.json`.
+* Cabeceras especiales de origen cruzado \(Cross-origin\):
+  * `Origin` -- el origen de la fuente.
+  * `Access-Control-Request-Method` -- método solicitado.
+  * `Access-Control-Request-Headers` -- listado separado por comas de las cabeceras "inseguras".
 
-### Paso 2 (solicitud de pre-vuelo)
+### Paso 2 \(solicitud de pre-vuelo\)
 
 El servidor debe responder con el código de estado 200 y las cabeceras:
-- `Access-Control-Allow-Origin: https://javascript.info`
-- `Access-Control-Allow-Methods: PATCH`
-- `Access-Control-Allow-Headers: Content-Type,API-Key`.
+
+* `Access-Control-Allow-Origin: https://javascript.info`
+* `Access-Control-Allow-Methods: PATCH`
+* `Access-Control-Allow-Headers: Content-Type,API-Key`.
 
 Esto permitirá la comunicación futura, de otro modo se disparará un error.
 
@@ -280,13 +280,13 @@ Access-Control-Max-Age: 86400
 
 Ahora el navegador puede ver que `PATCH` se encuentra dentro de la cabecera `Access-Control-Allow-Methods` y `Content-Type,API-Key` dentro de la lista `Access-Control-Allow-Headers`, por lo que permitirá enviar la solicitud principal.
 
-Si se encuentra con una cabecera `Access-Control-Max-Age` con determinada cantidad de segundos, entonces los permisos son almacenados en el caché por ese determinado tiempo. La solicitud anterior será cacheada por 86400 segundos (un día). Durante ese marco de tiempo, las solicitudes siguientes no requerirán la solicitud de pre-vuelo. Asumiendo que están dentro de lo permitido en la respuesta cacheada, serán enviadas de forma directa.
+Si se encuentra con una cabecera `Access-Control-Max-Age` con determinada cantidad de segundos, entonces los permisos son almacenados en el caché por ese determinado tiempo. La solicitud anterior será cacheada por 86400 segundos \(un día\). Durante ese marco de tiempo, las solicitudes siguientes no requerirán la solicitud de pre-vuelo. Asumiendo que están dentro de lo permitido en la respuesta cacheada, serán enviadas de forma directa.
 
-### Paso 3 (solicitud real)
+### Paso 3 \(solicitud real\)
 
 Una vez el pre-vuelo se realiza de forma satisfactoria, el navegador realiza la solicitud principal. El algoritmo aquí es el mismo que el utilizado para una solicitud segura.
 
-La solicitud principal tiene la cabecera `Origin` (ya que se trata de una solicitud de origen cruzado):
+La solicitud principal tiene la cabecera `Origin` \(ya que se trata de una solicitud de origen cruzado\):
 
 ```http
 PATCH /service.json
@@ -296,7 +296,7 @@ API-Key: secret
 Origin: https://javascript.info
 ```
 
-### Paso 4 (respuesta real)
+### Paso 4 \(respuesta real\)
 
 El server no debe olvidar agregar la cabecera `Access-Control-Allow-Origin` a la respuesta principal. Un pre-vuelo exitoso no lo libera de esto:
 
@@ -306,7 +306,7 @@ Access-Control-Allow-Origin: https://javascript.info
 
 Entonces JavaScript es capaz de leer la respuesta principal del servidor.
 
-```smart
+```text
 La solicitud de pre-vuelo ocurre "detrás de escena", es invisible a JavaScript.
 
 JavaScript únicamente obtiene la respuesta a la solicitud principal o un error en caso de que el servidor no otorgue la autorización.
@@ -314,11 +314,11 @@ JavaScript únicamente obtiene la respuesta a la solicitud principal o un error 
 
 ## Credenciales
 
-Una solicitud de origen cruzado realizada por código JavaScript, por defecto no provee ningún tipo de credenciales (cookies o autenticación HTTP).
+Una solicitud de origen cruzado realizada por código JavaScript, por defecto no provee ningún tipo de credenciales \(cookies o autenticación HTTP\).
 
 Esto es poco común para solicitudes HTTP. Usualmente una solicitud a un sitio `http://site.com` es acompañada por todas las cookies de ese dominio. Pero una solicitud de origen cruzado realizada por métodos de JavaScript son una excepción.
 
-Por ejemplo, `fetch('http://another.com')` no enviará ninguna cookie, ni siquiera (!) esas que pertenecen al dominio `another.com`.
+Por ejemplo, `fetch('http://another.com')` no enviará ninguna cookie, ni siquiera \(!\) esas que pertenecen al dominio `another.com`.
 
 ¿Por qué?
 
@@ -328,7 +328,7 @@ El motivo de esto es que una solicitud con credenciales es mucho más poderosa q
 
 Para permitir el envío de credenciales en `fetch`, necesitamos agregar la opción `credentials: "include"`, de este modo:
 
-```js
+```javascript
 fetch('http://another.com', {
   credentials: "include"
 });
@@ -336,7 +336,7 @@ fetch('http://another.com', {
 
 Ahora `fetch` envía cookies originadas desde `another.com` con las solicitudes a ese sitio.
 
-Si el servidor está de acuerdo en aceptar solicitudes *con credenciales*, debe agregar la cabecera `Access-Control-Allow-Credentials: true` a la respuesta, además de `Access-Control-Allow-Origin`.
+Si el servidor está de acuerdo en aceptar solicitudes _con credenciales_, debe agregar la cabecera `Access-Control-Allow-Credentials: true` a la respuesta, además de `Access-Control-Allow-Origin`.
 
 Por ejemplo:
 
@@ -353,12 +353,13 @@ Cabe destacar que: `Access-Control-Allow-Origin` no se puede utilizar con un ast
 Desde el punto de vista del navegador, existen dos tipos de solicitudes de origen cruzado: solicitudes "seguras" y todas las demás.
 
 [Solicitudes seguras](http://www.w3.org/TR/cors/#terminology) deben cumplir las siguientes condiciones:
-- Método: GET, POST o HEAD.
-- Cabeceras -- solo podemos establecer:
-    - `Accept`
-    - `Accept-Language`
-    - `Content-Language`
-    - `Content-Type` con el valor `application/x-www-form-urlencoded`, `multipart/form-data` o `text/plain`.
+
+* Método: GET, POST o HEAD.
+* Cabeceras -- solo podemos establecer:
+  * `Accept`
+  * `Accept-Language`
+  * `Content-Language`
+  * `Content-Type` con el valor `application/x-www-form-urlencoded`, `multipart/form-data` o `text/plain`.
 
 La diferencia esencial es que las solicitudes seguras eran posibles desde los viejos tiempos utilizando las etiquetas `<form>` o `<script>`, mientras que las solicitudes "inseguras" fueron imposibles para el navegador durante mucho tiempo.
 
@@ -366,22 +367,23 @@ Por lo tanto, en la práctica, la diferencia se encuentra en que las solicitudes
 
 **Para una solicitud segura:**
 
-- → El navegador envía una cabecera `Origin` con el origen.
-- ← Para solicitudes sin credenciales (no enviadas por defecto), el servidor debe establecer:
-    - `Access-Control-Allow-Origin` como `*` o el mismo valor que en `Origin`.
-- ← Para solicitudes con credenciales, el servidor deberá establecer:
-    - `Access-Control-Allow-Origin` con el mismo valor que en `Origin`.
-    - `Access-Control-Allow-Credentials` en `true`
+* → El navegador envía una cabecera `Origin` con el origen.
+* ← Para solicitudes sin credenciales \(no enviadas por defecto\), el servidor debe establecer:
+  * `Access-Control-Allow-Origin` como `*` o el mismo valor que en `Origin`.
+* ← Para solicitudes con credenciales, el servidor deberá establecer:
+  * `Access-Control-Allow-Origin` con el mismo valor que en `Origin`.
+  * `Access-Control-Allow-Credentials` en `true`
 
 Adicionalmente, para garantizar a JavaScript acceso a cualquier cabecera de la respuesta, con excepción de `Cache-Control`, `Content-Language`, `Content-Type`, `Expires`, `Last-Modified` o `Pragma`, el servidor debe agregarlas como permitidas en la lista de la cabecera `Access-Control-Expose-Headers`.
 
-**Para solicitudes inseguras, se utiliza una solicitud preliminar "pre-vuelo"  antes de la solicitud principal:**
+**Para solicitudes inseguras, se utiliza una solicitud preliminar "pre-vuelo" antes de la solicitud principal:**
 
-- → El navegador envía una solicitud del tipo `OPTIONS` a la misma URL, con las cabeceras:
-    - `Access-Control-Request-Method` con el método requerido.
-    - `Access-Control-Request-Headers` listado de las cabeceras inseguras.
-- ← El servidor debe responder con el código de estado 200 y las cabeceras:
-    - `Access-Control-Allow-Methods` con la lista de todos los métodos permitidos,
-    - `Access-Control-Allow-Headers` con una lista de cabeceras permitidas,
-    - `Access-Control-Max-Age` con los segundos en los que se podrá almacenar la autorización en caché.
-- Tras lo cual la solicitud es enviada, y se aplica el esquema previo "seguro".
+* → El navegador envía una solicitud del tipo `OPTIONS` a la misma URL, con las cabeceras:
+  * `Access-Control-Request-Method` con el método requerido.
+  * `Access-Control-Request-Headers` listado de las cabeceras inseguras.
+* ← El servidor debe responder con el código de estado 200 y las cabeceras:
+  * `Access-Control-Allow-Methods` con la lista de todos los métodos permitidos,
+  * `Access-Control-Allow-Headers` con una lista de cabeceras permitidas,
+  * `Access-Control-Max-Age` con los segundos en los que se podrá almacenar la autorización en caché.
+* Tras lo cual la solicitud es enviada, y se aplica el esquema previo "seguro".
+

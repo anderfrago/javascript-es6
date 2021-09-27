@@ -1,13 +1,14 @@
-```js run
+# solution
 
-let john = { name: "John", age: 25 };
-let pete = { name: "Pete", age: 30 };
-let mary = { name: "Mary", age: 28 };
+\`\`\`js run
 
-let users = [ john, pete, mary ];
+let john = { name: "John", age: 25 }; let pete = { name: "Pete", age: 30 }; let mary = { name: "Mary", age: 28 };
 
-let names = users.map(item => item.name);
+let users = \[ john, pete, mary \];
 
-alert( names ); // John, Pete, Mary
-```
+let names = users.map\(item =&gt; item.name\);
+
+alert\( names \); // John, Pete, Mary
+
+\`\`\`
 

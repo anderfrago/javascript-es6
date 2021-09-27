@@ -1,17 +1,14 @@
+# solution
+
 La primera solución que podemos probar aquí es la recursiva.
 
 La secuencia de Fibonacci es recursiva por definición:
 
-```js run
-function fib(n) {
-  return n <= 1 ? n : fib(n - 1) + fib(n - 2);
-}
+\`\`\`js run function fib\(n\) { return n &lt;= 1 ? n : fib\(n - 1\) + fib\(n - 2\); }
 
-alert( fib(3) ); // 2
-alert( fib(7) ); // 13
-// fib(77); // ¡Será extremadamente lento!
-```
+alert\( fib\(3\) \); // 2 alert\( fib\(7\) \); // 13 // fib\(77\); // ¡Será extremadamente lento!
 
+```text
 ...Pero para valores grandes de `n` es muy lenta. Por ejemplo, `fib(77)` puede colgar el motor durante un tiempo consumiendo todos los recursos de la CPU.
 
 Eso es porque la función realiza demasiadas sub llamadas. Los mismos valores son evaluados una y otra vez.
@@ -29,7 +26,7 @@ Aquí podemos ver que el valor de `fib(3)` es necesario tanto para `fib(5)` y `f
 
 Aquí está el árbol de recursividad completo:
 
-![fibonacci recursion tree](fibonacci-recursion-tree.svg)
+![fibonacci recursion tree](../../../../.gitbook/assets/fibonacci-recursion-tree.svg)
 
 Podemos ver claramente que `fib(3)` es evaluado dos veces y `fib(2)` es evaluado tres veces. La cantidad total de cálculos crece mucho más rápido que `n`, lo que lo hace enorme incluso para `n=77`.
 
@@ -43,7 +40,7 @@ Estos son los pasos del nuevo algoritmo en detalle.
 
 El inicio:
 
-```js
+```javascript
 // a = fib(1), b = fib(2), estos valores son por definición 1
 let a = 1, b = 1;
 
@@ -60,17 +57,11 @@ Ahora queremos obtener `fib(4) = fib(2) + fib(3)`.
 
 Cambiemos las variables: `a, b` obtendrán `fib(2),fib(3)`, y `c` obtendrá su suma:
 
-```js no-beautify
-a = b; // now a = fib(2)
-b = c; // now b = fib(3)
-c = a + b; // c = fib(4)
+\`\`\`js no-beautify a = b; // now a = fib\(2\) b = c; // now b = fib\(3\) c = a + b; // c = fib\(4\)
 
-/* ahora tenemos la secuencia:
-   a  b  c
-1, 1, 2, 3
-*/
-```
+/ _ahora tenemos la secuencia: a b c 1, 1, 2, 3_ /
 
+```text
 El siguiente paso obtiene otro número de la secuencia:
 
 ```js no-beautify
@@ -88,23 +79,13 @@ c = a + b; // c = fib(5)
 
 El código completo:
 
-```js run
-function fib(n) {
-  let a = 1;
-  let b = 1;
-  for (let i = 3; i <= n; i++) {
-    let c = a + b;
-    a = b;
-    b = c;
-  }
-  return b;
-}
+\`\`\`js run function fib\(n\) { let a = 1; let b = 1; for \(let i = 3; i &lt;= n; i++\) { let c = a + b; a = b; b = c; } return b; }
 
-alert( fib(3) ); // 2
-alert( fib(7) ); // 13
-alert( fib(77) ); // 5527939700884757
-```
+alert\( fib\(3\) \); // 2 alert\( fib\(7\) \); // 13 alert\( fib\(77\) \); // 5527939700884757
+
+\`\`\`
 
 El bucle comienza con `i=3`, porque el primer y segundo valor de la secuencia están codificados en las variables `a=1` y `b=1`.
 
 Este enfoque se llama [programación dinámica](https://es.wikipedia.org/wiki/Programaci%C3%B3n_din%C3%A1mica).
+

@@ -1,12 +1,12 @@
+# task
+
 importance: 5
 
----
-
-# Almacenar banderas "no leídas"
+## Almacenar banderas "no leídas"
 
 Hay un array de mensajes:
 
-```js
+```javascript
 let messages = [
   {text: "Hello", from: "John"},
   {text: "How goes?", from: "John"},
@@ -21,3 +21,4 @@ Ahora, ¿qué estructura de datos podría usar para almacenar información sobre
 P.D Cuando un mensaje se elimina de `messages`, también debería desaparecer de su estructura.
 
 P.P.D. No debemos modificar los objetos del mensaje, o agregarles nuestras propiedades. Como son administrados por el código de otra persona, eso puede generarnos resultados no deseados.
+

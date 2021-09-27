@@ -1,26 +1,21 @@
+# solution
+
 Recorramos los elementos dentro del array:
-- Para cada elemento vamos a comprobar si el array resultante ya tiene ese elemento.
-- Si ya lo tiene, ignora. Si no, agrega el resultado.
 
-```js run demo
-function unique(arr) {
-  let result = [];
+* Para cada elemento vamos a comprobar si el array resultante ya tiene ese elemento.
+* Si ya lo tiene, ignora. Si no, agrega el resultado.
 
-  for (let str of arr) {
-    if (!result.includes(str)) {
-      result.push(str);
-    }
-  }
+\`\`\`js run demo function unique\(arr\) { let result = \[\];
 
-  return result;
-}
+for \(let str of arr\) { if \(!result.includes\(str\)\) { result.push\(str\); } }
 
-let strings = ["Hare", "Krishna", "Hare", "Krishna",
-  "Krishna", "Krishna", "Hare", "Hare", ":-O"
-];
+return result; }
 
-alert( unique(strings) ); // Hare, Krishna, :-O
-```
+let strings = \["Hare", "Krishna", "Hare", "Krishna", "Krishna", "Krishna", "Hare", "Hare", ":-O" \];
+
+alert\( unique\(strings\) \); // Hare, Krishna, :-O
+
+\`\`\`
 
 El código funciona pero tiene un problema potencial de desempeño.
 
@@ -36,4 +31,5 @@ Entonces si `arr.length` es `10000` vamos a tener algo como `10000*10000` = 100 
 
 Por lo que la solución solo es buena para arrays pequeños.
 
-Más adelante en el capítulo <info:map-set> vamos a ver como optimizarlo.
+Más adelante en el capítulo  vamos a ver como optimizarlo.
+

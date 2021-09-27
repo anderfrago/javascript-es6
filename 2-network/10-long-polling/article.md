@@ -10,9 +10,7 @@ La forma más sencilla de obtener nueva información del servidor es un sondeo p
 
 En respuesta, el servidor primero se da cuenta de que el cliente está en línea, y segundo, envía un paquete de mensajes que recibió hasta ese momento.
 
-Eso funciona, pero hay desventajas:
-1. Los mensajes se transmiten con un retraso de hasta 10 segundos (entre solicitudes).
-2. Incluso si no hay mensajes, el servidor se bombardea con solicitudes cada 10 segundos, aunque el usuario haya cambiado a otro lugar o esté dormido. Eso es bastante difícil de manejar, hablando en términos de rendimiento.
+Eso funciona, pero hay desventajas: 1. Los mensajes se transmiten con un retraso de hasta 10 segundos \(entre solicitudes\). 2. Incluso si no hay mensajes, el servidor se bombardea con solicitudes cada 10 segundos, aunque el usuario haya cambiado a otro lugar o esté dormido. Eso es bastante difícil de manejar, hablando en términos de rendimiento.
 
 Entonces, si hablamos de un servicio muy pequeño, el enfoque puede ser viable, pero en general, necesita una mejora.
 
@@ -31,13 +29,13 @@ El flujo:
 
 La situación en la que el navegador envió una solicitud y tiene una conexión pendiente con el servidor, es estándar para este método. Solo cuando se entrega un mensaje, se restablece la conexión.
 
-![](long-polling.svg)
+![](../../.gitbook/assets/long-polling.svg)
 
 Si se pierde la conexión, por ejemplo, debido a un error de red, el navegador envía inmediatamente una nueva solicitud.
 
 Un esquema de la función de suscripción del lado del cliente que realiza solicitudes largas:
 
-```js
+```javascript
 async function subscribe() {
   let response = await fetch("/subscribe");
 
@@ -67,8 +65,7 @@ subscribe();
 
 Como puedes ver, la función `subscribe` realiza una búsqueda, luego espera la respuesta, la maneja y se llama a sí misma nuevamente.
 
-```warn header="El servidor debería estar bien aún con muchas conexiones pendientes"
-La arquitectura del servidor debe poder funcionar con muchas conexiones pendientes.
+\`\`\`warn header="El servidor debería estar bien aún con muchas conexiones pendientes" La arquitectura del servidor debe poder funcionar con muchas conexiones pendientes.
 
 Algunas arquitecturas de servidor ejecutan un proceso por conexión, resultando en que habrá tantos procesos como conexiones y cada proceso requiere bastante memoria. Demasiadas conexiones la consumirán toda.
 
@@ -77,13 +74,14 @@ Este suele ser el caso de los backends escritos en lenguajes como PHP y Ruby.
 Los servidores escritos con Node.js generalmente no tienen estos problemas.
 
 Dicho esto, no es un problema del lenguaje sino de implementación. La mayoría de los lenguajes modernos, incluyendo PHP y Ruby permiten la implementación de un backend adecuado. Por favor asegúrate de que la arquitectura del servidor funcione bien con múltiples conexiones simultáneas.
-```
+
+\`\`\`
 
 ## Demostración: un chat
 
-Aquí hay un chat de demostración, también puedes descargarlo y ejecutarlo localmente (si estás familiarizado con Node.js y puedes instalar módulos):
+Aquí hay un chat de demostración, también puedes descargarlo y ejecutarlo localmente \(si estás familiarizado con Node.js y puedes instalar módulos\):
 
-[codetabs src="longpoll" height=500]
+\[codetabs src="longpoll" height=500\]
 
 El código del navegador está en `browser.js`.
 
@@ -96,3 +94,4 @@ Si los mensajes llegan con mucha frecuencia, entonces el gráfico de mensajes so
 Cada mensaje es una solicitud separada, provista de encabezados, sobrecarga de autenticación, etc.
 
 Entonces, en este caso, se prefiere otro método, como [Websocket](info:websocket) o [Eventos enviados por el servidor](info:server-sent-events).
+

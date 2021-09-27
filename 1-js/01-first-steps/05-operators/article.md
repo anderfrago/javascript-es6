@@ -8,36 +8,31 @@ En este capítulo, nos vamos a concentrar en los aspectos de los operadores que 
 
 Antes de continuar, comprendamos la terminología común.
 
-- *Un operando* -- es a lo que se aplican los operadores. Por ejemplo, en la multiplicación de `5 * 2` hay dos operandos: el operando izquierdo es `5` y el operando derecho es `2`. A veces, la gente los llama "argumentos" en lugar de "operandos".
-- Un operador es *unario* si tiene un solo operando. Por ejemplo, la negación unaria `-` invierte el signo de un número:
+* _Un operando_ -- es a lo que se aplican los operadores. Por ejemplo, en la multiplicación de `5 * 2` hay dos operandos: el operando izquierdo es `5` y el operando derecho es `2`. A veces, la gente los llama "argumentos" en lugar de "operandos".
+* Un operador es _unario_ si tiene un solo operando. Por ejemplo, la negación unaria `-` invierte el signo de un número:
 
-    ```js run
-    let x = 1;
+  \`\`\`js run let x = 1;
 
-    *!*
-    x = -x;
-    */!*
-    alert( x ); // -1, se aplicó negación unaria
-    ```
-- Un operador es *binario* si tiene dos operandos. El mismo negativo también existe en forma binaria:
+  _!_ x = -x; _/!_ alert\( x \); // -1, se aplicó negación unaria \`\`\`
 
-    ```js run no-beautify
-    let x = 1, y = 3;
-    alert( y - x ); // 2, binario negativo resta valores
-    ```
+* Un operador es _binario_ si tiene dos operandos. El mismo negativo también existe en forma binaria:
 
-    Formalmente, estamos hablando de dos operadores distintos: la negación unaria (un operando: revierte el símbolo) y la resta binaria (dos operandos: resta).
+  \`\`\`js run no-beautify let x = 1, y = 3; alert\( y - x \); // 2, binario negativo resta valores
+
+  \`\`\`
+
+  Formalmente, estamos hablando de dos operadores distintos: la negación unaria \(un operando: revierte el símbolo\) y la resta binaria \(dos operandos: resta\).
 
 ## Matemáticas
 
 Están soportadas las siguientes operaciones:
 
-- Suma `+`,
-- Resta `-`,
-- Multiplicación `*`,
-- División `/`,
-- Resto `%`,
-- Exponenciación `**`.
+* Suma `+`,
+* Resta `-`,
+* Multiplicación `*`,
+* División `/`,
+* Resto `%`,
+* Exponenciación `**`.
 
 Los primeros cuatro son conocidos mientras que `%` y `**` deben ser explicados más ampliamente.
 
@@ -49,11 +44,9 @@ El resultado de `a % b` es el [resto](https://es.wikipedia.org/wiki/Resto) de la
 
 Por ejemplo:
 
-```js run
-alert( 5 % 2 ); // 1 es un resto de 5 dividido por 2
-alert( 8 % 3 ); // 2 es un resto de 8 dividido por 3
-```
+\`\`\`js run alert\( 5 % 2 \); // 1 es un resto de 5 dividido por 2 alert\( 8 % 3 \); // 2 es un resto de 8 dividido por 3
 
+```text
 ## Exponenciación **
 
 El operador exponenciación `a ** b` eleva `a` a la potencia de `b`.
@@ -72,12 +65,9 @@ Matemáticamente, la exponenciación es definida para números no enteros tambi�
 
 Por ejemplo, la raíz cuadrada es el exponente ½:
 
-```js run
-alert( 4 ** (1/2) ); // 2 (potencia de 1/2 es lo mismo que raíz cuadrada, eso es matemáticas)
-alert( 8 ** (1/3) ); // 2 (potencia de 1/3 es lo mismo que raíz cúbica)
-```
+\`\`\`js run alert\( 4  **\(1/2\) \); // 2 \(potencia de 1/2 es lo mismo que raíz cuadrada, eso es matemáticas\) alert\( 8**  \(1/3\) \); // 2 \(potencia de 1/3 es lo mismo que raíz cúbica\)
 
-
+```text
 ## Concatenación de cadenas con el binario +
 
 Ahora veamos características especiales de JavaScript que van más allá de las aritméticas escolares.
@@ -95,11 +85,9 @@ Tenga presente que si uno de los operandos es una cadena, el otro es convertido 
 
 Por ejemplo:
 
-```js run
-alert( '1' + 2 ); // "12"
-alert( 2 + '1' ); // "21"
-```
+\`\`\`js run alert\( '1' + 2 \); // "12" alert\( 2 + '1' \); // "21"
 
+```text
 Vieron, no importa si el primer operando es una cadena o el segundo.
 
 Aquí hay un ejemplo algo más complejo:
@@ -110,9 +98,9 @@ alert(2 + 2 + '1' ); // "41" y no "221"
 
 Aquí, los operadores trabajan uno después de otro. El primer `+` suma dos números entonces devuelve `4`, luego el siguiente `+` le agrega la cadena `1`, así que se evalúa como `4 + '1' = 41`.
 
-```js run
-alert('1' + 2 + 2); // "122", no es "14"
-```
+\`\`\`js run alert\('1' + 2 + 2\); // "122", no es "14"
+
+```text
 Aquí el primer operando es una cadena, el compilador trata los otros dos operandos como cadenas también. El `2` es concatenado a `'1'`, entonces es como `'1' + 2 = "12"` y `"12" + 2 = "122"`.
 
 El binario `+` es el único operador que soporta cadenas en esa forma. Otros operadores matemáticos trabajan solamente con números y siempre convierten sus operandos a números.
@@ -132,21 +120,13 @@ El unario suma o, en otras palabras, el operador suma `+` aplicado a un solo val
 
 Por ejemplo:
 
-```js run
-// Sin efecto en números
-let x = 1;
-alert( +x ); // 1
+\`\`\`js run // Sin efecto en números let x = 1; alert\( +x \); // 1
 
-let y = -2;
-alert( +y ); // -2
+let y = -2; alert\( +y \); // -2
 
-*!*
-// Convierte los no números
-alert( +true ); // 1
-alert( +"" );   // 0
-*/!*
-```
+_!_ // Convierte los no números alert\( +true \); // 1 alert\( +"" \); // 0 _/!_
 
+```text
 Realmente hace lo mismo que `Number(...)`, pero es más corto.
 
 La necesidad de convertir cadenas en números surge con mucha frecuencia. Por ejemplo, si estamos obteniendo valores de campos de formulario HTML, generalmente son cadenas. 
@@ -162,19 +142,13 @@ alert( apples + oranges ); // "23", el binario suma concatena las cadenas
 
 Si queremos tratarlos como números, necesitamos convertirlos y luego sumarlos:
 
-```js run
-let apples = "2";
-let oranges = "3";
+\`\`\`js run let apples = "2"; let oranges = "3";
 
-*!*
-// ambos valores convertidos a números antes del operador binario suma
-alert( +apples + +oranges ); // 5
-*/!*
+_!_ // ambos valores convertidos a números antes del operador binario suma alert\( +apples + +oranges \); // 5 _/!_
 
-// la variante más larga
-// alert( Number(apples) + Number(oranges) ); // 5
-```
+// la variante más larga // alert\( Number\(apples\) + Number\(oranges\) \); // 5
 
+```text
 Desde el punto de vista de un matemático, la abundancia de signos más puede parecer extraña. Pero desde el punto de vista de un programador no hay nada especial: primero se aplican los signos más unarios que convierten las cadenas en números, y luego el signo más binario los suma.
 
 ¿Por qué se aplican los signos más unarios a los valores antes que los binarios? Como veremos, eso se debe a su *mayor precedencia*.
@@ -225,22 +199,17 @@ El hecho de que `=` sea un operador, no una construcción "mágica" del lenguaje
 
 Todos los operadores en JavaScript devuelven un valor. Esto es obvio para `+` y `-`, pero también es cierto para `=`.
 
-La llamada `x = value` escribe el `value` en `x` *y luego lo devuelve*.
+La llamada `x = value` escribe el `value` en `x` _y luego lo devuelve_.
 
 Aquí hay una demostración que usa una asignación como parte de una expresión más compleja:
 
-```js run
-let a = 1;
-let b = 2;
+\`\`\`js run let a = 1; let b = 2;
 
-*!*
-let c = 3 - (a = b + 1);
-*/!*
+_!_ let c = 3 - \(a = b + 1\); _/!_
 
-alert( a ); // 3
-alert( c ); // 0
-```
+alert\( a \); // 3 alert\( c \); // 0
 
+```text
 En el ejemplo anterior, el resultado de la expresión `(a = b + 1)` es el valor asignado a `a` (es decir, `3`). Luego se usa para evaluaciones adicionales.
 
 Código gracioso, ¿no? Deberíamos entender cómo funciona, porque a veces lo vemos en las bibliotecas de JavaScript.
@@ -267,11 +236,12 @@ Las asignaciones encadenadas evalúan de derecha a izquierda. Primero, se evalú
 
 Una vez más, con el propósito de la legibilidad es mejor separa tal código en unas pocas líneas:
 
-```js
+```javascript
 c = 2 + 2;
 b = c;
 a = c;
 ```
+
 Es más fácil de leer, especialmente cuando se hace de un vistazo.
 
 ## Modificar en el lugar
@@ -280,7 +250,7 @@ A menudo necesitamos aplicar un operador a una variable y guardar el nuevo resul
 
 Por ejemplo:
 
-```js
+```javascript
 let n = 2;
 n = n + 5;
 n = n * 2;
@@ -288,14 +258,11 @@ n = n * 2;
 
 Esta notación puede ser acortada utilizando los operadores `+=` y `*=`:
 
-```js run
-let n = 2;
-n += 5; // ahora n = 7 (lo mismo que n = n + 5)
-n *= 2; // ahora n = 14 (lo mismo que n = n * 2)
+\`\`\`js run let n = 2; n += 5; // ahora n = 7 \(lo mismo que n = n + 5\) n _= 2; // ahora n = 14 \(lo mismo que n = n_  2\)
 
-alert( n ); // 14
-```
+alert\( n \); // 14
 
+```text
 Los operadores cortos "modifica y asigna" existen para todos los operadores aritméticos y de nivel bit: `/=`, `-=`, etcétera.
 
 Tales operadores tienen la misma precedencia que la asignación normal, por lo tanto se ejecutan después de otros cálculos:
@@ -310,51 +277,42 @@ alert( n ); // 16  (lado derecho evaluado primero, lo mismo que n *= 8)
 
 ## Incremento/decremento
 
-<!-- No se puede usar -- en título, porque el conversor interno lo convierte a – -->
-
 Aumentar o disminuir un número en uno es una de las operaciones numéricas más comunes.
 
 Entonces, hay operadores especiales para ello:
 
-- **Incremento** `++` incrementa una variable por 1:
+* **Incremento** `++` incrementa una variable por 1:
 
-    ```js run no-beautify
-    let counter = 2;
-    counter++;      // funciona igual que counter = counter + 1, pero es más corto
-    alert( counter ); // 3
-    ```
-- **Decremento** `--` decrementa una variable por 1:
+  `js run no-beautify let counter = 2; counter++; // funciona igual que counter = counter + 1, pero es más corto alert( counter ); // 3`
 
-    ```js run no-beautify
-    let counter = 2;
-    counter--;      // funciona igual que counter = counter - 1, pero es más corto
-    alert( counter ); // 1
-    ```
+* **Decremento** `--` decrementa una variable por 1:
 
-```warn
+  \`\`\`js run no-beautify let counter = 2; counter--; // funciona igual que counter = counter - 1, pero es más corto alert\( counter \); // 1
+
+  \`\`\`
+
+```text
 Incremento/decremento sólo puede ser aplicado a variables. Intentar utilizarlo en un valor como `5++` dará un error.
 ```
 
 Los operadores `++` y `--` pueden ser colocados antes o después de una variable.
 
-- Cuando el operador va después de la variable, está en "forma de sufijo": `counter++`.
-- La "forma de prefijo" es cuando el operador va antes de la variable: `++counter`.
+* Cuando el operador va después de la variable, está en "forma de sufijo": `counter++`.
+* La "forma de prefijo" es cuando el operador va antes de la variable: `++counter`.
 
 Ambas sentencias hacen la misma cosa: aumentar `counter` por `1`.
 
 ¿Existe alguna diferencia? Sí, pero solamente la podemos ver si utilizamos el valor devuelto de `++/--`.
 
-Aclaremos. Tal como conocemos, todos los operadores devuelven un valor. Incremento/decremento no es una excepción. La forma prefijo devuelve el nuevo valor mientras que la forma sufijo devuelve el valor anterior (antes del incremento/decremento).
+Aclaremos. Tal como conocemos, todos los operadores devuelven un valor. Incremento/decremento no es una excepción. La forma prefijo devuelve el nuevo valor mientras que la forma sufijo devuelve el valor anterior \(antes del incremento/decremento\).
 
 Para ver la diferencia, aquí hay un ejemplo:
 
-```js run
-let counter = 1;
-let a = ++counter; // (*)
+\`\`\`js run let counter = 1; let a = ++counter; // \(\*\)
 
-alert(a); // *!*2*/!*
-```
+alert\(a\); // _!_2_/!_
 
+```text
 En la línea `(*)`, la forma *prefijo* `++counter` incrementa `counter` y devuelve el nuevo valor, `2`. Por lo tanto, el `alert` muestra `2`.
 
 Ahora usemos la forma sufijo:
@@ -366,41 +324,31 @@ let a = counter++; // (*) cambiado ++counter a counter++
 alert(a); // *!*1*/!*
 ```
 
-En la línea `(*)`, la forma *sufijo* `counter++` también incrementa `counter` pero devuelve el *antiguo* valor (antes de incrementar). Por lo tanto, el `alert` muestra `1`.
+En la línea `(*)`, la forma _sufijo_ `counter++` también incrementa `counter` pero devuelve el _antiguo_ valor \(antes de incrementar\). Por lo tanto, el `alert` muestra `1`.
 
 Para resumir:
 
-- Si no se usa el resultado del incremento/decremento, no hay diferencia en la forma de usar:
+* Si no se usa el resultado del incremento/decremento, no hay diferencia en la forma de usar:
 
-    ```js run
-    let counter = 0;
-    counter++;
-    ++counter;
-    alert( counter ); // 2, las líneas de arriba realizan lo mismo
-    ```
-- Si queremos aumentar un valor *y* usar inmediatamente el resultado del operador, necesitamos la forma de prefijo:
+  `js run let counter = 0; counter++; ++counter; alert( counter ); // 2, las líneas de arriba realizan lo mismo`
 
-    ```js run
-    let counter = 0;
-    alert( ++counter ); // 1
-    ```
-- Si queremos incrementar un valor pero usamos su valor anterior, necesitamos la forma sufijo:
+* Si queremos aumentar un valor _y_ usar inmediatamente el resultado del operador, necesitamos la forma de prefijo:
 
-    ```js run
-    let counter = 0;
-    alert( counter++ ); // 0
-    ```
+  `js run let counter = 0; alert( ++counter ); // 1`
 
-````smart header="Incremento/decremento entre otros operadores"
-Los operadores `++/--` también pueden ser usados dentro de expresiones. Su precedencia es más alta que la mayoría de los otros operadores aritméticos.
+* Si queremos incrementar un valor pero usamos su valor anterior, necesitamos la forma sufijo:
+
+  \`\`\`js run let counter = 0; alert\( counter++ \); // 0
+
+  \`\`\`
+
+```````smart header="Incremento/decremento entre otros operadores" Los operadores````++/--\` también pueden ser usados dentro de expresiones. Su precedencia es más alta que la mayoría de los otros operadores aritméticos.
 
 Por ejemplo:
 
-```js run
-let counter = 1;
-alert( 2 * ++counter ); // 4
-```
+\`\`\`js run let counter = 1; alert\( 2 \* ++counter \); // 4
 
+```text
 Compara con:
 
 ```js run
@@ -414,12 +362,11 @@ Mientras lee el código, un rápido escaneo ocular "vertical" puede pasar por al
 
 Aconsejamos un estilo de "una línea - una acción":
 
-```js run
-let counter = 1;
-alert( 2 * counter );
-counter++;
+\`\`\`js run let counter = 1; alert\( 2 \* counter \); counter++;
+
+```text
+`
 ```
-````
 
 ## Operadores a nivel de bit
 
@@ -429,13 +376,13 @@ Estos operadores no son específicos de JavaScript. Son compatibles con la mayor
 
 La lista de operadores:
 
-- AND ( `&` )
-- OR ( `|` )
-- XOR ( `^` )
-- NOT ( `~` )
-- LEFT SHIFT ( `<<` )
-- RIGHT SHIFT ( `>>` )
-- ZERO-FILL RIGHT SHIFT ( `>>>` )
+* AND \( `&` \)
+* OR \( `|` \)
+* XOR \( `^` \)
+* NOT \( `~` \)
+* LEFT SHIFT \( `<<` \)
+* RIGHT SHIFT \( `>>` \)
+* ZERO-FILL RIGHT SHIFT \( `>>>` \)
 
 Estos operadores se usan muy raramente. Para comprenderlos, necesitamos profundizar en la representación de números de bajo nivel y no sería óptimo hacerlo en este momento, especialmente porque no los necesitaremos pronto. Si tienes curiosidad, puedes leer el artículo [Operadores a nivel de bit](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Operadores/Bitwise_Operators#Bitwise_AND) en MDN. Sería más práctico hacerlo cuando surja una necesidad real.
 
@@ -447,14 +394,11 @@ El operador coma nos permite evaluar varias expresiones, dividiéndolas con una 
 
 Por ejemplo:
 
-```js run
-*!*
-let a = (1 + 2, 3 + 4);
-*/!*
+\`\`\`js run _!_ let a = \(1 + 2, 3 + 4\); _/!_
 
-alert( a ); // 7 (el resultado de 3 + 4)
-```
+alert\( a \); // 7 \(el resultado de 3 + 4\)
 
+```text
 Aquí, se evalúa la primera expresión `1 + 2` y se desecha su resultado. Luego, se evalúa `3 + 4` y se devuelve como resultado.
 
 ```smart header="Coma tiene muy baja precedencia"
@@ -469,7 +413,7 @@ A veces, las personas lo usan en construcciones más complejas para poner varias
 
 Por ejemplo:
 
-```js
+```javascript
 // tres operaciones en una línea
 for (*!*a = 1, b = 3, c = a * b*/!*; a < 10; a++) {
  ...
@@ -477,3 +421,4 @@ for (*!*a = 1, b = 3, c = a * b*/!*; a < 10; a++) {
 ```
 
 Tales trucos se usan en muchos frameworks de JavaScript. Por eso los estamos mencionando. Pero generalmente no mejoran la legibilidad del código, por lo que debemos pensar bien antes de usarlos.
+

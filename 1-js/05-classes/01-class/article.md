@@ -1,10 +1,8 @@
+# Sintaxis básica de class
 
-# Sintaxis básica de `class`
+\`\`\`quote author="Wikipedia" En informática, una clase es una plantilla para la creación de objetos de datos según un modelo predefinido. Las clases se utilizan para representar entidades o conceptos, como los sustantivos en el lenguaje. Cada clase es un modelo que define un conjunto de variables —el estado—, y métodos apropiados para operar con dichos datos —el comportamiento—.
 
-```quote author="Wikipedia"
-En informática, una clase es una plantilla para la creación de objetos de datos según un modelo predefinido. Las clases se utilizan para representar entidades o conceptos, como los sustantivos en el lenguaje. Cada clase es un modelo que define un conjunto de variables —el estado—, y métodos apropiados para operar con dichos datos —el comportamiento—.
-```
-
+```text
 En la práctica a menudo necesitamos crear muchos objetos del mismo tipo, como usuarios, bienes, lo que sea.
 
 Como ya sabemos del capítulo <info:constructor-new>, `new function` puede ayudar con eso.
@@ -31,24 +29,17 @@ El método `constructor()` es llamado automáticamente por `new`, así podemos i
 
 Por ejemplo:
 
-```js run
-class User {
+\`\`\`js run class User {
 
-  constructor(name) {
-    this.name = name;
-  }
+constructor\(name\) { this.name = name; }
 
-  sayHi() {
-    alert(this.name);
-  }
+sayHi\(\) { alert\(this.name\); }
 
 }
 
-// Uso:
-let user = new User("John");
-user.sayHi();
-```
+// Uso: let user = new User\("John"\); user.sayHi\(\);
 
+```text
 Cuando se llama a `new User("John")`:
 1. Un objeto nuevo es creado.
 2. El `constructor` se ejecuta con el argumento dado y lo asigna a `this.name`.
@@ -72,18 +63,11 @@ En JavaScript, una clase es un tipo de función.
 
 Aquí, hecha un vistazo:
 
-```js run
-class User {
-  constructor(name) { this.name = name; }
-  sayHi() { alert(this.name); }
-}
+\`\`\`js run class User { constructor\(name\) { this.name = name; } sayHi\(\) { alert\(this.name\); } }
 
-// La prueba: User es una función
-*!*
-alert(typeof User); // function
-*/!*
-```
+// La prueba: User es una función _!_ alert\(typeof User\); // function _/!_
 
+```text
 Lo que la construcción `class User {...}` hace realmente es:
 
 1. Crea una función llamada `User`, la que se vuelve el resultado de la declaración de la clase. El código de la función es tomado del método `constructor` (se asume vacío si no se escribe tal método).
@@ -118,28 +102,17 @@ alert(Object.getOwnPropertyNames(User.prototype)); // constructor, sayHi
 
 ## No es solamente azúcar sintáctica
 
-A veces se dice que `class` es "azúcar sintáctica" (sintaxis que es diseñada para que sea más fácil de leer pero no introduce nada nuevo), porque en realidad podemos declarar lo mismo sin la palabra clave `class` en absoluto:
+A veces se dice que `class` es "azúcar sintáctica" \(sintaxis que es diseñada para que sea más fácil de leer pero no introduce nada nuevo\), porque en realidad podemos declarar lo mismo sin la palabra clave `class` en absoluto:
 
-```js run
-// reescribiendo la clase User puramente con funciones
+\`\`\`js run // reescribiendo la clase User puramente con funciones
 
-// 1. Crear la función constructor
-function User(name) {
-  this.name = name;
-}
-// un prototipo de función tiene la propiedad "constructor" por defecto,
-// así que no necesitamos crearla
+// 1. Crear la función constructor function User\(name\) { this.name = name; } // un prototipo de función tiene la propiedad "constructor" por defecto, // así que no necesitamos crearla
 
-// 2. Agregar el método al prototipo
-User.prototype.sayHi = function() {
-  alert(this.name);
-};
+// 2. Agregar el método al prototipo User.prototype.sayHi = function\(\) { alert\(this.name\); };
 
-// Uso:
-let user = new User("John");
-user.sayHi();
-```
+// Uso: let user = new User\("John"\); user.sayHi\(\);
 
+```text
 El resultado de esta definición es el mismo. Así, efectivamente hay razones para que `class` sea considerada azúcar sintáctica para definir un constructor junto con sus métodos de prototipo.
 
 Aún así hay diferencias importantes.
@@ -155,26 +128,26 @@ Aún así hay diferencias importantes.
 
     alert(typeof User); // function
     User(); // Error: El constructor de clase User no puede ser invocado sin 'new'
-    ```
+```
 
-    Además una representación string de un constructor de clase en la mayoría de los motores JavaScript comienzan con "class..."
+```text
+Además una representación string de un constructor de clase en la mayoría de los motores JavaScript comienzan con "class..."
 
-    ```js run
-    class User {
-      constructor() {}
-    }
+```js run
+class User {
+  constructor() {}
+}
 
-    alert(User); // class User { ... }
-    ```
-    Hay otras diferencias que veremos pronto.
+alert(User); // class User { ... }
+```
+Hay otras diferencias que veremos pronto.
+```
 
-2. Los métodos de clase no son enumerables.
-    La definición de clase establece la bandera `enumerable` a `false` para todos los métodos en `"prototype"`.
+1. Los métodos de clase no son enumerables. La definición de clase establece la bandera `enumerable` a `false` para todos los métodos en `"prototype"`.
 
-    Esto es bueno porque si hacemos `for..in` a un objeto usualmente no queremos sus métodos de clase.
+   Esto es bueno porque si hacemos `for..in` a un objeto usualmente no queremos sus métodos de clase.
 
-3. Las clases siempre asumen `use strict`.
-    Todo el código dentro del constructor de clase está automáticamente en modo estricto.
+2. Las clases siempre asumen `use strict`. Todo el código dentro del constructor de clase está automáticamente en modo estricto.
 
 Además la sintaxis de `class` brinda muchas otras características que exploraremos luego.
 
@@ -184,7 +157,7 @@ Al igual que las funciones, las clases pueden ser definidas dentro de otra expre
 
 Aquí hay un ejemplo de una expresión de clase:
 
-```js
+```javascript
 let User = class {
   sayHi() {
     alert("Hello");
@@ -196,20 +169,13 @@ Al igual que las expresiones de función, las expresiones de clase pueden tener 
 
 Si una expresión de clase tiene un nombre, este es visible solamente dentro de la clase.
 
-```js run
-// Expresiones de clase con nombre
-// ("Named Class Expression" no figura así en la especificación, pero es equivalente a "Named Function Expression")
-let User = class *!*MyClass*/!* {
-  sayHi() {
-    alert(MyClass); // El nombre de MyClass solo es visible dentro de la clase
-  }
-};
+\`\`\`js run // Expresiones de clase con nombre // \("Named Class Expression" no figura así en la especificación, pero es equivalente a "Named Function Expression"\) let User = class _!_MyClass_/!_ { sayHi\(\) { alert\(MyClass\); // El nombre de MyClass solo es visible dentro de la clase } };
 
-new User().sayHi(); // Funciona, muestra la definición de MyClass
+new User\(\).sayHi\(\); // Funciona, muestra la definición de MyClass
 
-alert(MyClass); // error, el nombre de MyClass no es visible fuera de la clase
-```
+alert\(MyClass\); // error, el nombre de MyClass no es visible fuera de la clase
 
+```text
 Podemos inclusive crear clases dinámicamente "a pedido", como esto:
 
 ```js run
@@ -228,45 +194,27 @@ let User = makeClass("Hello");
 new User().sayHi(); // Hello
 ```
 
-
 ## Getters/setters
 
 Al igual que los objetos literales, las clases pueden incluir getters/setters, propiedades calculadas, etc.
 
 Aquí hay un ejemplo de `user.name`, implementado usando `get/set`:
 
-```js run
-class User {
+\`\`\`js run class User {
 
-  constructor(name) {
-    // invoca el setter
-    this.name = name;
-  }
+constructor\(name\) { // invoca el setter this.name = name; }
 
-*!*
-  get name() {
-*/!*
-    return this._name;
-  }
+_!_ get name\(\) { _/!_ return this.\_name; }
 
-*!*
-  set name(value) {
-*/!*
-    if (value.length < 4) {
-      alert("Nombre demasiado corto.");
-      return;
-    }
-    this._name = value;
-  }
+_!_ set name\(value\) { _/!_ if \(value.length &lt; 4\) { alert\("Nombre demasiado corto."\); return; } this.\_name = value; }
 
 }
 
-let user = new User("John");
-alert(user.name); // John
+let user = new User\("John"\); alert\(user.name\); // John
 
-user = new User(""); // Nombre demasiado corto.
-```
+user = new User\(""\); // Nombre demasiado corto.
 
+```text
 Técnicamente, la declaración de clase funciona creando getters y setters en `User.prototype`.
 
 ## Nombres calculados [...]
@@ -289,12 +237,11 @@ new User().sayHi();
 
 Es una característica fácil de recordar porque se asemeja a la de los objetos literales.
 
-## Campos de clase (Class fields) 
+## Campos de clase \(Class fields\)
 
-```warn header="Los navegadores viejos pueden necesitar polyfill"
-Los campos de clase son un agregado reciente al lenguaje.
-```
+\`\`\`warn header="Los navegadores viejos pueden necesitar polyfill" Los campos de clase son un agregado reciente al lenguaje.
 
+```text
 Antes, nuestras clases tenían solamente métodos.
 
 "Campos de clase" es una sintaxis que nos permite agregar una propiedad cualquiera.
@@ -315,22 +262,15 @@ class User {
 new User().sayHi(); // Hello, John!
 ```
 
-Así, simplemente escribimos "<property name> = <value>" en la declaración, y eso es todo.
+Así, simplemente escribimos " = " en la declaración, y eso es todo.
 
 La diferencia importante de las propiedades definidas como "campos de clase" es que estas son establecidas en los objetos individuales, no compartidas en `User.prototype`:
 
-```js run
-class User {
-*!*
-  name = "John";
-*/!*
-}
+\`\`\`js run class User { _!_ name = "John"; _/!_ }
 
-let user = new User();
-alert(user.name); // John
-alert(User.prototype.name); // undefined
-```
+let user = new User\(\); alert\(user.name\); // John alert\(User.prototype.name\); // undefined
 
+```text
 También podemos asignar valores usando expresiones más complejas y llamados a función:
 
 ```js run
@@ -344,32 +284,23 @@ let user = new User();
 alert(user.name); // John
 ```
 
-### Vinculación de métodos (binding) usando campos de clase
+### Vinculación de métodos \(binding\) usando campos de clase
 
-Como se demostró en el capítulo <info:bind>, las funciones en JavaScript tienen un `this` dinámico. Este depende del contexto del llamado.
+Como se demostró en el capítulo , las funciones en JavaScript tienen un `this` dinámico. Este depende del contexto del llamado.
 
 Entonces si un método de objeto es pasado y llamado en otro contexto, `this` ya no será una referencia a su objeto.
 
 Por ejemplo, este código mostrará `undefined`:
 
-```js run
-class Button {
-  constructor(value) {
-    this.value = value;
-  }
+\`\`\`js run class Button { constructor\(value\) { this.value = value; }
 
-  click() {
-    alert(this.value);
-  }
-}
+click\(\) { alert\(this.value\); } }
 
-let button = new Button("hello");
+let button = new Button\("hello"\);
 
-*!*
-setTimeout(button.click, 1000); // undefined
-*/!*
-```
+_!_ setTimeout\(button.click, 1000\); // undefined _/!_
 
+```text
 Este problema es denominado "pérdida de `this`".
 
 Hay dos enfoques para solucionarlos, como se discute en el capítulo <info:bind>:
@@ -404,7 +335,7 @@ Esto es especialmente práctico, en el ambiente de los navegadores, para los "ev
 
 La sintaxis básica de clase se ve así:
 
-```js
+```javascript
 class MyClass {
   prop = value; // propiedad
 
@@ -422,6 +353,7 @@ class MyClass {
 }
 ```
 
-`MyClass` es técnicamente una función (la que proveemos como `constructor`), mientras que los métodos, getters y setters son escritos en `MyClass.prototype`.
+`MyClass` es técnicamente una función \(la que proveemos como `constructor`\), mientras que los métodos, getters y setters son escritos en `MyClass.prototype`.
 
 En los siguientes capítulos aprenderemos más acerca de clases, incluyendo herencia y otras características.
+

@@ -1,12 +1,12 @@
+# task
+
 importance: 5
 
----
-
-# Reescribe el 'if' como '?'
+## Reescribe el 'if' como '?'
 
 Reescriba esta condición `if` usando el operador ternario `'?'`:
 
-```js
+```javascript
 let result;
 
 if (a + b < 4) {
@@ -15,3 +15,4 @@ if (a + b < 4) {
   result = 'Encima';
 }
 ```
+

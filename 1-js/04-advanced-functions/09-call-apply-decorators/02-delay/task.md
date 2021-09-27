@@ -1,14 +1,14 @@
+# task
+
 importance: 5
 
----
-
-# Decorador de retraso
+## Decorador de retraso
 
 Cree un decorador `delay(f, ms)` que retrase cada llamada de `f` en `ms` milisegundos.
 
 Por ejemplo
 
-```js
+```javascript
 function f(x) {
   alert(x);
 }
@@ -24,3 +24,4 @@ f1500("test"); // mostrar "test" después de 1500ms
 En otras palabras, `delay (f, ms)` devuelve una variante "Retrasada por `ms`" de`f`.
 
 En el código anterior, `f` es una función de un solo argumento, pero en esta solución debe pasar todos los argumentos y el contexto `this`.
+

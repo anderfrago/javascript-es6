@@ -1,8 +1,8 @@
+# task
+
 importance: 3
 
----
-
-# Muestra números primos
+## Muestra números primos
 
 Un número entero mayor que `1` es llamado [primo](https://es.wikipedia.org/wiki/N%C3%BAmero_primo) si no puede ser dividido sin un resto por ningún número excepto `1` y él mismo.
 
@@ -15,3 +15,4 @@ Por ejemplo, `5` es un primo, porque no puede ser divido exactamente por `2`, `3
 Para `n = 10` el resultado será `2, 3, 5, 7`.
 
 PD. El código debería funcionar para cualquier `n`, no debe estar programado para valores fijos.
+

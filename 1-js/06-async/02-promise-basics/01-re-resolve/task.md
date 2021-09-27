@@ -1,10 +1,8 @@
-
 # ¿Volver a resolver una promesa?
-
 
 ¿Cuál es el resultado del código a continuación?
 
-```js
+```javascript
 let promise = new Promise(function(resolve, reject) {
   resolve(1);
 
@@ -13,3 +11,4 @@ let promise = new Promise(function(resolve, reject) {
 
 promise.then(alert);
 ```
+

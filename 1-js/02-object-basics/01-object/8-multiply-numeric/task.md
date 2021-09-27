@@ -1,14 +1,14 @@
+# task
+
 importance: 3
 
----
-
-# Multiplicar propiedades numéricas por 2
+## Multiplicar propiedades numéricas por 2
 
 Crea una función `multiplyNumeric(obj)` que multiplique todas las propiedades numéricas de `obj` por `2`.
 
 Por ejemplo:
 
-```js
+```javascript
 // Antes de la llamada
 let menu = {
   width: 200,
@@ -29,5 +29,4 @@ menu = {
 Nota que `multiplyNumeric` no necesita devolver nada. Debe modificar el objeto en su lugar.
 
 P.D. Usa `typeof` para verificar si hay un número aquí.
-
 
