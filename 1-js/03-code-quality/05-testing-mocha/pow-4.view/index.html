@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- incluir css para mocha, para mostrar los resultados -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.css">
+  <!-- incluir el código del framework mocha -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
+  <script>
+    mocha.setup('bdd'); // configuración mínima
+  </script>
+  <!-- incluir chai -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+  <script>
+    // chai tiene un montón de cosas, hacemos assert global
+    let assert = chai.assert;
+  </script>
+</head>
+
+<body>
+
+  <script>
+    function pow(x, n) {
+      let result = 1;
+
+      for (let i = 0; i < n; i++) {
+        result *= x;
+      }
+
+      return result;
+    }
+  </script>
+
+  <!-- el fichero con los tests (describe, it...) -->
+  <script src="test.js"></script>
+
+  <!-- el elemento con id="mocha" que contendrá los resultados de los tests -->
+  <div id="mocha"></div>
+
+  <!-- ¡ejecutamos los tests! -->
+  <script>
+    mocha.run();
+  </script>
+</body>
+
+</html>

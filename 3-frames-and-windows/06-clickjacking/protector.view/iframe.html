@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+
+  <style>
+    #protector {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 99999999;
+    }
+  </style>
+
+</head>
+
+<body>
+
+<div id="protector">
+  <a href="/" target="_blank">Ir al sitio</a>
+</div>
+
+<script>
+
+  if (top.document.domain == document.domain) {
+    protector.remove();
+  }
+
+</script>
+
+  Este texto siempre está visible.
+
+  Pero si la página estuviera abierta dentro de un documento de otro dominio, el div sobre ella evitaría cualquier acción.
+
+  <button onclick="alert(1)">El clic no funcionaría en ese caso</button>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+</head>
+
+<body>
+
+  Recibiendo iframe.
+  <script>
+    window.addEventListener('message', function(event) {
+      alert(`Recibí ${event.data} de ${event.origin}`);
+    });
+  </script>
+
+</body>
+</html>
