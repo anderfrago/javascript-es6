@@ -1,5 +1,4 @@
-JavaScript ES6
-==============
+
 
 # Desarrollo de Interfaces
 
